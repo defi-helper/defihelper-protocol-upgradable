@@ -1,0 +1,59 @@
+## {{name}}
+
+{{{natspec.userdoc}}}
+
+{{{natspec.devdoc}}}
+
+{{#if ownEvents.length}}
+### Events
+{{#each ownEvents}}
+```solidity
+{{name}}({{args}})
+```
+
+{{{natspec.userdoc}}}
+
+{{{natspec.devdoc}}}
+
+{{/each}}
+
+{{/if}}
+{{#if ownVariables.length}}
+### Variables
+{{#each ownVariables}}
+```solidity
+{{type}} {{name}}
+```
+
+{{/each}}
+
+{{/if}}
+{{#if ownFunctions.length}}
+### Functions
+{{#each ownFunctions}}
+{{#if (or (eq visibility "public") (eq visibility "external"))}}
+```solidity
+{{name}}({{args}}){{#if outputs}} → {{outputs}}{{/if}}
+```
+
+{{{natspec.userdoc}}}
+
+{{{natspec.devdoc}}}
+{{#if natspec.params}}
+
+**Arguments:**
+{{#each natspec.params}}
+- *{{param}}* - {{description}}
+{{/each}}
+{{/if}}
+{{#if natspec.returns}}
+
+**Returns:**
+{{#each natspec.returns}}
+- *{{param}}* - {{description}}
+{{/each}}
+{{/if}}
+
+{{/if}}
+{{/each}}
+{{/if}}
