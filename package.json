@@ -20,7 +20,7 @@
     "docs": "solidity-docgen --solc-module solc-0.8 -i ./contracts -o ./docs/api -t ./docs/templates",
     "etherscan-verify": "hardhat etherscan-verify",
     "export-abi": "hardhat export-abi --dir ./networks/abi",
-    "export-deploy": "hardhat export-deployed --file ./networks/contracts.json --fields address,blockNumber"
+    "export-deploy": "hardhat export-deployed --file ./networks/contractsUpgradable.json --fields address,blockNumber"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
