@@ -1,9 +1,9 @@
-const path = require("path");
-const fs = require("fs");
-const glob = require("tiny-glob");
-const BN = require("bignumber.js");
-const { TASK_COMPILE } = require("hardhat/builtin-tasks/task-names");
-const { types } = require("hardhat/config");
+const path = require('path');
+const fs = require('fs');
+const glob = require('tiny-glob');
+const BN = require('bignumber.js');
+const { TASK_COMPILE } = require('hardhat/builtin-tasks/task-names');
+const { types } = require('hardhat/config');
 
 class DeployerError extends Error {}
 
@@ -11,7 +11,7 @@ class Info {
   /**
    * @param {string} content
    */
-  constructor(content = "") {
+  constructor(content = '') {
     this.content = content;
   }
 
@@ -29,7 +29,7 @@ class Info {
    *
    * @returns {Info}
    */
-  nl(str = "") {
+  nl(str = '') {
     return new Info(`${this.content}\n`).m(str);
   }
 
@@ -43,12 +43,12 @@ class Info {
 
 /**
  * @typedef {{[library: string]: string}} Libraries
- * 
+ *
  * @typedef {{
  *   implementation: string;
  *   proxyAdmin: string;
  * }} UpgradableInfo
- * 
+ *
  * @typedef {{
  *   name: string;
  *   address: string;
@@ -103,9 +103,9 @@ class DeploymentArtifacts {
       .readFile(this.path(contractName))
       .then(JSON.parse)
       .catch((e) => {
-        if (e.code === "ENOENT") {
+        if (e.code === 'ENOENT') {
           throw new DeployerError(
-            `Deployed artifact for contract "${contractName}" not found on path "${artifactPath}"`
+            `Deployed artifact for contract "${contractName}" not found on path "${artifactPath}"`,
           );
         }
         throw e;
@@ -143,9 +143,9 @@ class DeploymentArtifacts {
           upgradable,
         },
         null,
-        2
+        2,
       ),
-      { flag: "w" }
+      { flag: 'w' },
     );
   }
 }
@@ -176,44 +176,30 @@ class Deployer {
    * @param {import('ethers').Contract} contract
    * @param {import('ethers').Transaction} transaction
    */
-  deployInfo(
-    name,
-    args,
-    path,
-    { address },
-    { hash, gasPrice, gasLimit, from }
-  ) {
+  deployInfo(name, args, path, { address }, { hash, gasPrice, gasLimit, from }) {
     console.info(
       new Info()
-        .nl(`===== ${name}(${args.join(", ")}) =====`)
+        .nl(`===== ${name}(${args.join(', ')}) =====`)
         .nl(` > Contract: ${path}`)
         .nl(` > Tx hash: ${hash}`)
-        .nl(
-          ` > Gas price: ${new BN(gasPrice.toString())
-            .div("1e9")
-            .toString(10)} Gwei`
-        )
+        .nl(` > Gas price: ${new BN(gasPrice.toString()).div('1e9').toString(10)} Gwei`)
         .nl(` > Gas limit: ${gasLimit.toString()}`)
         .nl(` > Deployer: ${from}`)
         .nl(` > To: ${address}`)
-        .toString()
+        .toString(),
     );
   }
 
   /**
    *
    * @param {string} contractName
-   * @param {import('ethers').providers.Provider | import('ethers').Signer | undefined} signerOrProvider
+   * @param {import('ethers').Signer | undefined} signerOrProvider
    *
    * @returns {Promise<import('ethers').Contract>}
    */
-  async getContract(contractName, signerOrProvider = undefined) {
+  async getContract(contractName, signer = undefined) {
     const { address, abi } = await this.artifacts.readDeploy(contractName);
-    return new this.hre.ethers.Contract(
-      address,
-      abi,
-      signerOrProvider ?? this.hre.ethers.getDefaultProvider()
-    );
+    return this.hre.ethers.getContractAt(abi, address, signer);
   }
 
   /**
@@ -232,16 +218,11 @@ class Deployer {
 
     const isAlreadyDeployed = await this.artifacts.isDeployed(name);
     if (isAlreadyDeployed) {
-      return console.info(
-        new Info().nl(`===== ${name} =====`).nl(`Already deployed`).toString()
-      );
+      return console.info(new Info().nl(`===== ${name} =====`).nl(`Already deployed`).toString());
     }
 
     const artifact = await this.hre.artifacts.readArtifact(path);
-    const factory = await this.hre.ethers.getContractFactoryFromArtifact(
-      artifact,
-      { libraries }
-    );
+    const factory = await this.hre.ethers.getContractFactoryFromArtifact(artifact, { libraries });
     const contract = await factory.deploy(...args);
     const tx = contract.deployTransaction;
     this.deployInfo(name, args, path, contract, tx);
@@ -251,17 +232,14 @@ class Deployer {
         .nl(
           ` > Gas used: ${new BN(receipt.gasUsed.toString())
             .multipliedBy(tx.gasPrice.toString())
-            .div("1e18")
-            .toString(10)} Eth`
+            .div('1e18')
+            .toString(10)} Eth`,
         )
         .nl(`===== Deployed =====`)
-        .toString()
+        .toString(),
     );
 
-    return this.artifacts.saveDeploy(
-      { name, args, libraries },
-      { artifact, receipt }
-    );
+    return this.artifacts.saveDeploy({ name, args, libraries }, { artifact, receipt });
   }
 
   /**
@@ -275,15 +253,12 @@ class Deployer {
       name: path,
       args: [],
       libraries: {},
-      initializer: "initialize",
+      initializer: 'initialize',
       ...options,
     };
 
     const artifact = await this.hre.artifacts.readArtifact(path);
-    const factory = await this.hre.ethers.getContractFactoryFromArtifact(
-      artifact,
-      { libraries }
-    );
+    const factory = await this.hre.ethers.getContractFactoryFromArtifact(artifact, { libraries });
     const contract = await this.hre.upgrades.deployProxy(factory, args, {
       initializer,
     });
@@ -299,13 +274,13 @@ class Deployer {
         .nl(
           ` > Gas used: ${new BN(receipt.gasUsed.toString())
             .multipliedBy(tx.gasPrice.toString())
-            .div("1e18")
-            .toString(10)} Eth`
+            .div('1e18')
+            .toString(10)} Eth`,
         )
         .nl(` > Implementation: ${implAddress}`)
         .nl(` > Proxy admin: ${proxyAdminAddress}`)
         .nl(`===== Deployed =====`)
-        .toString()
+        .toString(),
     );
 
     return this.artifacts.saveDeploy(
@@ -318,7 +293,7 @@ class Deployer {
           proxyAdmin: proxyAdminAddress,
         },
       },
-      { artifact, receipt }
+      { artifact, receipt },
     );
   }
 
@@ -343,10 +318,7 @@ class Deployer {
 
     const proxy = await this.artifacts.readDeploy(proxyName);
     const artifact = await this.hre.artifacts.readArtifact(implementation);
-    const factory = await this.hre.ethers.getContractFactoryFromArtifact(
-      artifact,
-      { libraries }
-    );
+    const factory = await this.hre.ethers.getContractFactoryFromArtifact(artifact, { libraries });
     const contract = await this.hre.upgrades.upgradeProxy(proxy.address, factory, {
       call: initializer !== false ? { fn: initializer, args } : undefined,
     });
@@ -356,14 +328,10 @@ class Deployer {
         .nl(`===== ${proxyName} -> ${implementation} =====`)
         .nl(` > Proxy: ${proxy.address}`)
         .nl(` > Tx hash: ${tx.hash}`)
-        .nl(
-          ` > Gas price: ${new BN(tx.gasPrice.toString())
-            .div("1e9")
-            .toString(10)} Gwei`
-        )
+        .nl(` > Gas price: ${new BN(tx.gasPrice.toString()).div('1e9').toString(10)} Gwei`)
         .nl(` > Gas limit: ${tx.gasLimit.toString()}`)
         .nl(` > Deployer: ${tx.from}`)
-        .toString()
+        .toString(),
     );
     const receipt = await tx.wait();
     const [proxyAdminAddress, implAddress] = await Promise.all([
@@ -375,13 +343,13 @@ class Deployer {
         .nl(
           ` > Gas used: ${new BN(receipt.gasUsed.toString())
             .multipliedBy(tx.gasPrice.toString())
-            .div("1e18")
-            .toString(10)} Eth`
+            .div('1e18')
+            .toString(10)} Eth`,
         )
         .nl(` > Implementation: ${implAddress}`)
         .nl(` > Proxy admin: ${proxyAdminAddress}`)
         .nl(`===== Upgraded =====`)
-        .toString()
+        .toString(),
     );
 
     return fs.promises.writeFile(
@@ -403,9 +371,9 @@ class Deployer {
           },
         },
         null,
-        2
+        2,
       ),
-      { flag: "w" }
+      { flag: 'w' },
     );
   }
 
@@ -414,9 +382,7 @@ class Deployer {
    * @param {string} contractName
    * @param {string} method
    * @param {any[]} args
-   * @param {{
-   *   from: string;
-   * }} options
+   * @param {import('ethers').CallOverrides} options
    *
    * @returns {Promise<void>}
    */
@@ -426,46 +392,35 @@ class Deployer {
       ...options,
     };
 
-    const contract = await this.getContract(
-      contractName,
-      await this.hre.ethers.getSigner(from)
-    );
-    if (typeof contract[method] !== "function") {
-      throw new DeployerError(
-        `Method "${method}" not found on contract "${contractName}"`
-      );
+    const contract = await this.getContract(contractName, await this.hre.ethers.getSigner(from));
+    if (typeof contract[method] !== 'function') {
+      throw new DeployerError(`Method "${method}" not found on contract "${contractName}"`);
     }
 
-    const tx = await contract[method](...args).catch((e) => e);
+    const tx = await contract[method](...args, {
+      ...options,
+    }).catch((e) => e);
     if (tx instanceof Error) {
       console.info(
         new Info()
-          .nl(`===== ${contractName}.${method}(${args.join(", ")}) =====`)
+          .nl(`===== ${contractName}.${method}(${args.join(', ')}) =====`)
           .nl(` > Contract: ${contract.address}`)
           .nl(` > From: ${from}`)
-          .nl(
-            ` > Reason: ${
-              typeof tx.reason === "string" ? tx.reason : tx.message
-            }`
-          )
+          .nl(` > Reason: ${typeof tx.reason === 'string' ? tx.reason : tx.message}`)
           .nl(`===== Error =====`)
-          .toString()
+          .toString(),
       );
       return;
     }
     console.info(
       new Info()
-        .nl(`===== ${contractName}.${method}(${args.join(", ")}) =====`)
+        .nl(`===== ${contractName}.${method}(${args.join(', ')}) =====`)
         .nl(` > Contract: ${contract.address}`)
         .nl(` > Tx hash: ${tx.hash}`)
-        .nl(
-          ` > Gas price: ${new BN(tx.gasPrice.toString())
-            .div("1e9")
-            .toString(10)} Gwei`
-        )
+        .nl(` > Gas price: ${new BN(tx.gasPrice.toString()).div('1e9').toString(10)} Gwei`)
         .nl(` > Gas limit: ${tx.gasLimit.toString()}`)
         .nl(` > From: ${tx.from}`)
-        .toString()
+        .toString(),
     );
     const receipt = await tx.wait();
     console.info(
@@ -473,11 +428,11 @@ class Deployer {
         .nl(
           ` > Gas used: ${new BN(receipt.gasUsed.toString())
             .multipliedBy(tx.gasPrice.toString())
-            .div("1e18")
-            .toString(10)} Eth`
+            .div('1e18')
+            .toString(10)} Eth`,
         )
         .nl(`===== Completed =====`)
-        .toString()
+        .toString(),
     );
   }
 }
@@ -490,53 +445,52 @@ function migration(fn) {
   return (deployer) => fn(deployer);
 }
 
-task("deploy", "Deploy contracts")
-  .addOptionalParam("deploy", "Path to the scripts deployment directory", "")
-  .addOptionalParam(
-    "artifact",
-    "Path to the artifacts deployment directory",
-    ""
-  )
-  .addOptionalParam("tags", "Target tags (comma separated)", "")
-  .addOptionalParam(
-    "compile",
-    "Is compile sources before run",
-    true,
-    types.boolean
-  )
+/**
+ *
+ * @param {string} ownerName
+ * @param {string} subjectName
+ *
+ * @returns {ReturnType<typeof migration>}
+ */
+function transferOwnership(ownerName, subjectName) {
+  return migration(async (deployer) => {
+    const owner = await deployer.artifacts.readDeploy(ownerName);
+    const subject = await deployer.getContract(subjectName);
+    if (await subject.owner().then((v) => v === owner.address)) return;
+
+    await deployer.execute(subjectName, 'transferOwnership', [owner.address]);
+  });
+}
+
+task('deploy', 'Deploy contracts')
+  .addOptionalParam('deploy', 'Path to the scripts deployment directory', '')
+  .addOptionalParam('artifact', 'Path to the artifacts deployment directory', '')
+  .addOptionalParam('tags', 'Target tags (comma separated)', '')
+  .addOptionalParam('compile', 'Is compile sources before run', true, types.boolean)
   .setAction(async (options, hre) => {
     if (options.compile) await run(TASK_COMPILE);
 
-    const tags = options.tags !== "" ? options.tags.split(",") : [];
-    const deployDir =
-      options.deploy !== "" ? options.deploy : hre.config.paths.deploy;
-    const artifactDir =
-      options.artifact !== "" ? options.artifact : hre.config.paths.deployments;
+    const tags = options.tags !== '' ? options.tags.split(',') : [];
+    const deployDir = options.deploy !== '' ? options.deploy : hre.config.paths.deploy;
+    const artifactDir = options.artifact !== '' ? options.artifact : hre.config.paths.deployments;
     const signers = await hre.ethers.getSigners();
-    const namedAccounts = Object.entries(hre.config.namedAccounts).reduce(
-      (result, [name, config]) => {
-        const accountIndex = config[hre.network.name]
-          ? config[hre.network.name]
-          : config[""] ?? 0;
-        return { ...result, [name]: signers[accountIndex] };
-      },
-      {}
-    );
+    const namedAccounts = Object.entries(hre.config.namedAccounts).reduce((result, [name, config]) => {
+      const accountIndex = config[hre.network.name] ? config[hre.network.name] : config[''] ?? 0;
+      return { ...result, [name]: signers[accountIndex] };
+    }, {});
     const deploymentsDir = path.resolve(artifactDir, hre.network.name);
     await fs.promises.mkdir(deploymentsDir, { recursive: true });
-    await fs.promises.writeFile(
-      path.resolve(deploymentsDir, "./.chainId"),
-      String(hre.network.config.chainId),
-      { flag: "w" }
-    );
+    await fs.promises.writeFile(path.resolve(deploymentsDir, './.chainId'), String(hre.network.config.chainId), {
+      flag: 'w',
+    });
 
-    const scriptsPath = await glob(path.resolve(deployDir, "**/*.js"), {
+    const scriptsPath = await glob(path.resolve(deployDir, '**/*.js'), {
       absolute: true,
     });
     const scripts = scriptsPath
       .map((scriptPath) => require(scriptPath))
       .filter((script) => {
-        if (typeof script !== "function") {
+        if (typeof script !== 'function') {
           return false;
         }
         if (tags.length > 0) {
@@ -552,71 +506,47 @@ task("deploy", "Deploy contracts")
       });
     if (scripts.length === 0) {
       throw new DeployerError(
-        `Deploy scripts by path "${deployDir}"${
-          tags.length > 0 ? ` with tags "${tags.join(", ")}" ` : " "
-        }not found`
+        `Deploy scripts by path "${deployDir}"${tags.length > 0 ? ` with tags "${tags.join(', ')}" ` : ' '}not found`,
       );
     }
-    const deployer = new Deployer(
-      hre,
-      new DeploymentArtifacts(deploymentsDir),
-      namedAccounts
-    );
-    await scripts.reduce(
-      async (prev, script) => prev.then(() => script(deployer)),
-      Promise.resolve(null)
-    );
+    const deployer = new Deployer(hre, new DeploymentArtifacts(deploymentsDir), namedAccounts);
+    await scripts.reduce(async (prev, script) => prev.then(() => script(deployer)), Promise.resolve(null));
   });
 
-task("etherscan-verify", "Verify all deployed contract on etherscan")
-  .addParam("contract", "Target contract")
-  .addOptionalParam(
-    "artifact",
-    "Path to the artifacts deployment directory",
-    ""
-  )
+task('etherscan-verify', 'Verify all deployed contract on etherscan')
+  .addParam('contract', 'Target contract')
+  .addOptionalParam('artifact', 'Path to the artifacts deployment directory', '')
   .setAction(async (options, hre) => {
-    const artifactDir =
-      options.artifact !== "" ? options.artifact : hre.config.paths.deployments;
+    const artifactDir = options.artifact !== '' ? options.artifact : hre.config.paths.deployments;
 
     const deploymentsDir = path.resolve(artifactDir, hre.network.name);
-    const {
-      name,
-      address,
-      args,
-      libraries,
-      contractName,
-      sourceName,
-      upgradable,
-    } = await fs.promises
+    const { name, address, args, libraries, contractName, sourceName, upgradable } = await fs.promises
       .readFile(path.resolve(deploymentsDir, `./${options.contract}.json`))
       .then((v) => JSON.parse(v));
     console.info(new Info().nl(`===== ${name} =====`).toString());
 
     if (upgradable !== undefined) {
-      return hre.run("verify", {
+      return hre.run('verify', {
         address,
       });
     }
 
     return hre
-      .run("verify:verify", {
+      .run('verify:verify', {
         address,
         contract: `${sourceName}:${contractName}`,
         constructorArguments: args,
         libraries,
       })
       .catch((e) => {
-        if (e.message.includes("Reason: Already Verified")) {
-          return console.info(
-            `${contractName}: Contract source code already verified`
-          );
+        if (e.message.includes('Reason: Already Verified')) {
+          return console.info(`${contractName}: Contract source code already verified`);
         }
         if (
           e.message.includes(
-            `The address provided as argument contains a contract, but its bytecode doesn't match the contract`
+            `The address provided as argument contains a contract, but its bytecode doesn't match the contract`,
           ) ||
-          e.message.includes("Contract source code already verified")
+          e.message.includes('Contract source code already verified')
         ) {
           return console.info(`${name}: ${e.message}`);
         }
@@ -625,51 +555,36 @@ task("etherscan-verify", "Verify all deployed contract on etherscan")
       });
   });
 
-task("export-deployed", "Export info of deployed contract")
-  .addParam("file", "Output file")
-  .addOptionalParam("fields", "Export fields", "*")
-  .addOptionalParam(
-    "artifact",
-    "Path to the artifacts deployment directory",
-    ""
-  )
+task('export-deployed', 'Export info of deployed contract')
+  .addParam('file', 'Output file')
+  .addOptionalParam('fields', 'Export fields', '*')
+  .addOptionalParam('artifact', 'Path to the artifacts deployment directory', '')
   .setAction(async (options, hre) => {
-    const artifactDir =
-      options.artifact !== "" ? options.artifact : hre.config.paths.deployments;
+    const artifactDir = options.artifact !== '' ? options.artifact : hre.config.paths.deployments;
 
     const deploymentsDir = path.resolve(artifactDir, hre.network.name);
-    const fields = options.fields.split(",");
+    const fields = options.fields.split(',');
 
     await fs.promises.mkdir(path.dirname(options.file), { recursive: true });
     const currentExport = await fs.promises
       .readFile(options.file)
       .then((v) => JSON.parse(v))
       .catch(() => ({}));
-    const deployments = await glob(path.resolve(deploymentsDir, "./*.json"), {
+    const deployments = await glob(path.resolve(deploymentsDir, './*.json'), {
       absolute: true,
     }).catch((e) => {
-      throw new DeployerError(
-        `Deploy directory "${deploymentsDir}" not found (maybe --network options not set?)`
-      );
+      throw new DeployerError(`Deploy directory "${deploymentsDir}" not found (maybe --network options not set?)`);
     });
-    const networkExport = await deployments.reduce(
-      async (prev, deployArtifactPath) => {
-        const result = await prev;
-        const deployment = await fs.promises
-          .readFile(deployArtifactPath)
-          .then((v) => JSON.parse(v));
-        return {
-          ...result,
-          [deployment.name]: fields.includes("*")
-            ? deployment
-            : fields.reduce(
-                (result, field) => ({ ...result, [field]: deployment[field] }),
-                {}
-              ),
-        };
-      },
-      Promise.resolve(currentExport[hre.network.config.chainId] ?? {})
-    );
+    const networkExport = await deployments.reduce(async (prev, deployArtifactPath) => {
+      const result = await prev;
+      const deployment = await fs.promises.readFile(deployArtifactPath).then((v) => JSON.parse(v));
+      return {
+        ...result,
+        [deployment.name]: fields.includes('*')
+          ? deployment
+          : fields.reduce((result, field) => ({ ...result, [field]: deployment[field] }), {}),
+      };
+    }, Promise.resolve(currentExport[hre.network.config.chainId] ?? {}));
     await fs.promises.writeFile(
       options.file,
       JSON.stringify(
@@ -678,29 +593,25 @@ task("export-deployed", "Export info of deployed contract")
           [hre.network.config.chainId]: networkExport,
         },
         null,
-        2
+        2,
       ),
-      { flag: "w" }
+      { flag: 'w' },
     );
   });
 
-task("export-abi", "Export ABI of deployed contract")
-  .addParam("dir", "Output directory")
+task('export-abi', 'Export ABI of deployed contract')
+  .addParam('dir', 'Output directory')
   .setAction(async (options, hre) => {
     await fs.promises.mkdir(options.dir, { recursive: true });
-    const artifactsDir = path.resolve(
-      hre.config.paths.artifacts,
-      "./contracts"
-    );
-    const artifacts = await glob(path.resolve(artifactsDir, "./**/*.sol"), {
+    const artifactsDir = path.resolve(hre.config.paths.artifacts, './contracts');
+    const artifacts = await glob(path.resolve(artifactsDir, './**/*.sol/*.json'), {
       absolute: true,
     }).catch((e) => {
-      throw new DeployerError(
-        `Artifacts directory "${artifactsDir}" not found`
-      );
+      throw new DeployerError(`Artifacts directory "${artifactsDir}" not found`);
     });
     await artifacts.reduce(async (prev, artifactPath) => {
       await prev;
+      if (artifactPath.includes('.dbg.json')) return;
       const artifactName = path.parse(artifactPath).name;
       const artifact = await hre.artifacts.readArtifact(artifactName);
       return fs.promises.writeFile(
@@ -710,9 +621,9 @@ task("export-abi", "Export ABI of deployed contract")
             abi: artifact.abi,
           },
           null,
-          4
+          4,
         ),
-        { flag: "w" }
+        { flag: 'w' },
       );
     }, Promise.resolve(null));
   });
@@ -722,4 +633,5 @@ module.exports = {
   DeploymentArtifacts,
   Deployer,
   migration,
+  transferOwnership,
 };

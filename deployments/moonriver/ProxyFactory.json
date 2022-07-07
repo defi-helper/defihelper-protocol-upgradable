@@ -1,0 +1,99 @@
+{
+  "name": "ProxyFactory",
+  "address": "0x19d4448784c8c189b7479Ea96a8497B6E5e793f5",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "prototype",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "proxy",
+          "type": "address"
+        }
+      ],
+      "name": "ProxyCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "prototype",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "args",
+          "type": "bytes"
+        }
+      ],
+      "name": "create",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "proxy",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x7568476ef1b0f24768665e7bdefa42e39f3e5ccc2bac9fc61b119a22d90bcd1e",
+  "receipt": {
+    "to": null,
+    "from": "0xBB73463b88b0Cb9681f176d6D43a12C2FeA2c237",
+    "contractAddress": "0x19d4448784c8c189b7479Ea96a8497B6E5e793f5",
+    "transactionIndex": 14,
+    "gasUsed": "250442",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xf49a08c8ed312140287d93758ed08ff5670c26b0f39104766d1201a660642591",
+    "transactionHash": "0x7568476ef1b0f24768665e7bdefa42e39f3e5ccc2bac9fc61b119a22d90bcd1e",
+    "logs": [],
+    "blockNumber": 1087792,
+    "cumulativeGasUsed": "2329230",
+    "status": 1,
+    "byzantium": true
+  },
+  "blockNumber": 1087792,
+  "args": [],
+  "solcInputHash": "12fb6e7df0f49d959f0d90672680f947",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"prototype\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"proxy\",\"type\":\"address\"}],\"name\":\"ProxyCreated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"prototype\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"args\",\"type\":\"bytes\"}],\"name\":\"create\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"proxy\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"create(address,bytes)\":{\"params\":{\"args\":\"Encoded call to the init function.\",\"prototype\":\"Address of prototype contract.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"create(address,bytes)\":{\"notice\":\"Create proxy contract by prototype.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/proxy/ProxyFactory.sol\":\"ProxyFactory\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/proxy/ERC1167.sol\":{\"content\":\"// SPDX-License-Identifier: BSD-3-Clause\\npragma solidity ^0.8.6;\\n\\n// solhint-disable no-inline-assembly\\nlibrary ERC1167 {\\n  bytes public constant CLONE =\\n    hex\\\"363d3d373d3d3d363d73bebebebebebebebebebebebebebebebebebebebe5af43d82803e903d91602b57fd5bf3\\\";\\n\\n  /**\\n   * @notice Make new proxy contract.\\n   * @param impl Address prototype contract.\\n   * @return proxy Address new proxy contract.\\n   */\\n  function clone(address impl) external returns (address proxy) {\\n    assembly {\\n      let ptr := mload(0x40)\\n      mstore(ptr, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)\\n      mstore(add(ptr, 0x14), shl(0x60, impl))\\n      mstore(add(ptr, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\\n      proxy := create(0, ptr, 0x37)\\n    }\\n    require(proxy != address(0), \\\"ERC1167: create failed\\\");\\n  }\\n\\n  /**\\n   * @notice Returns address of prototype contract for proxy.\\n   * @param proxy Address proxy contract.\\n   * @return impl Address prototype contract (current contract address if not proxy).\\n   */\\n  function implementation(address proxy) external view returns (address impl) {\\n    uint256 size;\\n    assembly {\\n      size := extcodesize(proxy)\\n    }\\n\\n    impl = proxy;\\n    if (size <= 45 && size >= 41) {\\n      bool matches = true;\\n      uint256 i;\\n\\n      bytes memory code;\\n      assembly {\\n        code := mload(0x40)\\n        mstore(0x40, add(code, and(add(add(size, 0x20), 0x1f), not(0x1f))))\\n        mstore(code, size)\\n        extcodecopy(proxy, add(code, 0x20), 0, size)\\n      }\\n      for (i = 0; matches && i < 9; i++) {\\n        matches = code[i] == CLONE[i];\\n      }\\n      for (i = 0; matches && i < 15; i++) {\\n        if (i == 4) {\\n          matches = code[code.length - i - 1] == bytes1(uint8(CLONE[45 - i - 1]) - uint8(45 - size));\\n        } else {\\n          matches = code[code.length - i - 1] == CLONE[45 - i - 1];\\n        }\\n      }\\n      if (code[9] != bytes1(0x73 - uint8(45 - size))) {\\n        matches = false;\\n      }\\n      uint256 forwardedToBuffer;\\n      if (matches) {\\n        assembly {\\n          forwardedToBuffer := mload(add(code, 30))\\n        }\\n        forwardedToBuffer &= (0x1 << (20 * 8)) - 1;\\n        impl = address(uint160(forwardedToBuffer >> ((45 - size) * 8)));\\n      }\\n    }\\n  }\\n}\\n\",\"keccak256\":\"0x766f43e1832068a2a230f9bc19db0b190f638c4b0acb2dc689da07d43a45675f\",\"license\":\"BSD-3-Clause\"},\"contracts/proxy/ProxyFactory.sol\":{\"content\":\"// SPDX-License-Identifier: BSD-3-Clause\\npragma solidity ^0.8.6;\\n\\nimport \\\"./ERC1167.sol\\\";\\n\\ncontract ProxyFactory {\\n  using ERC1167 for address;\\n\\n  event ProxyCreated(address indexed prototype, address indexed proxy);\\n\\n  /**\\n   * @notice Create proxy contract by prototype.\\n   * @param prototype Address of prototype contract.\\n   * @param args Encoded call to the init function.\\n   */\\n  function create(address prototype, bytes memory args) external returns (address proxy) {\\n    proxy = prototype.clone();\\n\\n    if (args.length > 0) {\\n      // solhint-disable-next-line avoid-low-level-calls\\n      (bool success, ) = proxy.call(args);\\n      require(success, \\\"ProxyFactory::create: proxy initialization failed\\\");\\n    }\\n\\n    emit ProxyCreated(prototype, proxy);\\n  }\\n}\\n\",\"keccak256\":\"0x9430f5a5ca75b1483c1d4e2cd06e8d8af1344cfd5cf597d2538bd721d2b20d43\",\"license\":\"BSD-3-Clause\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50610391806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063a3f697ba14610030575b600080fd5b61004361003e36600461022e565b61005f565b6040516001600160a01b03909116815260200160405180910390f35b6040516340925bc760e11b81526001600160a01b038316600482015260009073d8C830401453796e043b35B628EF55A18817D9bD90638124b78e9060240160206040518083038186803b1580156100b557600080fd5b505af41580156100c9573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906100ed919061020a565b8251909150156101c4576000816001600160a01b03168360405161011191906102f2565b6000604051808303816000865af19150503d806000811461014e576040519150601f19603f3d011682016040523d82523d6000602084013e610153565b606091505b50509050806101c25760405162461bcd60e51b815260206004820152603160248201527f50726f7879466163746f72793a3a6372656174653a2070726f787920696e69746044820152701a585b1a5e985d1a5bdb8819985a5b1959607a1b606482015260840160405180910390fd5b505b806001600160a01b0316836001600160a01b03167f9678a1e87ca9f1a37dc659a97b39d812d98cd236947e1b53b3d0d6fd346acb6e60405160405180910390a392915050565b60006020828403121561021c57600080fd5b815161022781610343565b9392505050565b6000806040838503121561024157600080fd5b823561024c81610343565b9150602083013567ffffffffffffffff8082111561026957600080fd5b818501915085601f83011261027d57600080fd5b81358181111561028f5761028f61032d565b604051601f8201601f19908116603f011681019083821181831017156102b7576102b761032d565b816040528281528860208487010111156102d057600080fd5b8260208601602083013760006020848301015280955050505050509250929050565b6000825160005b8181101561031357602081860181015185830152016102f9565b81811115610322576000828501525b509190910192915050565b634e487b7160e01b600052604160045260246000fd5b6001600160a01b038116811461035857600080fd5b5056fea26469706673582212201446b52f019c75eb024568f6aa5af1246b93afd266671cd97dcb2ae889d066de64736f6c63430008060033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c8063a3f697ba14610030575b600080fd5b61004361003e36600461022e565b61005f565b6040516001600160a01b03909116815260200160405180910390f35b6040516340925bc760e11b81526001600160a01b038316600482015260009073__$d3a1c43bdbf195fbbe2b1b74a9a2651292$__90638124b78e9060240160206040518083038186803b1580156100b557600080fd5b505af41580156100c9573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906100ed919061020a565b8251909150156101c4576000816001600160a01b03168360405161011191906102f2565b6000604051808303816000865af19150503d806000811461014e576040519150601f19603f3d011682016040523d82523d6000602084013e610153565b606091505b50509050806101c25760405162461bcd60e51b815260206004820152603160248201527f50726f7879466163746f72793a3a6372656174653a2070726f787920696e69746044820152701a585b1a5e985d1a5bdb8819985a5b1959607a1b606482015260840160405180910390fd5b505b806001600160a01b0316836001600160a01b03167f9678a1e87ca9f1a37dc659a97b39d812d98cd236947e1b53b3d0d6fd346acb6e60405160405180910390a392915050565b60006020828403121561021c57600080fd5b815161022781610343565b9392505050565b6000806040838503121561024157600080fd5b823561024c81610343565b9150602083013567ffffffffffffffff8082111561026957600080fd5b818501915085601f83011261027d57600080fd5b81358181111561028f5761028f61032d565b604051601f8201601f19908116603f011681019083821181831017156102b7576102b761032d565b816040528281528860208487010111156102d057600080fd5b8260208601602083013760006020848301015280955050505050509250929050565b6000825160005b8181101561031357602081860181015185830152016102f9565b81811115610322576000828501525b509190910192915050565b634e487b7160e01b600052604160045260246000fd5b6001600160a01b038116811461035857600080fd5b5056fea26469706673582212201446b52f019c75eb024568f6aa5af1246b93afd266671cd97dcb2ae889d066de64736f6c63430008060033",
+  "libraries": {
+    "ERC1167": "0xd8C830401453796e043b35B628EF55A18817D9bD"
+  },
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "create(address,bytes)": {
+        "params": {
+          "args": "Encoded call to the init function.",
+          "prototype": "Address of prototype contract."
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "create(address,bytes)": {
+        "notice": "Create proxy contract by prototype."
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

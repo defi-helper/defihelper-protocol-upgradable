@@ -28,6 +28,7 @@ module.exports = {
   },
   networks: {
     hardhat: {
+      initialBaseFeePerGas: 0,
       blockGasLimit: 10000000,
     },
     main: {

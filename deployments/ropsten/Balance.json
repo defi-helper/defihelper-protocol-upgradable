@@ -1,0 +1,993 @@
+{
+  "name": "Balance",
+  "address": "0xdd4f76edF1B7Fd0707a4Cb1385092A8398bd2f81",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "_treasury",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "bill",
+          "type": "uint256"
+        }
+      ],
+      "name": "AcceptClaim",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "bill",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "description",
+          "type": "string"
+        }
+      ],
+      "name": "Claim",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        }
+      ],
+      "name": "ConsumerAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        }
+      ],
+      "name": "ConsumerRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Deposit",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "inspector",
+          "type": "address"
+        }
+      ],
+      "name": "InspectorAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "inspector",
+          "type": "address"
+        }
+      ],
+      "name": "InspectorRemoved",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "Refund",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "bill",
+          "type": "uint256"
+        }
+      ],
+      "name": "RejectClaim",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "treasury",
+          "type": "address"
+        }
+      ],
+      "name": "TreasuryChanged",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "MAXIMUM_CLAIM_PACKAGE",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAXIMUM_CONSUMER_COUNT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "MAXIMUM_INSPECTOR_COUNT",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "_bills",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "gasFees",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "protocolFees",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "acceptClaims",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        }
+      ],
+      "name": "addConsumer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "inspector",
+          "type": "address"
+        }
+      ],
+      "name": "addInspector",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "billCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "bills",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "claimant",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "gasFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "protocolFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum Balance.BillStatus",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "_treasury",
+          "type": "address"
+        }
+      ],
+      "name": "changeTreasury",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "gasFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "protocolFee",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "description",
+          "type": "string"
+        }
+      ],
+      "name": "claim",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "claimOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "consumers",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "recipient",
+          "type": "address"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "inspectors",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "netBalanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "refund",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "_bills",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "rejectClaims",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "consumer",
+          "type": "address"
+        }
+      ],
+      "name": "removeConsumer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "inspector",
+          "type": "address"
+        }
+      ],
+      "name": "removeInspector",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "treasury",
+      "outputs": [
+        {
+          "internalType": "address payable",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x4eee4e194245798f4a9c35708f9558a3158f191a98b01a86fff55ab68145dfd7",
+  "blockNumber": 11292255,
+  "receipt": {
+    "to": null,
+    "from": "0xFa02EDF9ebA53Ae811650e409A1da2E6103CDB54",
+    "contractAddress": "0xdd4f76edF1B7Fd0707a4Cb1385092A8398bd2f81",
+    "transactionIndex": 16,
+    "gasUsed": "1795464",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000020800000000100000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000020000000000000000000800000000000000000000000000000000400000000000001000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000020000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x47dd179ed76d393f908011aa7ce751ab87ab491b676b9f0d67f307f9e7053fdb",
+    "transactionHash": "0x4eee4e194245798f4a9c35708f9558a3158f191a98b01a86fff55ab68145dfd7",
+    "logs": [
+      {
+        "transactionIndex": 16,
+        "blockNumber": 11292255,
+        "transactionHash": "0x4eee4e194245798f4a9c35708f9558a3158f191a98b01a86fff55ab68145dfd7",
+        "address": "0xdd4f76edF1B7Fd0707a4Cb1385092A8398bd2f81",
+        "topics": [
+          "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x000000000000000000000000fa02edf9eba53ae811650e409a1da2e6103cdb54"
+        ],
+        "data": "0x",
+        "logIndex": 28,
+        "blockHash": "0x47dd179ed76d393f908011aa7ce751ab87ab491b676b9f0d67f307f9e7053fdb"
+      }
+    ],
+    "blockNumber": 11292255,
+    "cumulativeGasUsed": "4644540",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": ["0x8B869f014538118DDE992a7E568CE90479F7B4e8"],
+  "solcInputHash": "e3e56b2bf739817bae29b5001598093f",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.6+commit.11564f7e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"_treasury\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"bill\",\"type\":\"uint256\"}],\"name\":\"AcceptClaim\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"bill\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"}],\"name\":\"Claim\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"consumer\",\"type\":\"address\"}],\"name\":\"ConsumerAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"consumer\",\"type\":\"address\"}],\"name\":\"ConsumerRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"inspector\",\"type\":\"address\"}],\"name\":\"InspectorAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"inspector\",\"type\":\"address\"}],\"name\":\"InspectorRemoved\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Refund\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"bill\",\"type\":\"uint256\"}],\"name\":\"RejectClaim\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"treasury\",\"type\":\"address\"}],\"name\":\"TreasuryChanged\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"MAXIMUM_CLAIM_PACKAGE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MAXIMUM_CONSUMER_COUNT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MAXIMUM_INSPECTOR_COUNT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"_bills\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"gasFees\",\"type\":\"uint256[]\"},{\"internalType\":\"uint256[]\",\"name\":\"protocolFees\",\"type\":\"uint256[]\"}],\"name\":\"acceptClaims\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"consumer\",\"type\":\"address\"}],\"name\":\"addConsumer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"inspector\",\"type\":\"address\"}],\"name\":\"addInspector\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"billCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"bills\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"claimant\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"gasFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"},{\"internalType\":\"enum Balance.BillStatus\",\"name\":\"status\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address payable\",\"name\":\"_treasury\",\"type\":\"address\"}],\"name\":\"changeTreasury\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"gasFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"}],\"name\":\"claim\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"claimOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"consumers\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"}],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"inspectors\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"netBalanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"refund\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"_bills\",\"type\":\"uint256[]\"}],\"name\":\"rejectClaims\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"consumer\",\"type\":\"address\"}],\"name\":\"removeConsumer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"inspector\",\"type\":\"address\"}],\"name\":\"removeInspector\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"treasury\",\"outputs\":[{\"internalType\":\"address payable\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"acceptClaims(uint256[],uint256[],uint256[])\":{\"params\":{\"_bills\":\"Target bills.\",\"gasFees\":\"Confirmed claims gas fees by bills.\",\"protocolFees\":\"Confirmed claims protocol fees by bills.\"}},\"addConsumer(address)\":{\"params\":{\"consumer\":\"Added consumer.\"}},\"addInspector(address)\":{\"params\":{\"inspector\":\"Added inspector.\"}},\"changeTreasury(address)\":{\"params\":{\"_treasury\":\"New treasury contract address.\"}},\"claim(address,uint256,uint256,string)\":{\"params\":{\"account\":\"Target account.\",\"description\":\"Claim description.\",\"gasFee\":\"Claim gas fee.\",\"protocolFee\":\"Claim protocol fee.\"}},\"consumers()\":{\"returns\":{\"_0\":\"All consumers addresses.\"}},\"deposit(address)\":{\"params\":{\"recipient\":\"Target recipient.\"}},\"inspectors()\":{\"returns\":{\"_0\":\"All inspectors addresses.\"}},\"netBalanceOf(address)\":{\"params\":{\"account\":\"Target account.\"},\"returns\":{\"_0\":\"Net balance (balance minus claim).\"}},\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"refund(uint256)\":{\"params\":{\"amount\":\"Refunded amount.\"}},\"rejectClaims(uint256[])\":{\"params\":{\"_bills\":\"Target bills.\"}},\"removeConsumer(address)\":{\"params\":{\"consumer\":\"Removed consumer.\"}},\"removeInspector(address)\":{\"params\":{\"inspector\":\"Removed inspector.\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"stateVariables\":{\"_consumers\":{\"details\":\"Consumers list.\"},\"_inspectors\":{\"details\":\"Inspectors list.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"MAXIMUM_CLAIM_PACKAGE()\":{\"notice\":\"Maximum accept or reject claims by one call.\"},\"MAXIMUM_CONSUMER_COUNT()\":{\"notice\":\"Maximum consumer count.\"},\"MAXIMUM_INSPECTOR_COUNT()\":{\"notice\":\"Maximum inspector count.\"},\"acceptClaims(uint256[],uint256[],uint256[])\":{\"notice\":\"Accept bills package.\"},\"addConsumer(address)\":{\"notice\":\"Add consumer.\"},\"addInspector(address)\":{\"notice\":\"Add inspector.\"},\"balanceOf(address)\":{\"notice\":\"Account balance.\"},\"billCount()\":{\"notice\":\"Bill count.\"},\"bills(uint256)\":{\"notice\":\"Bills.\"},\"changeTreasury(address)\":{\"notice\":\"Change treasury contract address.\"},\"claim(address,uint256,uint256,string)\":{\"notice\":\"Send claim.\"},\"claimOf(address)\":{\"notice\":\"Account claim.\"},\"consumers()\":{\"notice\":\"Get all consumers.\"},\"deposit(address)\":{\"notice\":\"Deposit ETH to balance.\"},\"inspectors()\":{\"notice\":\"Get all inspectors.\"},\"netBalanceOf(address)\":{\"notice\":\"Get net balance of account.\"},\"refund(uint256)\":{\"notice\":\"Refund ETH from balance.\"},\"rejectClaims(uint256[])\":{\"notice\":\"Reject bills package.\"},\"removeConsumer(address)\":{\"notice\":\"Remove consumer.\"},\"removeInspector(address)\":{\"notice\":\"Remove inspector.\"},\"treasury()\":{\"notice\":\"Treasury contract\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Balance.sol\":\"Balance\"},\"evmVersion\":\"berlin\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/access/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../utils/Context.sol\\\";\\n\\n/**\\n * @dev Contract module which provides a basic access control mechanism, where\\n * there is an account (an owner) that can be granted exclusive access to\\n * specific functions.\\n *\\n * By default, the owner account will be the one that deploys the contract. This\\n * can later be changed with {transferOwnership}.\\n *\\n * This module is used through inheritance. It will make available the modifier\\n * `onlyOwner`, which can be applied to your functions to restrict their use to\\n * the owner.\\n */\\nabstract contract Ownable is Context {\\n    address private _owner;\\n\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\n\\n    /**\\n     * @dev Initializes the contract setting the deployer as the initial owner.\\n     */\\n    constructor() {\\n        _setOwner(_msgSender());\\n    }\\n\\n    /**\\n     * @dev Returns the address of the current owner.\\n     */\\n    function owner() public view virtual returns (address) {\\n        return _owner;\\n    }\\n\\n    /**\\n     * @dev Throws if called by any account other than the owner.\\n     */\\n    modifier onlyOwner() {\\n        require(owner() == _msgSender(), \\\"Ownable: caller is not the owner\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Leaves the contract without owner. It will not be possible to call\\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\\n     *\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\n     * thereby removing any functionality that is only available to the owner.\\n     */\\n    function renounceOwnership() public virtual onlyOwner {\\n        _setOwner(address(0));\\n    }\\n\\n    /**\\n     * @dev Transfers ownership of the contract to a new account (`newOwner`).\\n     * Can only be called by the current owner.\\n     */\\n    function transferOwnership(address newOwner) public virtual onlyOwner {\\n        require(newOwner != address(0), \\\"Ownable: new owner is the zero address\\\");\\n        _setOwner(newOwner);\\n    }\\n\\n    function _setOwner(address newOwner) private {\\n        address oldOwner = _owner;\\n        _owner = newOwner;\\n        emit OwnershipTransferred(oldOwner, newOwner);\\n    }\\n}\\n\",\"keccak256\":\"0x6bb804a310218875e89d12c053e94a13a4607cdf7cc2052f3e52bd32a0dc50a1\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/*\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n}\\n\",\"keccak256\":\"0x95098bd1d9c8dec4d80d3dedb88a0d949fa0d740ee99f2aa466bc308216ca6d5\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/structs/EnumerableSet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Library for managing\\n * https://en.wikipedia.org/wiki/Set_(abstract_data_type)[sets] of primitive\\n * types.\\n *\\n * Sets have the following properties:\\n *\\n * - Elements are added, removed, and checked for existence in constant time\\n * (O(1)).\\n * - Elements are enumerated in O(n). No guarantees are made on the ordering.\\n *\\n * ```\\n * contract Example {\\n *     // Add the library methods\\n *     using EnumerableSet for EnumerableSet.AddressSet;\\n *\\n *     // Declare a set state variable\\n *     EnumerableSet.AddressSet private mySet;\\n * }\\n * ```\\n *\\n * As of v3.3.0, sets of type `bytes32` (`Bytes32Set`), `address` (`AddressSet`)\\n * and `uint256` (`UintSet`) are supported.\\n */\\nlibrary EnumerableSet {\\n    // To implement this library for multiple types with as little code\\n    // repetition as possible, we write it in terms of a generic Set type with\\n    // bytes32 values.\\n    // The Set implementation uses private functions, and user-facing\\n    // implementations (such as AddressSet) are just wrappers around the\\n    // underlying Set.\\n    // This means that we can only create new EnumerableSets for types that fit\\n    // in bytes32.\\n\\n    struct Set {\\n        // Storage of set values\\n        bytes32[] _values;\\n        // Position of the value in the `values` array, plus 1 because index 0\\n        // means a value is not in the set.\\n        mapping(bytes32 => uint256) _indexes;\\n    }\\n\\n    /**\\n     * @dev Add a value to a set. O(1).\\n     *\\n     * Returns true if the value was added to the set, that is if it was not\\n     * already present.\\n     */\\n    function _add(Set storage set, bytes32 value) private returns (bool) {\\n        if (!_contains(set, value)) {\\n            set._values.push(value);\\n            // The value is stored at length-1, but we add 1 to all indexes\\n            // and use 0 as a sentinel value\\n            set._indexes[value] = set._values.length;\\n            return true;\\n        } else {\\n            return false;\\n        }\\n    }\\n\\n    /**\\n     * @dev Removes a value from a set. O(1).\\n     *\\n     * Returns true if the value was removed from the set, that is if it was\\n     * present.\\n     */\\n    function _remove(Set storage set, bytes32 value) private returns (bool) {\\n        // We read and store the value's index to prevent multiple reads from the same storage slot\\n        uint256 valueIndex = set._indexes[value];\\n\\n        if (valueIndex != 0) {\\n            // Equivalent to contains(set, value)\\n            // To delete an element from the _values array in O(1), we swap the element to delete with the last one in\\n            // the array, and then remove the last element (sometimes called as 'swap and pop').\\n            // This modifies the order of the array, as noted in {at}.\\n\\n            uint256 toDeleteIndex = valueIndex - 1;\\n            uint256 lastIndex = set._values.length - 1;\\n\\n            if (lastIndex != toDeleteIndex) {\\n                bytes32 lastvalue = set._values[lastIndex];\\n\\n                // Move the last value to the index where the value to delete is\\n                set._values[toDeleteIndex] = lastvalue;\\n                // Update the index for the moved value\\n                set._indexes[lastvalue] = valueIndex; // Replace lastvalue's index to valueIndex\\n            }\\n\\n            // Delete the slot where the moved value was stored\\n            set._values.pop();\\n\\n            // Delete the index for the deleted slot\\n            delete set._indexes[value];\\n\\n            return true;\\n        } else {\\n            return false;\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns true if the value is in the set. O(1).\\n     */\\n    function _contains(Set storage set, bytes32 value) private view returns (bool) {\\n        return set._indexes[value] != 0;\\n    }\\n\\n    /**\\n     * @dev Returns the number of values on the set. O(1).\\n     */\\n    function _length(Set storage set) private view returns (uint256) {\\n        return set._values.length;\\n    }\\n\\n    /**\\n     * @dev Returns the value stored at position `index` in the set. O(1).\\n     *\\n     * Note that there are no guarantees on the ordering of values inside the\\n     * array, and it may change when more values are added or removed.\\n     *\\n     * Requirements:\\n     *\\n     * - `index` must be strictly less than {length}.\\n     */\\n    function _at(Set storage set, uint256 index) private view returns (bytes32) {\\n        return set._values[index];\\n    }\\n\\n    // Bytes32Set\\n\\n    struct Bytes32Set {\\n        Set _inner;\\n    }\\n\\n    /**\\n     * @dev Add a value to a set. O(1).\\n     *\\n     * Returns true if the value was added to the set, that is if it was not\\n     * already present.\\n     */\\n    function add(Bytes32Set storage set, bytes32 value) internal returns (bool) {\\n        return _add(set._inner, value);\\n    }\\n\\n    /**\\n     * @dev Removes a value from a set. O(1).\\n     *\\n     * Returns true if the value was removed from the set, that is if it was\\n     * present.\\n     */\\n    function remove(Bytes32Set storage set, bytes32 value) internal returns (bool) {\\n        return _remove(set._inner, value);\\n    }\\n\\n    /**\\n     * @dev Returns true if the value is in the set. O(1).\\n     */\\n    function contains(Bytes32Set storage set, bytes32 value) internal view returns (bool) {\\n        return _contains(set._inner, value);\\n    }\\n\\n    /**\\n     * @dev Returns the number of values in the set. O(1).\\n     */\\n    function length(Bytes32Set storage set) internal view returns (uint256) {\\n        return _length(set._inner);\\n    }\\n\\n    /**\\n     * @dev Returns the value stored at position `index` in the set. O(1).\\n     *\\n     * Note that there are no guarantees on the ordering of values inside the\\n     * array, and it may change when more values are added or removed.\\n     *\\n     * Requirements:\\n     *\\n     * - `index` must be strictly less than {length}.\\n     */\\n    function at(Bytes32Set storage set, uint256 index) internal view returns (bytes32) {\\n        return _at(set._inner, index);\\n    }\\n\\n    // AddressSet\\n\\n    struct AddressSet {\\n        Set _inner;\\n    }\\n\\n    /**\\n     * @dev Add a value to a set. O(1).\\n     *\\n     * Returns true if the value was added to the set, that is if it was not\\n     * already present.\\n     */\\n    function add(AddressSet storage set, address value) internal returns (bool) {\\n        return _add(set._inner, bytes32(uint256(uint160(value))));\\n    }\\n\\n    /**\\n     * @dev Removes a value from a set. O(1).\\n     *\\n     * Returns true if the value was removed from the set, that is if it was\\n     * present.\\n     */\\n    function remove(AddressSet storage set, address value) internal returns (bool) {\\n        return _remove(set._inner, bytes32(uint256(uint160(value))));\\n    }\\n\\n    /**\\n     * @dev Returns true if the value is in the set. O(1).\\n     */\\n    function contains(AddressSet storage set, address value) internal view returns (bool) {\\n        return _contains(set._inner, bytes32(uint256(uint160(value))));\\n    }\\n\\n    /**\\n     * @dev Returns the number of values in the set. O(1).\\n     */\\n    function length(AddressSet storage set) internal view returns (uint256) {\\n        return _length(set._inner);\\n    }\\n\\n    /**\\n     * @dev Returns the value stored at position `index` in the set. O(1).\\n     *\\n     * Note that there are no guarantees on the ordering of values inside the\\n     * array, and it may change when more values are added or removed.\\n     *\\n     * Requirements:\\n     *\\n     * - `index` must be strictly less than {length}.\\n     */\\n    function at(AddressSet storage set, uint256 index) internal view returns (address) {\\n        return address(uint160(uint256(_at(set._inner, index))));\\n    }\\n\\n    // UintSet\\n\\n    struct UintSet {\\n        Set _inner;\\n    }\\n\\n    /**\\n     * @dev Add a value to a set. O(1).\\n     *\\n     * Returns true if the value was added to the set, that is if it was not\\n     * already present.\\n     */\\n    function add(UintSet storage set, uint256 value) internal returns (bool) {\\n        return _add(set._inner, bytes32(value));\\n    }\\n\\n    /**\\n     * @dev Removes a value from a set. O(1).\\n     *\\n     * Returns true if the value was removed from the set, that is if it was\\n     * present.\\n     */\\n    function remove(UintSet storage set, uint256 value) internal returns (bool) {\\n        return _remove(set._inner, bytes32(value));\\n    }\\n\\n    /**\\n     * @dev Returns true if the value is in the set. O(1).\\n     */\\n    function contains(UintSet storage set, uint256 value) internal view returns (bool) {\\n        return _contains(set._inner, bytes32(value));\\n    }\\n\\n    /**\\n     * @dev Returns the number of values on the set. O(1).\\n     */\\n    function length(UintSet storage set) internal view returns (uint256) {\\n        return _length(set._inner);\\n    }\\n\\n    /**\\n     * @dev Returns the value stored at position `index` in the set. O(1).\\n     *\\n     * Note that there are no guarantees on the ordering of values inside the\\n     * array, and it may change when more values are added or removed.\\n     *\\n     * Requirements:\\n     *\\n     * - `index` must be strictly less than {length}.\\n     */\\n    function at(UintSet storage set, uint256 index) internal view returns (uint256) {\\n        return uint256(_at(set._inner, index));\\n    }\\n}\\n\",\"keccak256\":\"0x211639753e28bdca7f98618f51dca3dcd08a88b57c45050eb05fa4d0053327c3\",\"license\":\"MIT\"},\"contracts/Balance.sol\":{\"content\":\"// SPDX-License-Identifier: BSD-3-Clause\\npragma solidity ^0.8.6;\\n\\nimport \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\nimport \\\"@openzeppelin/contracts/utils/structs/EnumerableSet.sol\\\";\\n\\ncontract Balance is Ownable {\\n  using EnumerableSet for EnumerableSet.AddressSet;\\n\\n  /// @notice Maximum inspector count.\\n  uint256 public constant MAXIMUM_INSPECTOR_COUNT = 100;\\n\\n  /// @notice Maximum consumer count.\\n  uint256 public constant MAXIMUM_CONSUMER_COUNT = 100;\\n\\n  /// @notice Maximum accept or reject claims by one call.\\n  uint256 public constant MAXIMUM_CLAIM_PACKAGE = 500;\\n\\n  /// @notice Treasury contract\\n  address payable public treasury;\\n\\n  /// @dev Inspectors list.\\n  EnumerableSet.AddressSet internal _inspectors;\\n\\n  /// @dev Consumers list.\\n  EnumerableSet.AddressSet internal _consumers;\\n\\n  /// @notice Account balance.\\n  mapping(address => uint256) public balanceOf;\\n\\n  /// @notice Account claim.\\n  mapping(address => uint256) public claimOf;\\n\\n  /// @notice Possible statuses that a bill may be in.\\n  enum BillStatus {\\n    Pending,\\n    Accepted,\\n    Rejected\\n  }\\n\\n  struct Bill {\\n    // Identificator.\\n    uint256 id;\\n    // Claimant.\\n    address claimant;\\n    // Target account.\\n    address account;\\n    // Claim gas fee.\\n    uint256 gasFee;\\n    // Claim protocol fee.\\n    uint256 protocolFee;\\n    // Current bill status.\\n    BillStatus status;\\n  }\\n\\n  /// @notice Bills.\\n  mapping(uint256 => Bill) public bills;\\n\\n  /// @notice Bill count.\\n  uint256 public billCount;\\n\\n  event TreasuryChanged(address indexed treasury);\\n\\n  event InspectorAdded(address indexed inspector);\\n\\n  event InspectorRemoved(address indexed inspector);\\n\\n  event ConsumerAdded(address indexed consumer);\\n\\n  event ConsumerRemoved(address indexed consumer);\\n\\n  event Deposit(address indexed recipient, uint256 amount);\\n\\n  event Refund(address indexed recipient, uint256 amount);\\n\\n  event Claim(address indexed account, uint256 indexed bill, string description);\\n\\n  event AcceptClaim(uint256 indexed bill);\\n\\n  event RejectClaim(uint256 indexed bill);\\n\\n  constructor(address payable _treasury) {\\n    treasury = _treasury;\\n  }\\n\\n  modifier onlyInspector() {\\n    require(_inspectors.contains(_msgSender()), \\\"Balance: caller is not the inspector\\\");\\n    _;\\n  }\\n\\n  /**\\n   * @notice Change treasury contract address.\\n   * @param _treasury New treasury contract address.\\n   */\\n  function changeTreasury(address payable _treasury) external onlyOwner {\\n    treasury = _treasury;\\n    emit TreasuryChanged(treasury);\\n  }\\n\\n  /**\\n   * @notice Add inspector.\\n   * @param inspector Added inspector.\\n   */\\n  function addInspector(address inspector) external onlyOwner {\\n    require(!_inspectors.contains(inspector), \\\"Balance::addInspector: inspector already added\\\");\\n    require(\\n      _inspectors.length() < MAXIMUM_INSPECTOR_COUNT,\\n      \\\"Balance::addInspector: inspector must not exceed maximum count\\\"\\n    );\\n\\n    _inspectors.add(inspector);\\n\\n    emit InspectorAdded(inspector);\\n  }\\n\\n  /**\\n   * @notice Remove inspector.\\n   * @param inspector Removed inspector.\\n   */\\n  function removeInspector(address inspector) external onlyOwner {\\n    require(_inspectors.contains(inspector), \\\"Balance::removeInspector: inspector already removed\\\");\\n\\n    _inspectors.remove(inspector);\\n\\n    emit InspectorRemoved(inspector);\\n  }\\n\\n  /**\\n   * @notice Get all inspectors.\\n   * @return All inspectors addresses.\\n   */\\n  function inspectors() external view returns (address[] memory) {\\n    address[] memory result = new address[](_inspectors.length());\\n\\n    for (uint256 i = 0; i < _inspectors.length(); i++) {\\n      result[i] = _inspectors.at(i);\\n    }\\n\\n    return result;\\n  }\\n\\n  /**\\n   * @notice Add consumer.\\n   * @param consumer Added consumer.\\n   */\\n  function addConsumer(address consumer) external onlyOwner {\\n    require(!_consumers.contains(consumer), \\\"Balance::addConsumer: consumer already added\\\");\\n    require(\\n      _consumers.length() < MAXIMUM_CONSUMER_COUNT,\\n      \\\"Balance::addConsumer: consumer must not exceed maximum count\\\"\\n    );\\n\\n    _consumers.add(consumer);\\n\\n    emit ConsumerAdded(consumer);\\n  }\\n\\n  /**\\n   * @notice Remove consumer.\\n   * @param consumer Removed consumer.\\n   */\\n  function removeConsumer(address consumer) external onlyOwner {\\n    require(_consumers.contains(consumer), \\\"Balance::removeConsumer: consumer already removed\\\");\\n\\n    _consumers.remove(consumer);\\n\\n    emit ConsumerRemoved(consumer);\\n  }\\n\\n  /**\\n   * @notice Get all consumers.\\n   * @return All consumers addresses.\\n   */\\n  function consumers() external view returns (address[] memory) {\\n    address[] memory result = new address[](_consumers.length());\\n\\n    for (uint256 i = 0; i < _consumers.length(); i++) {\\n      result[i] = _consumers.at(i);\\n    }\\n\\n    return result;\\n  }\\n\\n  /**\\n   * @notice Get net balance of account.\\n   * @param account Target account.\\n   * @return Net balance (balance minus claim).\\n   */\\n  function netBalanceOf(address account) public view returns (uint256) {\\n    return balanceOf[account] - claimOf[account];\\n  }\\n\\n  /**\\n   * @notice Deposit ETH to balance.\\n   * @param recipient Target recipient.\\n   */\\n  function deposit(address recipient) external payable {\\n    require(recipient != address(0), \\\"Balance::deposit: invalid recipient\\\");\\n    require(msg.value > 0, \\\"Balance::deposit: negative or zero deposit\\\");\\n\\n    balanceOf[recipient] += msg.value;\\n\\n    emit Deposit(recipient, msg.value);\\n  }\\n\\n  /**\\n   * @notice Refund ETH from balance.\\n   * @param amount Refunded amount.\\n   */\\n  function refund(uint256 amount) external {\\n    address payable recipient = payable(_msgSender());\\n    require(amount > 0, \\\"Balance::refund: negative or zero refund\\\");\\n    require(amount <= netBalanceOf(recipient), \\\"Balance::refund: refund amount exceeds net balance\\\");\\n\\n    balanceOf[recipient] -= amount;\\n    recipient.transfer(amount);\\n\\n    emit Refund(recipient, amount);\\n  }\\n\\n  /**\\n   * @notice Send claim.\\n   * @param account Target account.\\n   * @param gasFee Claim gas fee.\\n   * @param protocolFee Claim protocol fee.\\n   * @param description Claim description.\\n   */\\n  function claim(\\n    address account,\\n    uint256 gasFee,\\n    uint256 protocolFee,\\n    string memory description\\n  ) external returns (uint256) {\\n    require(\\n      // solhint-disable-next-line avoid-tx-origin\\n      tx.origin == account || _consumers.contains(tx.origin),\\n      \\\"Balance: caller is not a consumer\\\"\\n    );\\n\\n    uint256 amount = gasFee + protocolFee;\\n    require(amount > 0, \\\"Balance::claim: negative or zero claim\\\");\\n    require(amount <= netBalanceOf(account), \\\"Balance::claim: claim amount exceeds net balance\\\");\\n\\n    claimOf[account] += amount;\\n    billCount++;\\n    bills[billCount] = Bill(billCount, _msgSender(), account, gasFee, protocolFee, BillStatus.Pending);\\n    emit Claim(account, billCount, description);\\n\\n    return billCount;\\n  }\\n\\n  /**\\n   * @notice Accept bills package.\\n   * @param _bills Target bills.\\n   * @param gasFees Confirmed claims gas fees by bills.\\n   * @param protocolFees Confirmed claims protocol fees by bills.\\n   */\\n  function acceptClaims(\\n    uint256[] memory _bills,\\n    uint256[] memory gasFees,\\n    uint256[] memory protocolFees\\n  ) external onlyInspector {\\n    require(\\n      _bills.length == gasFees.length && _bills.length == protocolFees.length,\\n      \\\"Balance::acceptClaims: arity mismatch\\\"\\n    );\\n    require(_bills.length <= MAXIMUM_CLAIM_PACKAGE, \\\"Balance::acceptClaims: too many claims\\\");\\n\\n    uint256 transferredAmount;\\n    for (uint256 i = 0; i < _bills.length; i++) {\\n      uint256 billId = _bills[i];\\n      require(billId > 0 && billId <= billCount, \\\"Balance::acceptClaims: bill not found\\\");\\n\\n      uint256 gasFee = gasFees[i];\\n      uint256 protocolFee = protocolFees[i];\\n      uint256 amount = gasFee + protocolFee;\\n\\n      Bill storage bill = bills[billId];\\n      uint256 claimAmount = bill.gasFee + bill.protocolFee;\\n      require(bill.status == BillStatus.Pending, \\\"Balance::acceptClaims: bill already processed\\\");\\n      require(amount <= claimAmount, \\\"Balance::acceptClaims: claim amount exceeds max fee\\\");\\n\\n      bill.status = BillStatus.Accepted;\\n      bill.gasFee = gasFee;\\n      bill.protocolFee = protocolFee;\\n      claimOf[bill.account] -= claimAmount;\\n      balanceOf[bill.account] -= amount;\\n      transferredAmount += amount;\\n\\n      emit AcceptClaim(bill.id);\\n    }\\n    treasury.transfer(transferredAmount);\\n  }\\n\\n  /**\\n   * @notice Reject bills package.\\n   * @param _bills Target bills.\\n   */\\n  function rejectClaims(uint256[] memory _bills) external onlyInspector {\\n    require(_bills.length < MAXIMUM_CLAIM_PACKAGE, \\\"Balance::rejectClaims: too many claims\\\");\\n\\n    for (uint256 i = 0; i < _bills.length; i++) {\\n      uint256 billId = _bills[i];\\n      require(billId > 0 && billId <= billCount, \\\"Balance::rejectClaims: bill not found\\\");\\n\\n      Bill storage bill = bills[billId];\\n      require(bill.status == BillStatus.Pending, \\\"Balance::rejectClaims: bill already processed\\\");\\n      uint256 amount = bill.gasFee + bill.protocolFee;\\n\\n      bill.status = BillStatus.Rejected;\\n      claimOf[bill.account] -= amount;\\n\\n      emit RejectClaim(bill.id);\\n    }\\n  }\\n}\\n\",\"keccak256\":\"0x7993b684521e2e00cc369124fae93fdb7fb46b3fa14207fb79f8cfbc6cd78b24\",\"license\":\"BSD-3-Clause\"}},\"version\":1}",
+  "bytecode": "0x60806040523480156200001157600080fd5b5060405162001f9438038062001f948339810160408190526200003491620000b5565b6200003f3362000065565b600180546001600160a01b0319166001600160a01b0392909216919091179055620000e7565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b600060208284031215620000c857600080fd5b81516001600160a01b0381168114620000e057600080fd5b9392505050565b611e9d80620000f76000396000f3fe60806040526004361061014b5760003560e01c806370a08231116100b6578063b14f2a391161006f578063b14f2a39146103e7578063e211544a14610257578063e578a22514610407578063f2fde38b14610427578063f340fa0114610447578063fccd7f721461045a57600080fd5b806370a0823114610332578063715018a61461035f5780637c70e791146103745780637e458492146103945780638da5cb5b146103b4578063ac6f2f2d146103d257600080fd5b8063332d950f11610108578063332d950f1461026c57806341dc341214610282578063435e298014610298578063473f0175146102ba57806361d027b3146102da57806365e3527d1461031257600080fd5b80630b986a50146101505780630e27e3df14610183578063112940f9146101a5578063278ecde1146101c557806328bdcde8146101e5578063328199b714610257575b600080fd5b34801561015c57600080fd5b5061017061016b366004611a3d565b610487565b6040519081526020015b60405180910390f35b34801561018f57600080fd5b506101a361019e366004611a3d565b6104bb565b005b3480156101b157600080fd5b506101a36101c0366004611a3d565b6105a2565b3480156101d157600080fd5b506101a36101e0366004611bda565b6106fb565b3480156101f157600080fd5b50610245610200366004611bda565b60086020526000908152604090208054600182015460028301546003840154600485015460059095015493946001600160a01b03938416949290931692909160ff1686565b60405161017a96959493929190611d0e565b34801561026357600080fd5b50610170606481565b34801561027857600080fd5b506101706101f481565b34801561028e57600080fd5b5061017060095481565b3480156102a457600080fd5b506102ad610878565b60405161017a9190611bf3565b3480156102c657600080fd5b506101a36102d5366004611b52565b61092b565b3480156102e657600080fd5b506001546102fa906001600160a01b031681565b6040516001600160a01b03909116815260200161017a565b34801561031e57600080fd5b506101a361032d366004611b15565b610d2a565b34801561033e57600080fd5b5061017061034d366004611a3d565b60066020526000908152604090205481565b34801561036b57600080fd5b506101a3610f72565b34801561038057600080fd5b506101a361038f366004611a3d565b610fa8565b3480156103a057600080fd5b506101a36103af366004611a3d565b611088565b3480156103c057600080fd5b506000546001600160a01b03166102fa565b3480156103de57600080fd5b506102ad6111e3565b3480156103f357600080fd5b506101a3610402366004611a3d565b611290565b34801561041357600080fd5b50610170610422366004611a5a565b611304565b34801561043357600080fd5b506101a3610442366004611a3d565b6115c8565b6101a3610455366004611a3d565b611663565b34801561046657600080fd5b50610170610475366004611a3d565b60076020526000908152604090205481565b6001600160a01b03811660009081526007602090815260408083205460069092528220546104b59190611db2565b92915050565b6000546001600160a01b031633146104ee5760405162461bcd60e51b81526004016104e590611c95565b60405180910390fd5b6104f9600482611796565b61055f5760405162461bcd60e51b815260206004820152603160248201527f42616c616e63653a3a72656d6f7665436f6e73756d65723a20636f6e73756d656044820152701c88185b1c9958591e481c995b5bdd9959607a1b60648201526084016104e5565b61056a6004826117bb565b506040516001600160a01b038216907fe3f5ed5f263f1f01764a96edfc7d025f511ec5f7d180e8816908b78bcf74f09890600090a250565b6000546001600160a01b031633146105cc5760405162461bcd60e51b81526004016104e590611c95565b6105d7600482611796565b156106395760405162461bcd60e51b815260206004820152602c60248201527f42616c616e63653a3a616464436f6e73756d65723a20636f6e73756d6572206160448201526b1b1c9958591e48185919195960a21b60648201526084016104e5565b606461064560046117d0565b106106b85760405162461bcd60e51b815260206004820152603c60248201527f42616c616e63653a3a616464436f6e73756d65723a20636f6e73756d6572206d60448201527f757374206e6f7420657863656564206d6178696d756d20636f756e740000000060648201526084016104e5565b6106c36004826117da565b506040516001600160a01b038216907f28b26e7a3d20aedbc5f8f2ebf7da671c0491723a2b78f47a097b0e46dee0714290600090a250565b338161075a5760405162461bcd60e51b815260206004820152602860248201527f42616c616e63653a3a726566756e643a206e65676174697665206f72207a65726044820152671bc81c99599d5b9960c21b60648201526084016104e5565b61076381610487565b8211156107cd5760405162461bcd60e51b815260206004820152603260248201527f42616c616e63653a3a726566756e643a20726566756e6420616d6f756e742065604482015271786365656473206e65742062616c616e636560701b60648201526084016104e5565b6001600160a01b038116600090815260066020526040812080548492906107f5908490611db2565b90915550506040516001600160a01b0382169083156108fc029084906000818181858888f19350505050158015610830573d6000803e3d6000fd5b50806001600160a01b03167fbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d8360405161086c91815260200190565b60405180910390a25050565b6060600061088660046117d0565b67ffffffffffffffff81111561089e5761089e611e3c565b6040519080825280602002602001820160405280156108c7578160200160208202803683370190505b50905060005b6108d760046117d0565b811015610925576108e96004826117ef565b8282815181106108fb576108fb611e26565b6001600160a01b03909216602092830291909101909101528061091d81611dc9565b9150506108cd565b50919050565b610938335b600290611796565b6109545760405162461bcd60e51b81526004016104e590611cca565b81518351148015610966575080518351145b6109c05760405162461bcd60e51b815260206004820152602560248201527f42616c616e63653a3a616363657074436c61696d733a206172697479206d69736044820152640dac2e8c6d60db1b60648201526084016104e5565b6101f483511115610a225760405162461bcd60e51b815260206004820152602660248201527f42616c616e63653a3a616363657074436c61696d733a20746f6f206d616e7920604482015265636c61696d7360d01b60648201526084016104e5565b6000805b8451811015610ce8576000858281518110610a4357610a43611e26565b60200260200101519050600081118015610a5f57506009548111155b610ab95760405162461bcd60e51b815260206004820152602560248201527f42616c616e63653a3a616363657074436c61696d733a2062696c6c206e6f7420604482015264199bdd5b9960da1b60648201526084016104e5565b6000858381518110610acd57610acd611e26565b602002602001015190506000858481518110610aeb57610aeb611e26565b6020026020010151905060008183610b039190611d9a565b6000858152600860205260408120600481015460038201549394509092610b2a9190611d9a565b90506000600583015460ff166002811115610b4757610b47611dfa565b14610baa5760405162461bcd60e51b815260206004820152602d60248201527f42616c616e63653a3a616363657074436c61696d733a2062696c6c20616c726560448201526c18591e481c1c9bd8d95cdcd959609a1b60648201526084016104e5565b80831115610c165760405162461bcd60e51b815260206004820152603360248201527f42616c616e63653a3a616363657074436c61696d733a20636c61696d20616d6f604482015272756e742065786365656473206d61782066656560681b60648201526084016104e5565b60058201805460ff19166001179055600382018590556004820184905560028201546001600160a01b031660009081526007602052604081208054839290610c5f908490611db2565b909155505060028201546001600160a01b031660009081526006602052604081208054859290610c90908490611db2565b90915550610ca090508389611d9a565b8254604051919950907f799d0ccabf9cc5c53a2860d6b8133855f77618de4233ce9bb031395090d1c08090600090a25050505050508080610ce090611dc9565b915050610a26565b506001546040516001600160a01b039091169082156108fc029083906000818181858888f19350505050158015610d23573d6000803e3d6000fd5b5050505050565b610d3333610930565b610d4f5760405162461bcd60e51b81526004016104e590611cca565b6101f4815110610db05760405162461bcd60e51b815260206004820152602660248201527f42616c616e63653a3a72656a656374436c61696d733a20746f6f206d616e7920604482015265636c61696d7360d01b60648201526084016104e5565b60005b8151811015610f6e576000828281518110610dd057610dd0611e26565b60200260200101519050600081118015610dec57506009548111155b610e465760405162461bcd60e51b815260206004820152602560248201527f42616c616e63653a3a72656a656374436c61696d733a2062696c6c206e6f7420604482015264199bdd5b9960da1b60648201526084016104e5565b600081815260086020526040812090600582015460ff166002811115610e6e57610e6e611dfa565b14610ed15760405162461bcd60e51b815260206004820152602d60248201527f42616c616e63653a3a72656a656374436c61696d733a2062696c6c20616c726560448201526c18591e481c1c9bd8d95cdcd959609a1b60648201526084016104e5565b600081600401548260030154610ee79190611d9a565b60058301805460ff191660029081179091558301546001600160a01b0316600090815260076020526040812080549293508392909190610f28908490611db2565b909155505081546040517f64133ae74e171ef7ce5b71e32115aba7117a4f1bd6ef67b768668f5af1af97ad90600090a25050508080610f6690611dc9565b915050610db3565b5050565b6000546001600160a01b03163314610f9c5760405162461bcd60e51b81526004016104e590611c95565b610fa660006117fb565b565b6000546001600160a01b03163314610fd25760405162461bcd60e51b81526004016104e590611c95565b610fdd600282611796565b6110455760405162461bcd60e51b815260206004820152603360248201527f42616c616e63653a3a72656d6f7665496e73706563746f723a20696e737065636044820152721d1bdc88185b1c9958591e481c995b5bdd9959606a1b60648201526084016104e5565b6110506002826117bb565b506040516001600160a01b038216907f737c9e54b555afb1794817809534974cb61ead2136d82d4a8fecb34d0932922090600090a250565b6000546001600160a01b031633146110b25760405162461bcd60e51b81526004016104e590611c95565b6110bd600282611796565b156111215760405162461bcd60e51b815260206004820152602e60248201527f42616c616e63653a3a616464496e73706563746f723a20696e73706563746f7260448201526d08185b1c9958591e48185919195960921b60648201526084016104e5565b606461112d60026117d0565b106111a05760405162461bcd60e51b815260206004820152603e60248201527f42616c616e63653a3a616464496e73706563746f723a20696e73706563746f7260448201527f206d757374206e6f7420657863656564206d6178696d756d20636f756e74000060648201526084016104e5565b6111ab6002826117da565b506040516001600160a01b038216907f9ca2a3611f65b351a79d20d5314a16e37fe9b947d2a36232e101bd615994450390600090a250565b606060006111f160026117d0565b67ffffffffffffffff81111561120957611209611e3c565b604051908082528060200260200182016040528015611232578160200160208202803683370190505b50905060005b61124260026117d0565b811015610925576112546002826117ef565b82828151811061126657611266611e26565b6001600160a01b03909216602092830291909101909101528061128881611dc9565b915050611238565b6000546001600160a01b031633146112ba5760405162461bcd60e51b81526004016104e590611c95565b600180546001600160a01b0319166001600160a01b0383169081179091556040517fc714d22a2f08b695f81e7c707058db484aa5b4d6b4c9fd64beb10fe85832f60890600090a250565b6000326001600160a01b03861614806113235750611323600432611796565b6113795760405162461bcd60e51b815260206004820152602160248201527f42616c616e63653a2063616c6c6572206973206e6f74206120636f6e73756d656044820152603960f91b60648201526084016104e5565b60006113858486611d9a565b9050600081116113e65760405162461bcd60e51b815260206004820152602660248201527f42616c616e63653a3a636c61696d3a206e65676174697665206f72207a65726f60448201526520636c61696d60d01b60648201526084016104e5565b6113ef86610487565b8111156114575760405162461bcd60e51b815260206004820152603060248201527f42616c616e63653a3a636c61696d3a20636c61696d20616d6f756e742065786360448201526f65656473206e65742062616c616e636560801b60648201526084016104e5565b6001600160a01b0386166000908152600760205260408120805483929061147f908490611d9a565b90915550506009805490600061149483611dc9565b91905055506040518060c0016040528060095481526020016114b33390565b6001600160a01b039081168252881660208201526040810187905260608101869052608001600090526009546000908152600860209081526040918290208351815590830151600180830180546001600160a01b039384166001600160a01b0319918216179091559385015160028085018054929094169190951617909155606084015160038301556080840151600483015560a084015160058301805493949193909260ff1990911691849081111561156f5761156f611dfa565b0217905550905050600954866001600160a01b03167f58fb02bcfedd338314c70bcf748b4f71a01259cf8956f31b34cb09acf29809cb856040516115b39190611c40565b60405180910390a35050600954949350505050565b6000546001600160a01b031633146115f25760405162461bcd60e51b81526004016104e590611c95565b6001600160a01b0381166116575760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084016104e5565b611660816117fb565b50565b6001600160a01b0381166116c55760405162461bcd60e51b815260206004820152602360248201527f42616c616e63653a3a6465706f7369743a20696e76616c696420726563697069604482015262195b9d60ea1b60648201526084016104e5565b600034116117285760405162461bcd60e51b815260206004820152602a60248201527f42616c616e63653a3a6465706f7369743a206e65676174697665206f72207a656044820152691c9bc819195c1bdcda5d60b21b60648201526084016104e5565b6001600160a01b03811660009081526006602052604081208054349290611750908490611d9a565b90915550506040513481526001600160a01b038216907fe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c9060200160405180910390a250565b6001600160a01b038116600090815260018301602052604081205415155b9392505050565b60006117b4836001600160a01b03841661184b565b60006104b5825490565b60006117b4836001600160a01b03841661193e565b60006117b4838361198d565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6000818152600183016020526040812054801561193457600061186f600183611db2565b855490915060009061188390600190611db2565b90508181146118e85760008660000182815481106118a3576118a3611e26565b90600052602060002001549050808760000184815481106118c6576118c6611e26565b6000918252602080832090910192909255918252600188019052604090208390555b85548690806118f9576118f9611e10565b6001900381819060005260206000200160009055905585600101600086815260200190815260200160002060009055600193505050506104b5565b60009150506104b5565b6000818152600183016020526040812054611985575081546001818101845560008481526020808220909301849055845484825282860190935260409020919091556104b5565b5060006104b5565b60008260000182815481106119a4576119a4611e26565b9060005260206000200154905092915050565b600082601f8301126119c857600080fd5b8135602067ffffffffffffffff8211156119e4576119e4611e3c565b8160051b6119f3828201611d69565b838152828101908684018388018501891015611a0e57600080fd5b600093505b85841015611a31578035835260019390930192918401918401611a13565b50979650505050505050565b600060208284031215611a4f57600080fd5b81356117b481611e52565b60008060008060808587031215611a7057600080fd5b8435611a7b81611e52565b9350602085810135935060408601359250606086013567ffffffffffffffff80821115611aa757600080fd5b818801915088601f830112611abb57600080fd5b813581811115611acd57611acd611e3c565b611adf601f8201601f19168501611d69565b91508082528984828501011115611af557600080fd5b808484018584013760008482840101525080935050505092959194509250565b600060208284031215611b2757600080fd5b813567ffffffffffffffff811115611b3e57600080fd5b611b4a848285016119b7565b949350505050565b600080600060608486031215611b6757600080fd5b833567ffffffffffffffff80821115611b7f57600080fd5b611b8b878388016119b7565b94506020860135915080821115611ba157600080fd5b611bad878388016119b7565b93506040860135915080821115611bc357600080fd5b50611bd0868287016119b7565b9150509250925092565b600060208284031215611bec57600080fd5b5035919050565b6020808252825182820181905260009190848201906040850190845b81811015611c345783516001600160a01b031683529284019291840191600101611c0f565b50909695505050505050565b600060208083528351808285015260005b81811015611c6d57858101830151858201604001528201611c51565b81811115611c7f576000604083870101525b50601f01601f1916929092016040019392505050565b6020808252818101527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604082015260600190565b60208082526024908201527f42616c616e63653a2063616c6c6572206973206e6f742074686520696e73706560408201526331ba37b960e11b606082015260800190565b8681526001600160a01b03868116602083015285166040820152606081018490526080810183905260c0810160038310611d5857634e487b7160e01b600052602160045260246000fd5b8260a0830152979650505050505050565b604051601f8201601f1916810167ffffffffffffffff81118282101715611d9257611d92611e3c565b604052919050565b60008219821115611dad57611dad611de4565b500190565b600082821015611dc457611dc4611de4565b500390565b6000600019821415611ddd57611ddd611de4565b5060010190565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052602160045260246000fd5b634e487b7160e01b600052603160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052604160045260246000fd5b6001600160a01b038116811461166057600080fdfea26469706673582212200c00829b2267a866be55f175d9b9586a80cb7363a3c1727bea1d65517f66f7e164736f6c63430008060033",
+  "deployedBytecode": "0x60806040526004361061014b5760003560e01c806370a08231116100b6578063b14f2a391161006f578063b14f2a39146103e7578063e211544a14610257578063e578a22514610407578063f2fde38b14610427578063f340fa0114610447578063fccd7f721461045a57600080fd5b806370a0823114610332578063715018a61461035f5780637c70e791146103745780637e458492146103945780638da5cb5b146103b4578063ac6f2f2d146103d257600080fd5b8063332d950f11610108578063332d950f1461026c57806341dc341214610282578063435e298014610298578063473f0175146102ba57806361d027b3146102da57806365e3527d1461031257600080fd5b80630b986a50146101505780630e27e3df14610183578063112940f9146101a5578063278ecde1146101c557806328bdcde8146101e5578063328199b714610257575b600080fd5b34801561015c57600080fd5b5061017061016b366004611a3d565b610487565b6040519081526020015b60405180910390f35b34801561018f57600080fd5b506101a361019e366004611a3d565b6104bb565b005b3480156101b157600080fd5b506101a36101c0366004611a3d565b6105a2565b3480156101d157600080fd5b506101a36101e0366004611bda565b6106fb565b3480156101f157600080fd5b50610245610200366004611bda565b60086020526000908152604090208054600182015460028301546003840154600485015460059095015493946001600160a01b03938416949290931692909160ff1686565b60405161017a96959493929190611d0e565b34801561026357600080fd5b50610170606481565b34801561027857600080fd5b506101706101f481565b34801561028e57600080fd5b5061017060095481565b3480156102a457600080fd5b506102ad610878565b60405161017a9190611bf3565b3480156102c657600080fd5b506101a36102d5366004611b52565b61092b565b3480156102e657600080fd5b506001546102fa906001600160a01b031681565b6040516001600160a01b03909116815260200161017a565b34801561031e57600080fd5b506101a361032d366004611b15565b610d2a565b34801561033e57600080fd5b5061017061034d366004611a3d565b60066020526000908152604090205481565b34801561036b57600080fd5b506101a3610f72565b34801561038057600080fd5b506101a361038f366004611a3d565b610fa8565b3480156103a057600080fd5b506101a36103af366004611a3d565b611088565b3480156103c057600080fd5b506000546001600160a01b03166102fa565b3480156103de57600080fd5b506102ad6111e3565b3480156103f357600080fd5b506101a3610402366004611a3d565b611290565b34801561041357600080fd5b50610170610422366004611a5a565b611304565b34801561043357600080fd5b506101a3610442366004611a3d565b6115c8565b6101a3610455366004611a3d565b611663565b34801561046657600080fd5b50610170610475366004611a3d565b60076020526000908152604090205481565b6001600160a01b03811660009081526007602090815260408083205460069092528220546104b59190611db2565b92915050565b6000546001600160a01b031633146104ee5760405162461bcd60e51b81526004016104e590611c95565b60405180910390fd5b6104f9600482611796565b61055f5760405162461bcd60e51b815260206004820152603160248201527f42616c616e63653a3a72656d6f7665436f6e73756d65723a20636f6e73756d656044820152701c88185b1c9958591e481c995b5bdd9959607a1b60648201526084016104e5565b61056a6004826117bb565b506040516001600160a01b038216907fe3f5ed5f263f1f01764a96edfc7d025f511ec5f7d180e8816908b78bcf74f09890600090a250565b6000546001600160a01b031633146105cc5760405162461bcd60e51b81526004016104e590611c95565b6105d7600482611796565b156106395760405162461bcd60e51b815260206004820152602c60248201527f42616c616e63653a3a616464436f6e73756d65723a20636f6e73756d6572206160448201526b1b1c9958591e48185919195960a21b60648201526084016104e5565b606461064560046117d0565b106106b85760405162461bcd60e51b815260206004820152603c60248201527f42616c616e63653a3a616464436f6e73756d65723a20636f6e73756d6572206d60448201527f757374206e6f7420657863656564206d6178696d756d20636f756e740000000060648201526084016104e5565b6106c36004826117da565b506040516001600160a01b038216907f28b26e7a3d20aedbc5f8f2ebf7da671c0491723a2b78f47a097b0e46dee0714290600090a250565b338161075a5760405162461bcd60e51b815260206004820152602860248201527f42616c616e63653a3a726566756e643a206e65676174697665206f72207a65726044820152671bc81c99599d5b9960c21b60648201526084016104e5565b61076381610487565b8211156107cd5760405162461bcd60e51b815260206004820152603260248201527f42616c616e63653a3a726566756e643a20726566756e6420616d6f756e742065604482015271786365656473206e65742062616c616e636560701b60648201526084016104e5565b6001600160a01b038116600090815260066020526040812080548492906107f5908490611db2565b90915550506040516001600160a01b0382169083156108fc029084906000818181858888f19350505050158015610830573d6000803e3d6000fd5b50806001600160a01b03167fbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d8360405161086c91815260200190565b60405180910390a25050565b6060600061088660046117d0565b67ffffffffffffffff81111561089e5761089e611e3c565b6040519080825280602002602001820160405280156108c7578160200160208202803683370190505b50905060005b6108d760046117d0565b811015610925576108e96004826117ef565b8282815181106108fb576108fb611e26565b6001600160a01b03909216602092830291909101909101528061091d81611dc9565b9150506108cd565b50919050565b610938335b600290611796565b6109545760405162461bcd60e51b81526004016104e590611cca565b81518351148015610966575080518351145b6109c05760405162461bcd60e51b815260206004820152602560248201527f42616c616e63653a3a616363657074436c61696d733a206172697479206d69736044820152640dac2e8c6d60db1b60648201526084016104e5565b6101f483511115610a225760405162461bcd60e51b815260206004820152602660248201527f42616c616e63653a3a616363657074436c61696d733a20746f6f206d616e7920604482015265636c61696d7360d01b60648201526084016104e5565b6000805b8451811015610ce8576000858281518110610a4357610a43611e26565b60200260200101519050600081118015610a5f57506009548111155b610ab95760405162461bcd60e51b815260206004820152602560248201527f42616c616e63653a3a616363657074436c61696d733a2062696c6c206e6f7420604482015264199bdd5b9960da1b60648201526084016104e5565b6000858381518110610acd57610acd611e26565b602002602001015190506000858481518110610aeb57610aeb611e26565b6020026020010151905060008183610b039190611d9a565b6000858152600860205260408120600481015460038201549394509092610b2a9190611d9a565b90506000600583015460ff166002811115610b4757610b47611dfa565b14610baa5760405162461bcd60e51b815260206004820152602d60248201527f42616c616e63653a3a616363657074436c61696d733a2062696c6c20616c726560448201526c18591e481c1c9bd8d95cdcd959609a1b60648201526084016104e5565b80831115610c165760405162461bcd60e51b815260206004820152603360248201527f42616c616e63653a3a616363657074436c61696d733a20636c61696d20616d6f604482015272756e742065786365656473206d61782066656560681b60648201526084016104e5565b60058201805460ff19166001179055600382018590556004820184905560028201546001600160a01b031660009081526007602052604081208054839290610c5f908490611db2565b909155505060028201546001600160a01b031660009081526006602052604081208054859290610c90908490611db2565b90915550610ca090508389611d9a565b8254604051919950907f799d0ccabf9cc5c53a2860d6b8133855f77618de4233ce9bb031395090d1c08090600090a25050505050508080610ce090611dc9565b915050610a26565b506001546040516001600160a01b039091169082156108fc029083906000818181858888f19350505050158015610d23573d6000803e3d6000fd5b5050505050565b610d3333610930565b610d4f5760405162461bcd60e51b81526004016104e590611cca565b6101f4815110610db05760405162461bcd60e51b815260206004820152602660248201527f42616c616e63653a3a72656a656374436c61696d733a20746f6f206d616e7920604482015265636c61696d7360d01b60648201526084016104e5565b60005b8151811015610f6e576000828281518110610dd057610dd0611e26565b60200260200101519050600081118015610dec57506009548111155b610e465760405162461bcd60e51b815260206004820152602560248201527f42616c616e63653a3a72656a656374436c61696d733a2062696c6c206e6f7420604482015264199bdd5b9960da1b60648201526084016104e5565b600081815260086020526040812090600582015460ff166002811115610e6e57610e6e611dfa565b14610ed15760405162461bcd60e51b815260206004820152602d60248201527f42616c616e63653a3a72656a656374436c61696d733a2062696c6c20616c726560448201526c18591e481c1c9bd8d95cdcd959609a1b60648201526084016104e5565b600081600401548260030154610ee79190611d9a565b60058301805460ff191660029081179091558301546001600160a01b0316600090815260076020526040812080549293508392909190610f28908490611db2565b909155505081546040517f64133ae74e171ef7ce5b71e32115aba7117a4f1bd6ef67b768668f5af1af97ad90600090a25050508080610f6690611dc9565b915050610db3565b5050565b6000546001600160a01b03163314610f9c5760405162461bcd60e51b81526004016104e590611c95565b610fa660006117fb565b565b6000546001600160a01b03163314610fd25760405162461bcd60e51b81526004016104e590611c95565b610fdd600282611796565b6110455760405162461bcd60e51b815260206004820152603360248201527f42616c616e63653a3a72656d6f7665496e73706563746f723a20696e737065636044820152721d1bdc88185b1c9958591e481c995b5bdd9959606a1b60648201526084016104e5565b6110506002826117bb565b506040516001600160a01b038216907f737c9e54b555afb1794817809534974cb61ead2136d82d4a8fecb34d0932922090600090a250565b6000546001600160a01b031633146110b25760405162461bcd60e51b81526004016104e590611c95565b6110bd600282611796565b156111215760405162461bcd60e51b815260206004820152602e60248201527f42616c616e63653a3a616464496e73706563746f723a20696e73706563746f7260448201526d08185b1c9958591e48185919195960921b60648201526084016104e5565b606461112d60026117d0565b106111a05760405162461bcd60e51b815260206004820152603e60248201527f42616c616e63653a3a616464496e73706563746f723a20696e73706563746f7260448201527f206d757374206e6f7420657863656564206d6178696d756d20636f756e74000060648201526084016104e5565b6111ab6002826117da565b506040516001600160a01b038216907f9ca2a3611f65b351a79d20d5314a16e37fe9b947d2a36232e101bd615994450390600090a250565b606060006111f160026117d0565b67ffffffffffffffff81111561120957611209611e3c565b604051908082528060200260200182016040528015611232578160200160208202803683370190505b50905060005b61124260026117d0565b811015610925576112546002826117ef565b82828151811061126657611266611e26565b6001600160a01b03909216602092830291909101909101528061128881611dc9565b915050611238565b6000546001600160a01b031633146112ba5760405162461bcd60e51b81526004016104e590611c95565b600180546001600160a01b0319166001600160a01b0383169081179091556040517fc714d22a2f08b695f81e7c707058db484aa5b4d6b4c9fd64beb10fe85832f60890600090a250565b6000326001600160a01b03861614806113235750611323600432611796565b6113795760405162461bcd60e51b815260206004820152602160248201527f42616c616e63653a2063616c6c6572206973206e6f74206120636f6e73756d656044820152603960f91b60648201526084016104e5565b60006113858486611d9a565b9050600081116113e65760405162461bcd60e51b815260206004820152602660248201527f42616c616e63653a3a636c61696d3a206e65676174697665206f72207a65726f60448201526520636c61696d60d01b60648201526084016104e5565b6113ef86610487565b8111156114575760405162461bcd60e51b815260206004820152603060248201527f42616c616e63653a3a636c61696d3a20636c61696d20616d6f756e742065786360448201526f65656473206e65742062616c616e636560801b60648201526084016104e5565b6001600160a01b0386166000908152600760205260408120805483929061147f908490611d9a565b90915550506009805490600061149483611dc9565b91905055506040518060c0016040528060095481526020016114b33390565b6001600160a01b039081168252881660208201526040810187905260608101869052608001600090526009546000908152600860209081526040918290208351815590830151600180830180546001600160a01b039384166001600160a01b0319918216179091559385015160028085018054929094169190951617909155606084015160038301556080840151600483015560a084015160058301805493949193909260ff1990911691849081111561156f5761156f611dfa565b0217905550905050600954866001600160a01b03167f58fb02bcfedd338314c70bcf748b4f71a01259cf8956f31b34cb09acf29809cb856040516115b39190611c40565b60405180910390a35050600954949350505050565b6000546001600160a01b031633146115f25760405162461bcd60e51b81526004016104e590611c95565b6001600160a01b0381166116575760405162461bcd60e51b815260206004820152602660248201527f4f776e61626c653a206e6577206f776e657220697320746865207a65726f206160448201526564647265737360d01b60648201526084016104e5565b611660816117fb565b50565b6001600160a01b0381166116c55760405162461bcd60e51b815260206004820152602360248201527f42616c616e63653a3a6465706f7369743a20696e76616c696420726563697069604482015262195b9d60ea1b60648201526084016104e5565b600034116117285760405162461bcd60e51b815260206004820152602a60248201527f42616c616e63653a3a6465706f7369743a206e65676174697665206f72207a656044820152691c9bc819195c1bdcda5d60b21b60648201526084016104e5565b6001600160a01b03811660009081526006602052604081208054349290611750908490611d9a565b90915550506040513481526001600160a01b038216907fe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c9060200160405180910390a250565b6001600160a01b038116600090815260018301602052604081205415155b9392505050565b60006117b4836001600160a01b03841661184b565b60006104b5825490565b60006117b4836001600160a01b03841661193e565b60006117b4838361198d565b600080546001600160a01b038381166001600160a01b0319831681178455604051919092169283917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e09190a35050565b6000818152600183016020526040812054801561193457600061186f600183611db2565b855490915060009061188390600190611db2565b90508181146118e85760008660000182815481106118a3576118a3611e26565b90600052602060002001549050808760000184815481106118c6576118c6611e26565b6000918252602080832090910192909255918252600188019052604090208390555b85548690806118f9576118f9611e10565b6001900381819060005260206000200160009055905585600101600086815260200190815260200160002060009055600193505050506104b5565b60009150506104b5565b6000818152600183016020526040812054611985575081546001818101845560008481526020808220909301849055845484825282860190935260409020919091556104b5565b5060006104b5565b60008260000182815481106119a4576119a4611e26565b9060005260206000200154905092915050565b600082601f8301126119c857600080fd5b8135602067ffffffffffffffff8211156119e4576119e4611e3c565b8160051b6119f3828201611d69565b838152828101908684018388018501891015611a0e57600080fd5b600093505b85841015611a31578035835260019390930192918401918401611a13565b50979650505050505050565b600060208284031215611a4f57600080fd5b81356117b481611e52565b60008060008060808587031215611a7057600080fd5b8435611a7b81611e52565b9350602085810135935060408601359250606086013567ffffffffffffffff80821115611aa757600080fd5b818801915088601f830112611abb57600080fd5b813581811115611acd57611acd611e3c565b611adf601f8201601f19168501611d69565b91508082528984828501011115611af557600080fd5b808484018584013760008482840101525080935050505092959194509250565b600060208284031215611b2757600080fd5b813567ffffffffffffffff811115611b3e57600080fd5b611b4a848285016119b7565b949350505050565b600080600060608486031215611b6757600080fd5b833567ffffffffffffffff80821115611b7f57600080fd5b611b8b878388016119b7565b94506020860135915080821115611ba157600080fd5b611bad878388016119b7565b93506040860135915080821115611bc357600080fd5b50611bd0868287016119b7565b9150509250925092565b600060208284031215611bec57600080fd5b5035919050565b6020808252825182820181905260009190848201906040850190845b81811015611c345783516001600160a01b031683529284019291840191600101611c0f565b50909695505050505050565b600060208083528351808285015260005b81811015611c6d57858101830151858201604001528201611c51565b81811115611c7f576000604083870101525b50601f01601f1916929092016040019392505050565b6020808252818101527f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e6572604082015260600190565b60208082526024908201527f42616c616e63653a2063616c6c6572206973206e6f742074686520696e73706560408201526331ba37b960e11b606082015260800190565b8681526001600160a01b03868116602083015285166040820152606081018490526080810183905260c0810160038310611d5857634e487b7160e01b600052602160045260246000fd5b8260a0830152979650505050505050565b604051601f8201601f1916810167ffffffffffffffff81118282101715611d9257611d92611e3c565b604052919050565b60008219821115611dad57611dad611de4565b500190565b600082821015611dc457611dc4611de4565b500390565b6000600019821415611ddd57611ddd611de4565b5060010190565b634e487b7160e01b600052601160045260246000fd5b634e487b7160e01b600052602160045260246000fd5b634e487b7160e01b600052603160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052604160045260246000fd5b6001600160a01b038116811461166057600080fdfea26469706673582212200c00829b2267a866be55f175d9b9586a80cb7363a3c1727bea1d65517f66f7e164736f6c63430008060033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "acceptClaims(uint256[],uint256[],uint256[])": {
+        "params": {
+          "_bills": "Target bills.",
+          "gasFees": "Confirmed claims gas fees by bills.",
+          "protocolFees": "Confirmed claims protocol fees by bills."
+        }
+      },
+      "addConsumer(address)": {
+        "params": {
+          "consumer": "Added consumer."
+        }
+      },
+      "addInspector(address)": {
+        "params": {
+          "inspector": "Added inspector."
+        }
+      },
+      "changeTreasury(address)": {
+        "params": {
+          "_treasury": "New treasury contract address."
+        }
+      },
+      "claim(address,uint256,uint256,string)": {
+        "params": {
+          "account": "Target account.",
+          "description": "Claim description.",
+          "gasFee": "Claim gas fee.",
+          "protocolFee": "Claim protocol fee."
+        }
+      },
+      "consumers()": {
+        "returns": {
+          "_0": "All consumers addresses."
+        }
+      },
+      "deposit(address)": {
+        "params": {
+          "recipient": "Target recipient."
+        }
+      },
+      "inspectors()": {
+        "returns": {
+          "_0": "All inspectors addresses."
+        }
+      },
+      "netBalanceOf(address)": {
+        "params": {
+          "account": "Target account."
+        },
+        "returns": {
+          "_0": "Net balance (balance minus claim)."
+        }
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner."
+      },
+      "refund(uint256)": {
+        "params": {
+          "amount": "Refunded amount."
+        }
+      },
+      "rejectClaims(uint256[])": {
+        "params": {
+          "_bills": "Target bills."
+        }
+      },
+      "removeConsumer(address)": {
+        "params": {
+          "consumer": "Removed consumer."
+        }
+      },
+      "removeInspector(address)": {
+        "params": {
+          "inspector": "Removed inspector."
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+      }
+    },
+    "stateVariables": {
+      "_consumers": {
+        "details": "Consumers list."
+      },
+      "_inspectors": {
+        "details": "Inspectors list."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "MAXIMUM_CLAIM_PACKAGE()": {
+        "notice": "Maximum accept or reject claims by one call."
+      },
+      "MAXIMUM_CONSUMER_COUNT()": {
+        "notice": "Maximum consumer count."
+      },
+      "MAXIMUM_INSPECTOR_COUNT()": {
+        "notice": "Maximum inspector count."
+      },
+      "acceptClaims(uint256[],uint256[],uint256[])": {
+        "notice": "Accept bills package."
+      },
+      "addConsumer(address)": {
+        "notice": "Add consumer."
+      },
+      "addInspector(address)": {
+        "notice": "Add inspector."
+      },
+      "balanceOf(address)": {
+        "notice": "Account balance."
+      },
+      "billCount()": {
+        "notice": "Bill count."
+      },
+      "bills(uint256)": {
+        "notice": "Bills."
+      },
+      "changeTreasury(address)": {
+        "notice": "Change treasury contract address."
+      },
+      "claim(address,uint256,uint256,string)": {
+        "notice": "Send claim."
+      },
+      "claimOf(address)": {
+        "notice": "Account claim."
+      },
+      "consumers()": {
+        "notice": "Get all consumers."
+      },
+      "deposit(address)": {
+        "notice": "Deposit ETH to balance."
+      },
+      "inspectors()": {
+        "notice": "Get all inspectors."
+      },
+      "netBalanceOf(address)": {
+        "notice": "Get net balance of account."
+      },
+      "refund(uint256)": {
+        "notice": "Refund ETH from balance."
+      },
+      "rejectClaims(uint256[])": {
+        "notice": "Reject bills package."
+      },
+      "removeConsumer(address)": {
+        "notice": "Remove consumer."
+      },
+      "removeInspector(address)": {
+        "notice": "Remove inspector."
+      },
+      "treasury()": {
+        "notice": "Treasury contract"
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 53,
+        "contract": "contracts/Balance.sol:Balance",
+        "label": "_owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 1445,
+        "contract": "contracts/Balance.sol:Balance",
+        "label": "treasury",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address_payable"
+      },
+      {
+        "astId": 1449,
+        "contract": "contracts/Balance.sol:Balance",
+        "label": "_inspectors",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_struct(AddressSet)1193_storage"
+      },
+      {
+        "astId": 1453,
+        "contract": "contracts/Balance.sol:Balance",
+        "label": "_consumers",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_struct(AddressSet)1193_storage"
+      },
+      {
+        "astId": 1458,
+        "contract": "contracts/Balance.sol:Balance",
+        "label": "balanceOf",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 1463,
+        "contract": "contracts/Balance.sol:Balance",
+        "label": "claimOf",
+        "offset": 0,
+        "slot": "7",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 1487,
+        "contract": "contracts/Balance.sol:Balance",
+        "label": "bills",
+        "offset": 0,
+        "slot": "8",
+        "type": "t_mapping(t_uint256,t_struct(Bill)1481_storage)"
+      },
+      {
+        "astId": 1490,
+        "contract": "contracts/Balance.sol:Balance",
+        "label": "billCount",
+        "offset": 0,
+        "slot": "9",
+        "type": "t_uint256"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_address_payable": {
+        "encoding": "inplace",
+        "label": "address payable",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_bytes32)dyn_storage": {
+        "base": "t_bytes32",
+        "encoding": "dynamic_array",
+        "label": "bytes32[]",
+        "numberOfBytes": "32"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_enum(BillStatus)1467": {
+        "encoding": "inplace",
+        "label": "enum Balance.BillStatus",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_mapping(t_bytes32,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_bytes32",
+        "label": "mapping(bytes32 => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_mapping(t_uint256,t_struct(Bill)1481_storage)": {
+        "encoding": "mapping",
+        "key": "t_uint256",
+        "label": "mapping(uint256 => struct Balance.Bill)",
+        "numberOfBytes": "32",
+        "value": "t_struct(Bill)1481_storage"
+      },
+      "t_struct(AddressSet)1193_storage": {
+        "encoding": "inplace",
+        "label": "struct EnumerableSet.AddressSet",
+        "members": [
+          {
+            "astId": 1192,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "_inner",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_struct(Set)922_storage"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_struct(Bill)1481_storage": {
+        "encoding": "inplace",
+        "label": "struct Balance.Bill",
+        "members": [
+          {
+            "astId": 1469,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "id",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 1471,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "claimant",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address"
+          },
+          {
+            "astId": 1473,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "account",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address"
+          },
+          {
+            "astId": 1475,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "gasFee",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 1477,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "protocolFee",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256"
+          },
+          {
+            "astId": 1480,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "status",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_enum(BillStatus)1467"
+          }
+        ],
+        "numberOfBytes": "192"
+      },
+      "t_struct(Set)922_storage": {
+        "encoding": "inplace",
+        "label": "struct EnumerableSet.Set",
+        "members": [
+          {
+            "astId": 917,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "_values",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_array(t_bytes32)dyn_storage"
+          },
+          {
+            "astId": 921,
+            "contract": "contracts/Balance.sol:Balance",
+            "label": "_indexes",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_bytes32,t_uint256)"
+          }
+        ],
+        "numberOfBytes": "64"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

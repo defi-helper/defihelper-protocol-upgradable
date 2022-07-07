@@ -20,9 +20,10 @@
     "docs": "solidity-docgen --solc-module solc-0.8 -i ./contracts -o ./docs/api -t ./docs/templates",
     "etherscan-verify": "hardhat etherscan-verify",
     "export-abi": "hardhat export-abi --dir ./networks/abi",
-    "export-deploy": "hardhat export-deployed --file ./networks/contractsUpgradable.json --fields address,blockNumber"
+    "export-deploy": "hardhat export-deployed --file ./networks/contracts.json --fields address,blockNumber"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.4.1",
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "@openzeppelin/contracts": "^4.2.0",
@@ -32,14 +33,14 @@
     "dotenv": "^16.0.1",
     "ethers": "^5.6.9",
     "hardhat": "^2.4.3",
-    "tiny-glob": "^0.2.9",
+    "mocha": "^9.0.2",
+    "prettier": "^2.3.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
     "solc": "^0.8.6",
     "solc-0.8": "npm:solc@^0.8.6",
     "solhint": "^3.3.6",
     "solidity-docgen": "^0.5.13",
-    "truffle-assertions": "^0.9.2",
-    "mocha": "^9.0.2",
-    "prettier": "^2.3.2",
-    "prettier-plugin-solidity": "^1.0.0-beta.19"
+    "tiny-glob": "^0.2.9",
+    "truffle-assertions": "^0.9.2"
   }
 }
