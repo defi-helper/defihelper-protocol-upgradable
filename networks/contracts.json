@@ -121,6 +121,10 @@
     "Vesting": {
       "address": "0x36f33ff93a7e182c60a5a15ffcff07b1c5250adf",
       "deployBlockNumber": "0xba038d"
+    },
+    "ProxyAdmin": {
+      "address": "0xd603036cD0e63963720C684a7f98868c5e555A80",
+      "blockNumber": 12550085
     }
   },
   "4": {
