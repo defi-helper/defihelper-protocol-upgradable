@@ -257,6 +257,11 @@ class Deployer {
       ...options,
     };
 
+    const isAlreadyDeployed = await this.artifacts.isDeployed(name);
+    if (isAlreadyDeployed) {
+      return console.info(new Info().nl(`===== ${name} =====`).nl(`Already deployed`).toString());
+    }
+
     const artifact = await this.hre.artifacts.readArtifact(path);
     const factory = await this.hre.ethers.getContractFactoryFromArtifact(artifact, { libraries });
     const contract = await this.hre.upgrades.deployProxy(factory, args, {
@@ -375,6 +380,62 @@ class Deployer {
       ),
       { flag: 'w' },
     );
+  }
+
+  /**
+   *
+   * @param {string} proxyName
+   * @param {string} implementation
+   * @param {{ libraries?: Libraries } | undefined} options
+   */
+  async deployProxyImplementation(proxyName, implementation, options = {}) {
+    const { libraries } = {
+      libraries: {},
+      ...options,
+    };
+
+    const proxy = await this.artifacts.readDeploy(proxyName);
+    const artifact = await this.hre.artifacts.readArtifact(implementation);
+    const factory = await this.hre.ethers.getContractFactoryFromArtifact(artifact, { libraries });
+    const tx = await this.hre.upgrades.prepareUpgrade(proxy.address, factory, {
+      getTxResponse: true,
+    });
+    console.info(
+      new Info()
+        .nl(`===== Deploy impl ${implementation} for ${proxyName} =====`)
+        .nl(` > Proxy: ${proxy.address}`)
+        .nl(` > Tx hash: ${tx.hash}`)
+        .nl(` > Gas price: ${new BN(tx.gasPrice.toString()).div('1e9').toString(10)} Gwei`)
+        .nl(` > Gas limit: ${tx.gasLimit.toString()}`)
+        .nl(` > Deployer: ${tx.from}`)
+        .nl(` > To: ${tx.creates}`)
+        .toString(),
+    );
+    const receipt = await tx.wait();
+    console.info(
+      new Info(` > Block number: ${receipt.blockNumber}`)
+        .nl(
+          ` > Gas used: ${new BN(receipt.gasUsed.toString())
+            .multipliedBy(tx.gasPrice.toString())
+            .div('1e18')
+            .toString(10)} Eth`,
+        )
+        .nl(`===== Deployed =====`)
+        .toString(),
+    );
+  }
+
+  /**
+   * @param {string} newAdminAddress
+   */
+  async transferProxyAdminOwnership(newAdminAddress) {
+    const proxyAdmin = await this.hre.upgrades.admin.getInstance();
+    console.info(new Info().nl(`===== Proxy admin transfer ownership =====`).toString());
+    const proxyAdminOwnerAddress = await proxyAdmin.owner();
+    if (proxyAdminOwnerAddress === newAdminAddress) return console.info('Already transferred');
+    await this.hre.upgrades.admin.transferProxyAdminOwnership(newAdminAddress);
+    await new Promise((resolve) => setTimeout(() => resolve(null)), 20000);
+    console.info('===== Completed =====');
   }
 
   /**
