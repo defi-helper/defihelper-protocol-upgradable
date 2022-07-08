@@ -168,7 +168,7 @@
   "blockNumber": 12550138,
   "transactionHash": "0x5174e1b39b3a9305d0c26000bd9b8846d5d60f51859585c6505357a05722e9d7",
   "upgradable": {
-    "implementation": "0x1fBb6c377C93B6c0bE3294ccB2F00838E8638f39",
+    "implementation": "0xE2902D617d3bF63b591Fc0e9903E87A19A3F721F",
     "proxyAdmin": "0xd603036cD0e63963720C684a7f98868c5e555A80"
   }
 }
