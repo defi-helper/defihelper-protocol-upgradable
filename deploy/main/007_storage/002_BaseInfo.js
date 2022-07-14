@@ -10,7 +10,7 @@ module.exports = migration(async (deployer) => {
     deployer.artifacts.readDeploy('GovernanceToken'),
     deployer.artifacts.readDeploy('GovernorBravo'),
     deployer.artifacts.readDeploy('Balance'),
-    deployer.artifacts.readDeploy('Treasury'),
+    deployer.artifacts.readDeploy('TreasuryUpgradable'),
     deployer.artifacts.readDeploy('Budget'),
     deployer.artifacts.readDeploy('Store'),
   ]);
