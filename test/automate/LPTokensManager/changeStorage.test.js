@@ -4,12 +4,11 @@ const { ethers } = require('hardhat');
 
 describe('LPTokensManager.changeStorage', function () {
   let automate;
-  const zeroAddress = '0x0000000000000000000000000000000000000000';
   const storageAddress = '0x0000000000000000000000000000000000000001';
   const newStorageAddress = '0x0000000000000000000000000000000000000002';
   before(async function () {
     const Automate = await ethers.getContractFactory('LPTokensManager');
-    automate = await Automate.deploy(storageAddress, zeroAddress);
+    automate = await Automate.deploy(storageAddress);
     await automate.deployed();
 
     [owner, notOwner] = await ethers.getSigners();

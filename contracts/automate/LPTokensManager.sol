@@ -27,9 +27,6 @@ contract LPTokensManager is Ownable {
   /// @notice Storage contract
   Storage public info;
 
-  /// @notice Fee token to USD price feed contract
-  IPriceFeed public priceFeed;
-
   struct Swap {
     address[] path;
     uint256 outMin;
@@ -37,11 +34,8 @@ contract LPTokensManager is Ownable {
 
   event StorageChanged(address indexed info);
 
-  event PriceFeedChanged(address indexed priceFeed);
-
-  constructor(address _info, address _priceFeed) {
+  constructor(address _info) {
     info = Storage(_info);
-    priceFeed = IPriceFeed(_priceFeed);
   }
 
   /**
@@ -51,15 +45,6 @@ contract LPTokensManager is Ownable {
   function changeStorage(address _info) external onlyOwner {
     info = Storage(_info);
     emit StorageChanged(_info);
-  }
-
-  /**
-   * @notice Change price feed contract address.
-   * @param _priceFeed New price feed contract address.
-   */
-  function changePrireFeed(address _priceFeed) external onlyOwner {
-    priceFeed = IPriceFeed(_priceFeed);
-    emit PriceFeedChanged(_priceFeed);
   }
 
   function _swap(
@@ -87,7 +72,7 @@ contract LPTokensManager is Ownable {
     uint256 feeUSD = info.getUint(keccak256("DFH:Fee:Automate:LPTokensManager"));
     if (feeUSD == 0) return 0;
 
-    (, int256 answer, , , ) = priceFeed.latestRoundData();
+    (, int256 answer, , , ) = IPriceFeed(info.getAddress(keccak256("DFH:Fee:PriceFeed"))).latestRoundData();
     require(answer > 0, "LPTokensManager::fee: invalid fee token price");
 
     return (feeUSD * (10**18)) / uint256(answer);

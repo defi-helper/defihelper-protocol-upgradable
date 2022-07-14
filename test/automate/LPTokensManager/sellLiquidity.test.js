@@ -34,6 +34,11 @@ describe('LPTokensManager.sellLiquidity', function () {
     await token0.transfer(router.address, await token0.balanceOf(owner.address).then((v) => v.toString()));
     await token1.transfer(router.address, await token1.balanceOf(owner.address).then((v) => v.toString()));
 
+    const PriceFeed = await ethers.getContractFactory('PriceFeedMock');
+    priceFeed = await PriceFeed.deploy(8, '', 1);
+    await priceFeed.deployed();
+    await priceFeed.addRoundData(nativeTokenUSD);
+
     const Storage = await ethers.getContractFactory('Storage');
     storage = await Storage.deploy();
     await storage.deployed();
@@ -48,15 +53,11 @@ describe('LPTokensManager.sellLiquidity', function () {
       ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Contract:Treasury')),
       treasury.address,
     );
+    await storage.setAddress(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Fee:PriceFeed')), priceFeed.address);
     await storage.setUint(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Fee:Automate:LPTokensManager')), fee);
 
-    const PriceFeed = await ethers.getContractFactory('PriceFeedMock');
-    priceFeed = await PriceFeed.deploy(8, '', 1);
-    await priceFeed.deployed();
-    await priceFeed.addRoundData(nativeTokenUSD);
-
     const Automate = await ethers.getContractFactory('LPTokensManager');
-    automate = await Automate.deploy(storage.address, priceFeed.address);
+    automate = await Automate.deploy(storage.address);
     await automate.deployed();
   });
 
