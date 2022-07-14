@@ -1,6 +1,6 @@
 {
   "name": "ERC1167",
-  "address": "0x64c7199F7d2A1719B1625981B28cbe8BA69C1415",
+  "address": "0x3BFF31968608284fc4c606c268b88E3505C2b077",
   "contractName": "ERC1167",
   "sourceName": "contracts/proxy/ERC1167.sol",
   "args": [],
@@ -39,6 +39,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 11596071,
-  "transactionHash": "0xddc7b81999a54487ed2be33df4435263bcf7097494403aa8cf67ad8399937a05"
+  "blockNumber": 11596620,
+  "transactionHash": "0x6db4bd40e1e5c262db03322450c6684108dcaf03a7940f3591e3d0ca6c349851"
 }

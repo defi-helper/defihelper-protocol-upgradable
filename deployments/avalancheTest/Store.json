@@ -1,10 +1,10 @@
 {
   "name": "Store",
-  "address": "0xB1bd9a6EE4A9aACD055a384D16375f91A0Ab8d9B",
+  "address": "0x59b8C9007Be5EA4fC7bD71DFece6371BF7e4E32A",
   "contractName": "Store",
   "sourceName": "contracts/Store.sol",
   "args": [
-    "0x974CB3f64f0cD0Ab82273162E951Bdc9EEcFF778",
+    "0xDB56332Cb59CA4aC0494036410F39E486a62A774",
     "0x5498BB86BC934c8D34FDA08E81D444153d0D06aD"
   ],
   "libraries": {},
@@ -305,6 +305,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 11596035,
-  "transactionHash": "0x073d92d58d73f3bcd4ee37558d92c0e9c8f92952fb2aaa2f24c98d4fd7410708"
+  "blockNumber": 11596584,
+  "transactionHash": "0x87c88d473eaf0bb9066d8e27a5c0708ec56be667a1bd06a52b9e82ce3f65a1b3"
 }

@@ -1,11 +1,11 @@
 {
   "name": "ProxyFactory",
-  "address": "0x1B9f6476ee2e0a78A868f667AAf625d031b470dC",
+  "address": "0x2e8EdDCd2b7d18E6f8b1193C39fBdf6564268A10",
   "contractName": "ProxyFactory",
   "sourceName": "contracts/proxy/ProxyFactory.sol",
   "args": [],
   "libraries": {
-    "ERC1167": "0x64c7199F7d2A1719B1625981B28cbe8BA69C1415"
+    "ERC1167": "0x3BFF31968608284fc4c606c268b88E3505C2b077"
   },
   "abi": [
     {
@@ -52,6 +52,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 11596074,
-  "transactionHash": "0xc9526e3dce47cc3e0a60d943c5021977fdac6e218ecc5a1fee2d21c5286667ce"
+  "blockNumber": 11596623,
+  "transactionHash": "0xaa2c1fe70834c17881d3eba65612d0f5aac7b3f485013735616c6e35e6124001"
 }
