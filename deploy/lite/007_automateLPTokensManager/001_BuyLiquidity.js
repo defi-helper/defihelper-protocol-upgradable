@@ -9,4 +9,4 @@ module.exports = migration(async (deployer) => {
     args: [storage.address, priceFeed.address],
   });
 });
-module.exports.tags = ['DFH', 'Main', 'Protocol', 'NonUpgradable'];
+module.exports.tags = ['DFH', 'Lite', 'Protocol', 'NonUpgradable'];
