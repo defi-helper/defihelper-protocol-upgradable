@@ -1,18 +1,18 @@
 {
-  "name": "Balance",
-  "address": "0xDB56332Cb59CA4aC0494036410F39E486a62A774",
-  "contractName": "Balance",
-  "sourceName": "contracts/Balance.sol",
+  "name": "GovernanceToken",
+  "address": "0xFf904EeDFcD6d3828Bc6cB22A74915e2d0cCDF47",
+  "contractName": "GovernanceToken",
+  "sourceName": "contracts/governance/GovernanceToken.sol",
   "args": [
-    "0x15522C54cC6c52b758C3F43082A5bEc71A3b11B3"
+    "0xBB73463b88b0Cb9681f176d6D43a12C2FeA2c237"
   ],
   "libraries": {},
   "abi": [
     {
       "inputs": [
         {
-          "internalType": "address payable",
-          "name": "_treasury",
+          "internalType": "address",
+          "name": "account",
           "type": "address"
         }
       ],
@@ -24,72 +24,14 @@
       "inputs": [
         {
           "indexed": true,
-          "internalType": "uint256",
-          "name": "bill",
-          "type": "uint256"
-        }
-      ],
-      "name": "AcceptClaim",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
           "internalType": "address",
-          "name": "account",
+          "name": "owner",
           "type": "address"
         },
         {
           "indexed": true,
-          "internalType": "uint256",
-          "name": "bill",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "description",
-          "type": "string"
-        }
-      ],
-      "name": "Claim",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
           "internalType": "address",
-          "name": "consumer",
-          "type": "address"
-        }
-      ],
-      "name": "ConsumerAdded",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "consumer",
-          "type": "address"
-        }
-      ],
-      "name": "ConsumerRemoved",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "recipient",
+          "name": "spender",
           "type": "address"
         },
         {
@@ -99,7 +41,7 @@
           "type": "uint256"
         }
       ],
-      "name": "Deposit",
+      "name": "Approval",
       "type": "event"
     },
     {
@@ -108,11 +50,23 @@
         {
           "indexed": true,
           "internalType": "address",
-          "name": "inspector",
+          "name": "delegator",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "fromDelegate",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "toDelegate",
           "type": "address"
         }
       ],
-      "name": "InspectorAdded",
+      "name": "DelegateChanged",
       "type": "event"
     },
     {
@@ -121,11 +75,23 @@
         {
           "indexed": true,
           "internalType": "address",
-          "name": "inspector",
+          "name": "delegate",
           "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "previousBalance",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newBalance",
+          "type": "uint256"
         }
       ],
-      "name": "InspectorRemoved",
+      "name": "DelegateVotesChanged",
       "type": "event"
     },
     {
@@ -153,7 +119,13 @@
         {
           "indexed": true,
           "internalType": "address",
-          "name": "recipient",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
           "type": "address"
         },
         {
@@ -163,128 +135,88 @@
           "type": "uint256"
         }
       ],
-      "name": "Refund",
+      "name": "Transfer",
       "type": "event"
     },
     {
-      "anonymous": false,
-      "inputs": [
+      "inputs": [],
+      "name": "DELEGATION_TYPEHASH",
+      "outputs": [
         {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "bill",
-          "type": "uint256"
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
         }
       ],
-      "name": "RejectClaim",
-      "type": "event"
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      "anonymous": false,
+      "inputs": [],
+      "name": "DOMAIN_TYPEHASH",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
-          "indexed": true,
           "internalType": "address",
-          "name": "treasury",
+          "name": "account",
           "type": "address"
-        }
-      ],
-      "name": "TreasuryChanged",
-      "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "MAXIMUM_CLAIM_PACKAGE",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "MAXIMUM_CONSUMER_COUNT",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "MAXIMUM_INSPECTOR_COUNT",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "_bills",
-          "type": "uint256[]"
         },
         {
-          "internalType": "uint256[]",
-          "name": "gasFees",
-          "type": "uint256[]"
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        }
+      ],
+      "name": "allowance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
         },
         {
-          "internalType": "uint256[]",
-          "name": "protocolFees",
-          "type": "uint256[]"
+          "internalType": "uint256",
+          "name": "rawAmount",
+          "type": "uint256"
         }
       ],
-      "name": "acceptClaims",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
+      "name": "approve",
+      "outputs": [
         {
-          "internalType": "address",
-          "name": "consumer",
-          "type": "address"
-        }
-      ],
-      "name": "addConsumer",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "inspector",
-          "type": "address"
-        }
-      ],
-      "name": "addInspector",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
+          "internalType": "bool",
           "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
           "type": "address"
         }
       ],
@@ -300,38 +232,7 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "billCount",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "bills",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "id",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "claimant",
-          "type": "address"
-        },
         {
           "internalType": "address",
           "name": "account",
@@ -339,17 +240,51 @@
         },
         {
           "internalType": "uint256",
-          "name": "gasFee",
+          "name": "amount",
           "type": "uint256"
+        }
+      ],
+      "name": "burn",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
         },
         {
-          "internalType": "uint256",
-          "name": "protocolFee",
-          "type": "uint256"
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "name": "checkpoints",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "fromBlock",
+          "type": "uint32"
         },
         {
-          "internalType": "enum Balance.BillStatus",
-          "name": "status",
+          "internalType": "uint96",
+          "name": "votes",
+          "type": "uint96"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "decimals",
+      "outputs": [
+        {
+          "internalType": "uint8",
+          "name": "",
           "type": "uint8"
         }
       ],
@@ -359,14 +294,90 @@
     {
       "inputs": [
         {
-          "internalType": "address payable",
-          "name": "_treasury",
+          "internalType": "address",
+          "name": "delegatee",
           "type": "address"
         }
       ],
-      "name": "changeTreasury",
+      "name": "delegate",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "delegatee",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "nonce",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "expiry",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "delegateBySig",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "delegates",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getCurrentVotes",
+      "outputs": [
+        {
+          "internalType": "uint96",
+          "name": "",
+          "type": "uint96"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -378,29 +389,50 @@
         },
         {
           "internalType": "uint256",
-          "name": "gasFee",
+          "name": "blockNumber",
           "type": "uint256"
+        }
+      ],
+      "name": "getPriorVotes",
+      "outputs": [
+        {
+          "internalType": "uint96",
+          "name": "",
+          "type": "uint96"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
         },
         {
           "internalType": "uint256",
-          "name": "protocolFee",
+          "name": "amount",
           "type": "uint256"
-        },
+        }
+      ],
+      "name": "mint",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [
         {
           "internalType": "string",
-          "name": "description",
+          "name": "",
           "type": "string"
         }
       ],
-      "name": "claim",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -411,7 +443,7 @@
           "type": "address"
         }
       ],
-      "name": "claimOf",
+      "name": "nonces",
       "outputs": [
         {
           "internalType": "uint256",
@@ -423,58 +455,19 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "consumers",
-      "outputs": [
-        {
-          "internalType": "address[]",
-          "name": "",
-          "type": "address[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [
         {
           "internalType": "address",
-          "name": "recipient",
+          "name": "",
           "type": "address"
         }
       ],
-      "name": "deposit",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "inspectors",
+      "name": "numCheckpoints",
       "outputs": [
         {
-          "internalType": "address[]",
+          "internalType": "uint32",
           "name": "",
-          "type": "address[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "account",
-          "type": "address"
-        }
-      ],
-      "name": "netBalanceOf",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "type": "uint32"
         }
       ],
       "stateMutability": "view",
@@ -494,61 +487,88 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "refund",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "_bills",
-          "type": "uint256[]"
-        }
-      ],
-      "name": "rejectClaims",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "consumer",
-          "type": "address"
-        }
-      ],
-      "name": "removeConsumer",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "inspector",
-          "type": "address"
-        }
-      ],
-      "name": "removeInspector",
+      "inputs": [],
+      "name": "renounceOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [],
-      "name": "renounceOwnership",
-      "outputs": [],
+      "name": "symbol",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "dst",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rawAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "src",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "dst",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rawAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -564,21 +584,8 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "treasury",
-      "outputs": [
-        {
-          "internalType": "address payable",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
     }
   ],
-  "blockNumber": 11596569,
-  "transactionHash": "0xb65ad8c49daa0954260952718af398962b2bd1ec6e2c28914dacf8a1037ae5b8"
+  "blockNumber": 11596528,
+  "transactionHash": "0x920c3364f33149ac0554f311f80547521d51fa85d73fa7bb60d95a2f6d7d67fc"
 }

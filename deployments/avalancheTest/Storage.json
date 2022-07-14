@@ -1,6 +1,6 @@
 {
   "name": "Storage",
-  "address": "0x1547cC9120Bc1947a3e6bF89Bd44e011E5F8efA7",
+  "address": "0xfb20fBd58eF7073d4092d71e0d4af9bdB12aCB06",
   "contractName": "Storage",
   "sourceName": "contracts/Storage.sol",
   "args": [],
@@ -372,6 +372,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 11596044,
-  "transactionHash": "0x315a6928ab0ed78c39037a5d166ecde99eb7821e56c6d57cfb86199ad83d52f1"
+  "blockNumber": 11596593,
+  "transactionHash": "0xe0e5b112ce7eaee5b25068dd8c9b0827f9c6acae8f20b6cb9b6496339a13ff39"
 }

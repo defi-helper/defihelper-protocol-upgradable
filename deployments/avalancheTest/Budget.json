@@ -1,6 +1,6 @@
 {
   "name": "Budget",
-  "address": "0x350959707B85637355855Ec792830cB982F96F9F",
+  "address": "0x43EFfa93D3096960cA6882D81aC6243cc67f23b2",
   "contractName": "Budget",
   "sourceName": "contracts/Budget.sol",
   "args": [],
@@ -281,6 +281,6 @@
       "type": "receive"
     }
   ],
-  "blockNumber": 11595865,
-  "transactionHash": "0x0abbd70f841eb46fb5a8502926e6309a0a64fe155f420046dac208fb0c7acc5e"
+  "blockNumber": 11596552,
+  "transactionHash": "0x64e069c117a504119a754defaab6d46c3324334befdcefeba595cb5694b05dee"
 }

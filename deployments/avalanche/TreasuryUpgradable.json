@@ -1,6 +1,6 @@
 {
   "name": "TreasuryUpgradable",
-  "address": "0x15522C54cC6c52b758C3F43082A5bEc71A3b11B3",
+  "address": "0x210619ED4B0D613F34a15f1B13F7c03C114E48B9",
   "contractName": "TreasuryV1",
   "sourceName": "contracts/Treasury/TreasuryV1.sol",
   "args": [],
@@ -165,10 +165,10 @@
       "type": "receive"
     }
   ],
-  "blockNumber": 11596547,
-  "transactionHash": "0x55514eae5a88df887b1153a1907a1601a31b7745a7943239cbc4e4f5f19c005c",
+  "blockNumber": 17319374,
+  "transactionHash": "0xdb7371583cce3680fc403a9d4093d35f2ecdcd4ef726cbe5faec5ba31d2a9cc3",
   "upgradable": {
-    "implementation": "0x176f19F3ee735755F4d8BFB59e8F33087A34e1dc",
-    "proxyAdmin": "0xDEEe76B3b90d4413102fb9Cc7a52475fEE29fbe6"
+    "implementation": "0x50217662056630c1604a1FE9B964F97D25A45258",
+    "proxyAdmin": "0x5bC4C9b047B31F8215EA178c1CF38D5a210af8a1"
   }
 }
