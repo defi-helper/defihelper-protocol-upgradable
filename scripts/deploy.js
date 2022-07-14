@@ -445,7 +445,7 @@ class Deployer {
    * @param {any[]} args
    * @param {import('ethers').CallOverrides} options
    *
-   * @returns {Promise<void>}
+   * @returns {Promise<import('ethers').ContractReceipt>}
    */
   async execute(contractName, method, args, options = {}) {
     const { from } = {
@@ -495,6 +495,7 @@ class Deployer {
         .nl(`===== Completed =====`)
         .toString(),
     );
+    return receipt;
   }
 }
 
