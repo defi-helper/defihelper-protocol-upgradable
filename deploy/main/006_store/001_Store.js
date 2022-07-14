@@ -30,7 +30,7 @@ module.exports = migration(async (deployer) => {
 
   await deployer.deploy('contracts/Store.sol:Store', {
     name: 'Store',
-    args: [balance.address, priceFeed.address],
+    args: [balance.address, priceFeed],
   });
 });
 module.exports.tags = ['DFH', 'Main', 'Protocol', 'NonUpgradable'];
