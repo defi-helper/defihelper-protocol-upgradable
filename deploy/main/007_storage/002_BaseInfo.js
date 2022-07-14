@@ -24,6 +24,7 @@ module.exports = migration(async (deployer) => {
     { method: 'setAddress', key: 'DFH:Contract:Store', value: store.address },
     { method: 'setAddress', key: 'DFH:Pauser', value: deployer.namedAccounts.deployer.address },
     { method: 'setUint', key: 'DFH:Fee:Automate', value: 1e8 },
+    { method: 'setUint', key: 'DFH:Fee:Automate:LPTokensManager', value: 1e8 },
     ...[
       {
         method: 'setAddress',

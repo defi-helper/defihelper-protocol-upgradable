@@ -5,20 +5,22 @@ const { utils } = require('ethers');
 const defaultChainId = 31337;
 
 module.exports = migration(async (deployer) => {
-  const [governor, balance, budget, store] = await Promise.all([
+  const [governor, balance, budget, store, treasury] = await Promise.all([
     deployer.artifacts.readDeploy('GovernorMultisig'),
     deployer.artifacts.readDeploy('Balance'),
     deployer.artifacts.readDeploy('Budget'),
     deployer.artifacts.readDeploy('Store'),
+    deployer.artifacts.readDeploy('TreasuryUpgradable'),
   ]);
   const values = [
     { method: 'setAddress', key: 'DFH:Contract:Governor', value: governor.address },
     { method: 'setAddress', key: 'DFH:Contract:Budget', value: budget.address },
     { method: 'setAddress', key: 'DFH:Contract:Balance', value: balance.address },
     { method: 'setAddress', key: 'DFH:Contract:Store', value: store.address },
+    { method: 'setAddress', key: 'DFH:Contract:Treasury', value: treasury.address },
     { method: 'setAddress', key: 'DFH:Pauser', value: deployer.namedAccounts.deployer.address },
     { method: 'setUint', key: 'DFH:Fee:Automate', value: 1e8 },
-    { method: 'setUint', key: 'DFH:Fee:Automate:BuyLiquidity', value: 1e8 },
+    { method: 'setUint', key: 'DFH:Fee:Automate:LPTokensManager', value: 1e8 },
     ...[
       {
         method: 'setAddress',
