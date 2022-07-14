@@ -3,11 +3,13 @@ const assertions = require('truffle-assertions');
 const { ethers } = require('hardhat');
 const bn = require('bignumber.js');
 
-describe('BuyLiquidity.sellLiquidity', function () {
-  let owner, outToken, token0, token1, pair, router, storage, automate;
+describe('LPTokensManager.sellLiquidity', function () {
+  let owner, treasury, outToken, token0, token1, pair, router, storage, priceFeed, automate;
+  const fee = new bn('1e8').toFixed(0);
+  const nativeTokenUSD = new bn('1000e8').toFixed(0);
   const zeroAddress = '0x0000000000000000000000000000000000000000';
   before(async function () {
-    [owner] = await ethers.getSigners();
+    [owner, treasury] = await ethers.getSigners();
 
     const OutToken = await ethers.getContractFactory('ERC20Mock');
     outToken = await OutToken.deploy('OutToken', 'OT', new bn('200e18').toString(10));
@@ -38,13 +40,23 @@ describe('BuyLiquidity.sellLiquidity', function () {
     await storage.setBool(
       ethers.utils.solidityKeccak256(
         ['string', 'address'],
-        ['DFH:Contract:BuyLiquidity:allowedRouter:', router.address],
+        ['DFH:Contract:LPTokensManager:allowedRouter:', router.address],
       ),
       true,
     );
+    await storage.setAddress(
+      ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Contract:Treasury')),
+      treasury.address,
+    );
+    await storage.setUint(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Fee:Automate:LPTokensManager')), fee);
 
-    const Automate = await ethers.getContractFactory('BuyLiquidity');
-    automate = await Automate.deploy(storage.address, zeroAddress, zeroAddress);
+    const PriceFeed = await ethers.getContractFactory('PriceFeedMock');
+    priceFeed = await PriceFeed.deploy(8, '', 1);
+    await priceFeed.deployed();
+    await priceFeed.addRoundData(nativeTokenUSD);
+
+    const Automate = await ethers.getContractFactory('LPTokensManager');
+    automate = await Automate.deploy(storage.address, priceFeed.address);
     await automate.deployed();
   });
 
@@ -60,6 +72,9 @@ describe('BuyLiquidity.sellLiquidity', function () {
     );
 
     await pair.approve(automate.address, liquidity.toFixed(0));
+    const startTreasuryBalance = await ethers.provider.getBalance(treasury.address).then((v) => new bn(v.toString()));
+    const startCallerBalance = await ethers.provider.getBalance(owner.address).then((v) => new bn(v.toString()));
+    const payFee = await automate.fee().then((v) => new bn(v.toString()));
     await automate.sellLiquidity(
       liquidity.toFixed(0),
       router.address,
@@ -67,6 +82,10 @@ describe('BuyLiquidity.sellLiquidity', function () {
       { path: [token1.address, outToken.address], outMin: token1Amount.toString(10) },
       pair.address,
       0,
+      {
+        gasPrice: 0,
+        value: payFee.toFixed(0),
+      },
     );
 
     strictEqual(
@@ -74,12 +93,22 @@ describe('BuyLiquidity.sellLiquidity', function () {
       new bn('20e18').toString(10),
       'Invalid end token balance',
     );
+    strictEqual(
+      await ethers.provider.getBalance(owner.address).then((v) => v.toString()),
+      startCallerBalance.minus(payFee).toFixed(0),
+      'Invalid end caller balance',
+    );
+    strictEqual(
+      await ethers.provider.getBalance(treasury.address).then((v) => v.toString()),
+      startTreasuryBalance.plus(payFee).toFixed(0),
+      'Invalid end treasury balance',
+    );
   });
 
   it('sellLiquidity: should revert tx if router not allowed', async function () {
     await assertions.reverts(
       automate.sellLiquidity('0', zeroAddress, { path: [], outMin: 0 }, { path: [], outMin: 0 }, pair.address, 0),
-      'BuyLiquidity::sellLiquidity: invalid router address',
+      'LPTokensManager::sellLiquidity: invalid router address',
     );
   });
 
@@ -93,7 +122,7 @@ describe('BuyLiquidity.sellLiquidity', function () {
         pair.address,
         0,
       ),
-      'BuyLiquidity::sellLiqudity: end token not equals',
+      'LPTokensManager::sellLiqudity: end token not equals',
     );
   });
 
@@ -106,8 +135,11 @@ describe('BuyLiquidity.sellLiquidity', function () {
         { path: [token1.address, outToken.address], outMin: 0 },
         pair.address,
         0,
+        {
+          value: await automate.fee().then((v) => v.toString()),
+        },
       ),
-      'BuyLiquidity::sellLiqudity: invalid token0',
+      'LPTokensManager::sellLiqudity: invalid token0',
     );
   });
 
@@ -120,8 +152,11 @@ describe('BuyLiquidity.sellLiquidity', function () {
         { path: [outToken.address, outToken.address], outMin: 0 },
         pair.address,
         0,
+        {
+          value: await automate.fee().then((v) => v.toString()),
+        },
       ),
-      'BuyLiquidity::sellLiqudity: invalid token1',
+      'LPTokensManager::sellLiqudity: invalid token1',
     );
   });
 });

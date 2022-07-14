@@ -7,9 +7,9 @@ module.exports = migration(async (deployer) => {
   ]);
   const { priceFeed } = deployer.namedAccounts;
 
-  await deployer.deploy('contracts/automate/BuyLiquidity.sol:BuyLiquidity', {
-    name: 'BuyLiquidity',
-    args: [storage.address, treasury.address, priceFeed.address],
+  await deployer.deploy('contracts/automate/LPTokensManager.sol:LPTokensManager', {
+    name: 'LPTokensManager',
+    args: [storage.address, priceFeed.address],
   });
 });
 module.exports.tags = ['DFH', 'Main', 'Protocol', 'NonUpgradable'];
