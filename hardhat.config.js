@@ -203,7 +203,7 @@ module.exports = {
       'moonriver': '0x3f8BFbDc1e79777511c00Ad8591cef888C2113C1',
       'avalancheTest': '0x5498BB86BC934c8D34FDA08E81D444153d0D06aD',
       'avalanche': '0x0A77230d17318075983913bC2145DB16C7366156',
-      'avalancheTest': '0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada',
+      'mumbai': '0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada',
     },
   },
   etherscan: {
