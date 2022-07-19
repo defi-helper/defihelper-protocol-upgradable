@@ -4,22 +4,10 @@ pragma solidity ^0.8.6;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "../Storage.sol";
 import "./dex/IPair.sol";
 import "./dex/IRouter.sol";
-
-interface IPriceFeed {
-  function latestRoundData()
-    external
-    view
-    returns (
-      uint80 roundId,
-      int256 answer,
-      uint256 startedAt,
-      uint256 updatedAt,
-      uint80 answeredInRound
-    );
-}
 
 contract LPTokensManager is Ownable {
   using SafeERC20 for IERC20;
@@ -35,6 +23,7 @@ contract LPTokensManager is Ownable {
   event StorageChanged(address indexed info);
 
   constructor(address _info) {
+    require(_info != address(0), "LPTokensManager::constructor: invalid storage contract address");
     info = Storage(_info);
   }
 
@@ -43,6 +32,7 @@ contract LPTokensManager is Ownable {
    * @param _info New storage contract address.
    */
   function changeStorage(address _info) external onlyOwner {
+    require(_info != address(0), "LPTokensManager::changeStorage: invalid storage contract address");
     info = Storage(_info);
     emit StorageChanged(_info);
   }
@@ -72,17 +62,20 @@ contract LPTokensManager is Ownable {
     uint256 feeUSD = info.getUint(keccak256("DFH:Fee:Automate:LPTokensManager"));
     if (feeUSD == 0) return 0;
 
-    (, int256 answer, , , ) = IPriceFeed(info.getAddress(keccak256("DFH:Fee:PriceFeed"))).latestRoundData();
-    require(answer > 0, "LPTokensManager::fee: invalid fee token price");
+    (, int256 answer, , , ) = AggregatorV3Interface(info.getAddress(keccak256("DFH:Fee:PriceFeed"))).latestRoundData();
+    require(answer > 0, "LPTokensManager::fee: invalid price feed response");
 
-    return (feeUSD * (10**18)) / uint256(answer);
+    return (feeUSD * 1e18) / uint256(answer);
   }
 
   function _payCommission() internal {
     uint256 payFee = fee();
     if (payFee == 0) return;
     require(msg.value >= payFee, "LPTokensManager::_payCommission: insufficient funds to pay commission");
-    payable(info.getAddress(keccak256("DFH:Contract:Treasury"))).transfer(payFee);
+    address treasury = info.getAddress(keccak256("DFH:Contract:Treasury"));
+    require(treasury != address(0), "LPTokensManager::_payCommission: invalid treasury contract address");
+
+    payable(treasury).transfer(payFee);
     if (msg.value > payFee) {
       payable(msg.sender).transfer(msg.value - payFee);
     }

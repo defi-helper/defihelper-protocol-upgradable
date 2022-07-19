@@ -63,8 +63,8 @@ describe('LPTokensManager.buyLiquidity', function () {
 
   it('buyLiquidity: should buy pair tokens and add liquidity', async function () {
     const amount = await inToken.balanceOf(owner.address).then((v) => new bn(v.toString()));
-    const token0Amount = new bn(`10e18`);
-    const token1Amount = new bn(`10e18`);
+    const token0Amount = new bn('10e18');
+    const token1Amount = new bn('10e18');
 
     strictEqual(await pair.balanceOf(owner.address).then((v) => v.toString()), '0', 'Invalid start pair token balance');
 
@@ -181,6 +181,43 @@ describe('LPTokensManager.buyLiquidity', function () {
         },
       ),
       'LPTokensManager::buyLiqudity: invalid token1',
+    );
+  });
+
+  it('buyLiquidity: should revert tx if insufficient funds to pay commission', async function () {
+    await assertions.fails(
+      automate.buyLiquidity(
+        await inToken.balanceOf(owner.address).then((v) => v.toString()),
+        router.address,
+        { path: [inToken.address, token0.address], outMin: new bn('10e18').toFixed(0) },
+        { path: [inToken.address, token1.address], outMin: new bn('10e18').toFixed(0) },
+        pair.address,
+        0,
+        {
+          gasPrice: 0,
+          value: await automate.fee().then((v) => new bn(v.toString()).minus(1).toFixed(0)),
+        },
+      ),
+      'insufficient funds for intrinsic transaction cost',
+    );
+  });
+
+  it('buyLiquidity: should revert tx if invalid treasury contract address', async function () {
+    await storage.setAddress(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Contract:Treasury')), zeroAddress);
+    await assertions.reverts(
+      automate.buyLiquidity(
+        await inToken.balanceOf(owner.address).then((v) => v.toString()),
+        router.address,
+        { path: [inToken.address, token0.address], outMin: new bn('10e18').toFixed(0) },
+        { path: [inToken.address, token1.address], outMin: new bn('10e18').toFixed(0) },
+        pair.address,
+        0,
+        {
+          gasPrice: 0,
+          value: await automate.fee().then((v) => v.toString()),
+        },
+      ),
+      'LPTokensManager::_payCommission: invalid treasury contract address',
     );
   });
 });

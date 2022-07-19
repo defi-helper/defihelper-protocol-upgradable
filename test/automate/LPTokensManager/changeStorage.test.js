@@ -21,6 +21,13 @@ describe('LPTokensManager.changeStorage', function () {
     );
   });
 
+  it('changeStorage: should revert tx if for zero address', async function () {
+    await assertions.reverts(
+      automate.changeStorage('0x0000000000000000000000000000000000000000'),
+      'LPTokensManager::changeStorage: invalid storage contract address',
+    );
+  });
+
   it('changeStorage: should change storage contract address', async function () {
     strictEqual(await automate.info(), storageAddress, 'Invalid start storage address');
 
