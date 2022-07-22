@@ -398,39 +398,43 @@
   "43114": {
     "Balance": {
       "address": "0x1E46B649d6651b3892217Dd1EFd2a3e78f4D904B",
-      "deployBlockNumber": 6885271
+      "blockNumber": 6885271
     },
     "Budget": {
       "address": "0x64bA6C02321D77AD00308F06aD72beE7149b39A6",
-      "deployBlockNumber": 6885300
+      "blockNumber": 6885300
     },
     "BuyLiquidity": {
       "address": "0x975B07f95ce4F0A3E042769b311264A941568a0E",
-      "deployBlockNumber": 10777499
+      "blockNumber": 10777499
     },
     "ERC1167": {
       "address": "0xbbaDa894933398c1Fca03bdd8B872bb444A483f2",
-      "deployBlockNumber": 6885389
+      "blockNumber": 6885389
     },
     "GovernorMultisig": {
       "address": "0x5F2080542ab6ae7e0b06778F0B2d263006297840",
-      "deployBlockNumber": 6885256
+      "blockNumber": 6885256
     },
     "ProxyFactory": {
       "address": "0x770D64Ae34a52d8B60e0CC34F7991F19e026CfD7",
-      "deployBlockNumber": 6885394
+      "blockNumber": 6885394
     },
     "Storage": {
       "address": "0xDdfbffEfacB7598Ad995D327Ea4fF2D42aCF7b77",
-      "deployBlockNumber": 6885344
+      "blockNumber": 6885344
     },
-    "Store": {
-      "address": "0x040ccf6CA8CCFEd2eA741F1Dd76245314946f078",
-      "deployBlockNumber": 6885326
+    "LPTokensManager": {
+      "address": "0x5d917Fc37D1c485500dEecFd458E2d11A4B4F14D",
+      "blockNumber": 17319392
     },
-    "Treasury": {
-      "address": "0xDd69647fc0D46595b04b4082b0C760e2c98C90a2",
-      "deployBlockNumber": 6885265
+    "TreasuryUpgradable": {
+      "address": "0x210619ED4B0D613F34a15f1B13F7c03C114E48B9",
+      "blockNumber": 17319374
+    },
+    "StoreUpgradable": {
+      "address": "0x73c8F6Ecff80bF9276df8249Cc14568304935738",
+      "blockNumber": 17661121
     }
   },
   "80001": {

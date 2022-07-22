@@ -1,4 +1,4 @@
 const { transferOwnership } = require('../../../scripts/deploy');
 
-module.exports = transferOwnership('Timelock', 'Store');
+module.exports = transferOwnership('GovernorMultisig', 'StoreUpgradable');
 module.exports.tags = ['DFH', 'Lite', 'GovernanceOwner', 'Upgradable'];

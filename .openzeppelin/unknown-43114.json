@@ -9,6 +9,11 @@
       "address": "0x210619ED4B0D613F34a15f1B13F7c03C114E48B9",
       "txHash": "0xdb7371583cce3680fc403a9d4093d35f2ecdcd4ef726cbe5faec5ba31d2a9cc3",
       "kind": "transparent"
+    },
+    {
+      "address": "0x73c8F6Ecff80bF9276df8249Cc14568304935738",
+      "txHash": "0x46fc7cb903b3ffd6f817f7a829d8ec713d5709dc98b524b2fdfb047d47dde44e",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -75,6 +80,121 @@
           "t_bool": {
             "label": "bool",
             "numberOfBytes": "1"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "9815927619b9847f6670a62f1dd96fc5f9ddb06b4f4db8905d13c9d5c3254315": {
+      "address": "0xe1FEfee11adAC616090BB9c0a45967e78607Aa21",
+      "txHash": "0x6be36dbd49013cb2d281eab2de928231cb94b16f763a2947fe9181473188ee1e",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "_paused",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_bool",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:116"
+          },
+          {
+            "label": "info",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_contract(Storage)5184",
+            "contract": "StoreV1",
+            "src": "contracts/Store/StoreV1.sol:11"
+          },
+          {
+            "label": "products",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_mapping(t_uint8,t_uint256)",
+            "contract": "StoreV1",
+            "src": "contracts/Store/StoreV1.sol:14"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(Storage)5184": {
+            "label": "contract Storage",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_uint8,t_uint256)": {
+            "label": "mapping(uint8 => uint256)",
+            "numberOfBytes": "32"
           },
           "t_uint256": {
             "label": "uint256",

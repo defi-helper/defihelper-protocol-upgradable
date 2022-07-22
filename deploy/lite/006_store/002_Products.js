@@ -7,7 +7,7 @@ module.exports = migration(async (deployer) => {
     { id: 2, priceUSD: 100e8 },
   ];
 
-  const store = await deployer.getContract('Store');
+  const store = await deployer.getContract('StoreUpgradable');
   await products.reduce(async (prev, { id, priceUSD }) => {
     await prev;
     const currentPrice = await store.products(id).then((v) => new bn(v.toString()));
@@ -15,7 +15,7 @@ module.exports = migration(async (deployer) => {
       return null;
     }
 
-    return deployer.execute('Store', 'changeProduct', [id, priceUSD]);
+    return deployer.execute('StoreUpgradable', 'changeProduct', [id, priceUSD]);
   }, Promise.resolve(null));
 });
 module.exports.tags = ['DFH', 'Lite', 'Protocol', 'Upgradable'];
