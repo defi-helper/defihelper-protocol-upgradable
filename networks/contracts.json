@@ -404,10 +404,6 @@
       "address": "0x64bA6C02321D77AD00308F06aD72beE7149b39A6",
       "blockNumber": 6885300
     },
-    "BuyLiquidity": {
-      "address": "0x975B07f95ce4F0A3E042769b311264A941568a0E",
-      "blockNumber": 10777499
-    },
     "ERC1167": {
       "address": "0xbbaDa894933398c1Fca03bdd8B872bb444A483f2",
       "blockNumber": 6885389
@@ -435,6 +431,10 @@
     "StoreUpgradable": {
       "address": "0x73c8F6Ecff80bF9276df8249Cc14568304935738",
       "blockNumber": 17661121
+    },
+    "ProxyAdmin": {
+      "address": "0x5bC4C9b047B31F8215EA178c1CF38D5a210af8a1",
+      "blockNumber": 17319372
     }
   },
   "80001": {
