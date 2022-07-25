@@ -3,7 +3,7 @@ const { migration } = require('../../../scripts/deploy');
 module.exports = migration(async (deployer) => {
   const storage = await deployer.artifacts.readDeploy('Storage');
 
-  await deployer.deployProxy('contracts/Store/StoreV1.sol:StoreV1', {
+  await deployer.deployProxy('contracts/Store/StoreV2.sol:StoreV2', {
     name: 'StoreUpgradable',
     args: [storage.address],
   });
