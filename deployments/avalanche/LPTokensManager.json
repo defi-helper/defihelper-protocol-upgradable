@@ -1,6 +1,6 @@
 {
   "name": "LPTokensManager",
-  "address": "0x5d917Fc37D1c485500dEecFd458E2d11A4B4F14D",
+  "address": "0xb250494439B56E4Cd07B3A0B833E8AA89f5ff7f3",
   "contractName": "LPTokensManager",
   "sourceName": "contracts/automate/LPTokensManager.sol",
   "args": [
@@ -248,6 +248,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 17319392,
-  "transactionHash": "0x7045078920601f49dbefb6dfedb23e1614af7b790bbe7a88ca412a3d9ccda1c4"
+  "blockNumber": 17821728,
+  "transactionHash": "0x9b19b55540991ba1978db2b75e1cbafc0d541509855db8954d334de8395dec25"
 }
