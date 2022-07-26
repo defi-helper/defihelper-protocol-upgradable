@@ -75,9 +75,12 @@ contract LPTokensManager is Ownable {
     address treasury = info.getAddress(keccak256("DFH:Contract:Treasury"));
     require(treasury != address(0), "LPTokensManager::_payCommission: invalid treasury contract address");
 
-    payable(treasury).transfer(payFee);
+    // solhint-disable-next-line avoid-low-level-calls
+    (bool sentTreasury, ) = payable(treasury).call{value: payFee}("");
+    require(sentTreasury, "LPTokensManager::_payCommission: transfer fee to the treasury failed");
     if (msg.value > payFee) {
-      payable(msg.sender).transfer(msg.value - payFee);
+      (bool sentRemained, ) = payable(msg.sender).call{value: msg.value - payFee}("");
+      require(sentRemained, "LPTokensManager::_payCommission: transfer of remained tokens to the sender failed");
     }
   }
 

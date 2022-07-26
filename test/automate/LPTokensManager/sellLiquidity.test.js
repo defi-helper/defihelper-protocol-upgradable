@@ -9,7 +9,11 @@ describe('LPTokensManager.sellLiquidity', function () {
   const nativeTokenUSD = new bn('1000e8').toFixed(0);
   const zeroAddress = '0x0000000000000000000000000000000000000000';
   before(async function () {
-    [owner, treasury] = await ethers.getSigners();
+    [owner] = await ethers.getSigners();
+
+    const Treasury = await ethers.getContractFactory('contracts/Treasury/TreasuryV2.sol:TreasuryV2');
+    treasury = await upgrades.deployProxy(Treasury);
+    await treasury.deployed();
 
     const OutToken = await ethers.getContractFactory('ERC20Mock');
     outToken = await OutToken.deploy('OutToken', 'OT', new bn('200e18').toString(10));
