@@ -359,40 +359,44 @@
   },
   "43113": {
     "Balance": {
-      "address": "0xF11438cFDC2B8463A1F4d79C3825930a233C76bd",
-      "blockNumber": 5961049
+      "address": "0xb59aFaec69313fDe836Edffba5b2942ea2eD57Ed",
+      "blockNumber": 11985841
     },
     "Budget": {
-      "address": "0x436ddD2E33B45367Df455ee9dA5D73850650bd7e",
-      "blockNumber": 5961072
-    },
-    "BuyLiquidity": {
-      "address": "0xC1Ea5c99bA1431f67e1052c9D8471A74911c61c3",
-      "blockNumber": 5961160
+      "address": "0x1916d8A6644015D15a3A7F243B628Aa5f099fcD0",
+      "blockNumber": 11985859
     },
     "ERC1167": {
-      "address": "0x8586719c29A043C8305252de4DFfE94F43245590",
-      "blockNumber": 5961152
+      "address": "0xE4DD8F174a4CB3065ae2CC1A228901F8C5F089B4",
+      "blockNumber": 11985916
     },
     "GovernorMultisig": {
-      "address": "0xbd6f3c7d03aca8141bc24aaf096bbafce277a85f",
-      "blockNumber": "0x5af54b"
+      "address": "0x6490cE2C1972f7D44A76CE0a63997F478F538205",
+      "blockNumber": 11985822
+    },
+    "LPTokensManager": {
+      "address": "0xF1742b42bF56317DC07E4387ABc0440D87b924Bd",
+      "blockNumber": 11985922
     },
     "ProxyFactory": {
-      "address": "0xdcEBCae8c537c30a43DCC336278220d99540C00B",
-      "blockNumber": 5961157
+      "address": "0x562B9801dfcEC43eDcf26389832aeA72913deE07",
+      "blockNumber": 11985918
     },
     "Storage": {
-      "address": "0x67C2f8627C50139BBc893708b7Fb77eA3D3bF87F",
-      "blockNumber": 5961116
+      "address": "0xa59b9f031C056b29cAA019d28f51aa0c7E4f8E8e",
+      "blockNumber": 11985876
     },
-    "Store": {
-      "address": "0x9E3B7cf2596F418DFf7168e377878eCb9FcA67de",
-      "blockNumber": 5961100
+    "StoreUpgradable": {
+      "address": "0x71c9B05669Dd13c1562d720f50ac2f1609077d90",
+      "blockNumber": 11985903
     },
-    "Treasury": {
-      "address": "0x7ecFCbdeb6f195030B9Bf2ECc402f6d5433d116D",
-      "blockNumber": 5961042
+    "TreasuryUpgradable": {
+      "address": "0x865618bB3Be7427092f34b2c82BA0A5C42A668ae",
+      "blockNumber": 11985835
+    },
+    "ProxyAdmin": {
+      "address": "0x9E2B1D62c594cbeaad22f6D603Ae931705D266BD",
+      "blockNumber": 17319372
     }
   },
   "43114": {
