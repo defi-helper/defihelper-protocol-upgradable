@@ -225,6 +225,14 @@
     "Treasury": {
       "address": "0x1E46B649d6651b3892217Dd1EFd2a3e78f4D904B",
       "blockNumber": 12474592
+    },
+    "StoreUpgradable": {
+      "address": "0x64c7199F7d2A1719B1625981B28cbe8BA69C1415",
+      "blockNumber": 19920334
+    },
+    "TreasuryUpgradable": {
+      "address": "0x0ac409BD3F8360272238772933436F034A3ccC63",
+      "blockNumber": 19920309
     }
   },
   "1285": {
