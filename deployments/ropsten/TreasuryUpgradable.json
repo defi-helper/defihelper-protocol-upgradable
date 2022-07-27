@@ -1,8 +1,8 @@
 {
   "name": "TreasuryUpgradable",
-  "address": "0x011A8FC608a18760EA7A4F9dA376398B82c3421D",
-  "contractName": "TreasuryV1",
-  "sourceName": "contracts/Treasury/TreasuryV1.sol",
+  "address": "0x55C476d507D18273391d75c0eA2FAEFA8cEf9Bf9",
+  "contractName": "TreasuryV2",
+  "sourceName": "contracts/Treasury/TreasuryV2.sol",
   "args": [],
   "libraries": {},
   "abi": [
@@ -37,6 +37,10 @@
       ],
       "name": "OwnershipTransferred",
       "type": "event"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "fallback"
     },
     {
       "inputs": [
@@ -165,10 +169,10 @@
       "type": "receive"
     }
   ],
-  "blockNumber": 12550138,
-  "transactionHash": "0x5174e1b39b3a9305d0c26000bd9b8846d5d60f51859585c6505357a05722e9d7",
+  "blockNumber": 12673822,
+  "transactionHash": "0xb3aa8978f4a5acaeab5dc15069ff0c291b1e7e7a134c9c3ad71ad0e24705ac3f",
   "upgradable": {
-    "implementation": "0xE2902D617d3bF63b591Fc0e9903E87A19A3F721F",
-    "proxyAdmin": "0xd603036cD0e63963720C684a7f98868c5e555A80"
+    "implementation": "0xA6E93f163A5310bD7ac1128dC34b73463889A1DF",
+    "proxyAdmin": "0xEC988D925Bce187fECcADe8d25060bbB5b853244"
   }
 }

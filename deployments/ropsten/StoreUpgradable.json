@@ -1,9 +1,11 @@
 {
-  "name": "Budget",
-  "address": "0xD93b35e05C5732cC82676edB589B73e618168e4F",
-  "contractName": "Budget",
-  "sourceName": "contracts/Budget.sol",
-  "args": [],
+  "name": "StoreUpgradable",
+  "address": "0x0C2420138962F7aF5357F232289C7fbcb2463550",
+  "contractName": "StoreV2",
+  "sourceName": "contracts/Store/StoreV2.sol",
+  "args": [
+    "0xa2Cad388f8670D9c1759955830eaB6797653Ad03"
+  ],
   "libraries": {},
   "abi": [
     {
@@ -11,24 +13,31 @@
       "inputs": [
         {
           "indexed": true,
+          "internalType": "uint8",
+          "name": "product",
+          "type": "uint8"
+        },
+        {
+          "indexed": true,
           "internalType": "address",
           "name": "recipient",
           "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "min",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "target",
-          "type": "uint256"
         }
       ],
-      "name": "ExpenditureChanged",
+      "name": "Buy",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "version",
+          "type": "uint8"
+        }
+      ],
+      "name": "Initialized",
       "type": "event"
     },
     {
@@ -54,84 +63,117 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": true,
+          "indexed": false,
           "internalType": "address",
-          "name": "recipient",
+          "name": "account",
           "type": "address"
+        }
+      ],
+      "name": "Paused",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint8",
+          "name": "product",
+          "type": "uint8"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "amount",
+          "name": "priceUSD",
           "type": "uint256"
         }
       ],
-      "name": "Withdrawal",
+      "name": "ProductChanged",
       "type": "event"
     },
     {
-      "inputs": [],
-      "name": "MAXIMUM_RECIPIENT_COUNT",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
+      "anonymous": false,
       "inputs": [
         {
+          "indexed": true,
           "internalType": "address",
-          "name": "",
+          "name": "info",
           "type": "address"
         }
       ],
-      "name": "balanceOf",
-      "outputs": [
+      "name": "StorageChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
         }
       ],
-      "stateMutability": "view",
-      "type": "function"
+      "name": "Unpaused",
+      "type": "event"
     },
     {
       "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "product",
+          "type": "uint8"
+        },
         {
           "internalType": "address",
           "name": "recipient",
           "type": "address"
+        }
+      ],
+      "name": "buy",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "id",
+          "type": "uint8"
         },
         {
           "internalType": "uint256",
-          "name": "min",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "target",
+          "name": "priceUSD",
           "type": "uint256"
         }
       ],
-      "name": "changeExpenditure",
+      "name": "changeProduct",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_info",
+          "type": "address"
+        }
+      ],
+      "name": "changeStorage",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [],
-      "name": "deficit",
+      "name": "info",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "contract Storage",
           "name": "",
-          "type": "uint256"
+          "type": "address"
         }
       ],
       "stateMutability": "view",
@@ -141,48 +183,13 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "recipient",
+          "name": "_info",
           "type": "address"
         }
       ],
-      "name": "deficitTo",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "expenditures",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "recipient",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "min",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "target",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -200,34 +207,33 @@
     },
     {
       "inputs": [],
-      "name": "pay",
+      "name": "pause",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [],
-      "name": "recipients",
+      "name": "paused",
       "outputs": [
         {
-          "internalType": "address[]",
+          "internalType": "bool",
           "name": "",
-          "type": "address[]"
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "renounceOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "totalSupply",
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "product",
+          "type": "uint8"
+        }
+      ],
+      "name": "price",
       "outputs": [
         {
           "internalType": "uint256",
@@ -241,17 +247,25 @@
     {
       "inputs": [
         {
-          "internalType": "address payable",
-          "name": "recipient",
-          "type": "address"
-        },
+          "internalType": "uint8",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "name": "products",
+      "outputs": [
         {
           "internalType": "uint256",
-          "name": "amount",
+          "name": "",
           "type": "uint256"
         }
       ],
-      "name": "transferETH",
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -271,16 +285,16 @@
     },
     {
       "inputs": [],
-      "name": "withdraw",
+      "name": "unpause",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "stateMutability": "payable",
-      "type": "receive"
     }
   ],
-  "blockNumber": 12673825,
-  "transactionHash": "0x7590001c2fcac80aa0a2b734eaf84b0cd4ccc65270c8dfc9a6c636072e48d147"
+  "blockNumber": 12673876,
+  "transactionHash": "0x9e953400a100d52d2c6a8336e6fe4295b545ec46b136c1def9feca6214d1ddb9",
+  "upgradable": {
+    "implementation": "0xF44AdC9380BA5c4A00A18c6808FdCD1B43492B07",
+    "proxyAdmin": "0xEC988D925Bce187fECcADe8d25060bbB5b853244"
+  }
 }
