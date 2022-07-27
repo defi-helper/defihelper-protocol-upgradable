@@ -187,6 +187,18 @@
     "Treasury": {
       "address": "0x8dE8AFa08196Bb03fb8eE4cEe8BAdCe98fE4D063",
       "blockNumber": 5536794
+    },
+    "StoreUpgradable": {
+      "address": "0x4883B92D0c1cD3B857d6D9d5F3882Fc3857Dcc87",
+      "blockNumber": 16044466
+    },
+    "TreasuryUpgradable": {
+      "address": "0x7ecFCbdeb6f195030B9Bf2ECc402f6d5433d116D",
+      "blockNumber": 16044434
+    },
+    "ProxyAdmin": {
+      "address": "0xF28C8D44C1dD837FEc8a93a7BCD540552e954E7B",
+      "blockNumber": 16044422
     }
   },
   "56": {
@@ -233,6 +245,10 @@
     "TreasuryUpgradable": {
       "address": "0x0ac409BD3F8360272238772933436F034A3ccC63",
       "blockNumber": 19920309
+    },
+    "ProxyAdmin": {
+      "address": "0x3d0729c0718436f1B044d43230cFEDF78eCfceaf",
+      "blockNumber": 19920305
     }
   },
   "1285": {
@@ -271,6 +287,18 @@
     "Treasury": {
       "address": "0x31E723E3ff71D70cAb6a914BaB3d901d36497610",
       "blockNumber": 1087738
+    },
+    "StoreUpgradable": {
+      "address": "0x8436bB50a3C371da0fAa74BD6eDdF84179B331be",
+      "blockNumber": 2275750
+    },
+    "TreasuryUpgradable": {
+      "address": "0xD2B25e3c37428a0ea93F457CcF96eD43e2380a51",
+      "blockNumber": 2275743
+    },
+    "ProxyAdmin": {
+      "address": "0xDffd56375B96d178049B8BEa93867502d50eeD51",
+      "blockNumber": 2275741
     }
   },
   "43113": {
