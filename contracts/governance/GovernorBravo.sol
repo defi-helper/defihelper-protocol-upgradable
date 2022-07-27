@@ -17,7 +17,7 @@ contract GovernorBravo is GovernorBravoDelegateStorageV1, GovernorBravoEvents {
   uint256 public constant MAX_PROPOSAL_THRESHOLD = 40_000_000e18; //40,000,000 DFH (4%)
 
   /// @notice The minimum setable voting period
-  uint256 public constant MIN_VOTING_PERIOD = 5760; // About 24 hours
+  uint256 public constant MIN_VOTING_PERIOD = 0; // force for ropsten
 
   /// @notice The max setable voting period
   uint256 public constant MAX_VOTING_PERIOD = 80640; // About 2 weeks

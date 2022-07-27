@@ -12,7 +12,7 @@ module.exports = migration(async (deployer) => {
   await deployer.execute('GovernorBravo', 'initialize', [
     timelock.address,
     governanceToken.address,
-    5760, // Voting period - 24 hours with 15s for 1 block
+    10, // Voting period - 10 blocks
     1, // Voting delay - 1 block
     new bn(3000000).multipliedBy(new bn(10).pow(18)).toString(10), // Proposal threshold - 3,000,000 DFH
   ]);

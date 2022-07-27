@@ -7,7 +7,7 @@ module.exports = migration(async (deployer) => {
     name: 'Timelock',
     args: [
       governorBravo.address,
-      2 * 24 * 60 * 60, // 2 days delay
+      60 * 2, // 2 minutes delay
     ],
   });
 });
