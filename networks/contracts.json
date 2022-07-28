@@ -210,10 +210,6 @@
       "address": "0x98af329C07E1F3cb4fd32f52B603F401bBF0f23C",
       "blockNumber": 12474624
     },
-    "BuyLiquidity": {
-      "address": "0x386bE298d4C15D89Fff23F9C9BB481e93B05BAc4",
-      "blockNumber": 15480679
-    },
     "ERC1167": {
       "address": "0x1F59Ee3B1ff055Be0b84BcB6D7beAa7f984fFf2e",
       "blockNumber": 12474693
@@ -230,14 +226,6 @@
       "address": "0x1CeC05129206d9fBEE2e86E1A9294E64f7F86461",
       "blockNumber": 12474658
     },
-    "Store": {
-      "address": "0x38cb8B582D5892a0E2E7A9f01B4127c60DfB469B",
-      "blockNumber": 12474645
-    },
-    "Treasury": {
-      "address": "0x1E46B649d6651b3892217Dd1EFd2a3e78f4D904B",
-      "blockNumber": 12474592
-    },
     "StoreUpgradable": {
       "address": "0x64c7199F7d2A1719B1625981B28cbe8BA69C1415",
       "blockNumber": 19920334
@@ -249,6 +237,10 @@
     "ProxyAdmin": {
       "address": "0x3d0729c0718436f1B044d43230cFEDF78eCfceaf",
       "blockNumber": 19920305
+    },
+    "LPTokensManager": {
+      "address": "0x7d441fc545c32AE943814Fd5170DD1feaa4C515A",
+      "blockNumber": 19940075
     }
   },
   "1285": {
