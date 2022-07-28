@@ -180,14 +180,6 @@
       "address": "0xB0E5922Bf9F0AEac7f00198a5fe4ff59Be81225f",
       "blockNumber": 5536908
     },
-    "Store": {
-      "address": "0xE8ee02Aeffc506d5F1Df9e78f2AD189b0ae78B3e",
-      "blockNumber": 5536874
-    },
-    "Treasury": {
-      "address": "0x8dE8AFa08196Bb03fb8eE4cEe8BAdCe98fE4D063",
-      "blockNumber": 5536794
-    },
     "StoreUpgradable": {
       "address": "0x4883B92D0c1cD3B857d6D9d5F3882Fc3857Dcc87",
       "blockNumber": 16044466
@@ -199,6 +191,10 @@
     "ProxyAdmin": {
       "address": "0xF28C8D44C1dD837FEc8a93a7BCD540552e954E7B",
       "blockNumber": 16044422
+    },
+    "LPTokensManager": {
+      "address": "0x295425B90077252D52c35F15eABfb5C6d3178a4C",
+      "blockNumber": 16182616
     }
   },
   "56": {
