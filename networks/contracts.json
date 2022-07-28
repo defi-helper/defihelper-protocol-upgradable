@@ -52,10 +52,6 @@
       "address": "0x5AE235502Bf1de231AfD75364670d50e3C3694A6",
       "blockNumber": 13568624
     },
-    "Store": {
-      "address": "0xDdfbffEfacB7598Ad995D327Ea4fF2D42aCF7b77",
-      "blockNumber": 13568517
-    },
     "Timelock": {
       "address": "0xDd69647fc0D46595b04b4082b0C760e2c98C90a2",
       "blockNumber": 13561765
@@ -71,6 +67,18 @@
     "VestingPreSeedAdvisor": {
       "address": "0x01C08145D1cdDE89c077Ec4B0266fB35Cb7451b5",
       "blockNumber": 15048942
+    },
+    "LPTokensManager": {
+      "address": "0x3318F7b15FAe4683BAB036696B1c92908950b177",
+      "blockNumber": 15230026
+    },
+    "StoreUpgradable": {
+      "address": "0x36A7168Dc5752dE710C58a56e26D706Ad992a1d7",
+      "blockNumber": 15230019
+    },
+    "TreasuryUpgradable": {
+      "address": "0x61eeEB0dCEc716b74d3Aa6DF5Ecc399b2243a70b",
+      "blockNumber": 15230015
     }
   },
   "5": {
