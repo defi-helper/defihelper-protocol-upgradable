@@ -79,6 +79,10 @@
     "TreasuryUpgradable": {
       "address": "0x61eeEB0dCEc716b74d3Aa6DF5Ecc399b2243a70b",
       "blockNumber": 15230015
+    },
+    "ProxyAdmin": {
+      "address": "0xDDe13a66BDBD53708d26c516E9C4C92c0054847b",
+      "blockNumber": 15230014
     }
   },
   "5": {
