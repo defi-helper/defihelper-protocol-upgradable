@@ -99,8 +99,9 @@ class DeploymentArtifacts {
    * @returns {Promise<DeployedArtifact>}
    */
   readDeploy(contractName) {
+    const artifactPath = this.path(contractName);
     return fs.promises
-      .readFile(this.path(contractName))
+      .readFile(artifactPath)
       .then(JSON.parse)
       .catch((e) => {
         if (e.code === 'ENOENT') {
