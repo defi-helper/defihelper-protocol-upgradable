@@ -165,6 +165,14 @@
     "ProxyAdmin": {
       "address": "0x68baE415A56469fC99C4dD026e30786d5ED79Ca5",
       "blockNumber": 7299483
+    },
+    "SmartTradeRouter": {
+      "address": "0x13d1016F371cb1B87a315eb94236035964A9776e",
+      "blockNumber": 7391102
+    },
+    "SmartTradeSwapHandler": {
+      "address": "0x1904560910DCcBe5c26abd953d5Ccbe56a5387bd",
+      "blockNumber": 7391104
     }
   },
   "10": {
