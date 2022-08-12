@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "../Router.sol";
 import "../IHandler.sol";
 
-contract HandlerMock is IHandler {
+contract SmartTradeHandlerMock is IHandler {
   using SafeERC20 for IERC20;
 
   struct OrderData {
@@ -19,12 +19,12 @@ contract HandlerMock is IHandler {
   address public router;
 
   constructor(address _router) {
-    require(_router != address(0), "HandlerMock::constructor: invalid router contract address");
+    require(_router != address(0), "SmartTradeHandlerMock::constructor: invalid router contract address");
     router = _router;
   }
 
   modifier onlyRouter() {
-    require(msg.sender == router, "HandlerMock::onlyRouter: caller is not the router");
+    require(msg.sender == router, "SmartTradeHandlerMock::onlyRouter: caller is not the router");
     _;
   }
 
@@ -32,16 +32,16 @@ contract HandlerMock is IHandler {
     return abi.encode(data);
   }
 
-  function onOrderCreated(Router.Order calldata order) external view override onlyRouter {
+  function onOrderCreated(SmartTradeRouter.Order calldata order) external view override onlyRouter {
     abi.decode(order.callData, (OrderData));
   }
 
-  function handle(Router.Order calldata order) external override onlyRouter {
+  function handle(SmartTradeRouter.Order calldata order) external override onlyRouter {
     OrderData memory data = abi.decode(order.callData, (OrderData));
     address _router = router;
 
-    Router(_router).refund(order.owner, data.tokenIn, data.amountIn);
+    SmartTradeRouter(_router).refund(order.owner, data.tokenIn, data.amountIn);
     IERC20(data.tokenOut).safeApprove(_router, data.amountOut);
-    Router(_router).deposit(order.owner, data.tokenOut, data.amountOut);
+    SmartTradeRouter(_router).deposit(order.owner, data.tokenOut, data.amountOut);
   }
 }

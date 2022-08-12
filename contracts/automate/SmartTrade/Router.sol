@@ -10,7 +10,7 @@ import "../../Storage.sol";
 import "../../Balance.sol";
 import "./IHandler.sol";
 
-contract Router is Ownable, Pausable {
+contract SmartTradeRouter is Ownable, Pausable {
   using SafeERC20 for IERC20;
 
   enum OrderStatus {
@@ -49,20 +49,20 @@ contract Router is Ownable, Pausable {
   event OrderSuccessed(uint256 indexed id);
 
   constructor(address _info) {
-    require(_info != address(0), "Router::constructor: invalid storage contract address");
+    require(_info != address(0), "SmartTradeRouter::constructor: invalid storage contract address");
 
     info = Storage(_info);
   }
 
   function pause() external {
     address pauser = info.getAddress(keccak256("DFH:Pauser"));
-    require(msg.sender == owner() || msg.sender == pauser, "Router::pause: caller is not the owner or pauser");
+    require(msg.sender == owner() || msg.sender == pauser, "SmartTradeRouter::pause: caller is not the owner or pauser");
     _pause();
   }
 
   function unpause() external {
     address pauser = info.getAddress(keccak256("DFH:Pauser"));
-    require(msg.sender == owner() || msg.sender == pauser, "Router::unpause: caller is not the owner or pauser");
+    require(msg.sender == owner() || msg.sender == pauser, "SmartTradeRouter::unpause: caller is not the owner or pauser");
     _unpause();
   }
 
@@ -71,7 +71,7 @@ contract Router is Ownable, Pausable {
    * @param _info New storage contract address.
    */
   function changeStorage(address _info) external onlyOwner {
-    require(_info != address(0), "Router::changeStorage: invalid storage contract address");
+    require(_info != address(0), "SmartTradeRouter::changeStorage: invalid storage contract address");
 
     info = Storage(_info);
     emit StorageChanged(_info);
@@ -85,7 +85,7 @@ contract Router is Ownable, Pausable {
     if (feeUSD == 0) return 0;
 
     (, int256 answer, , , ) = AggregatorV3Interface(info.getAddress(keccak256("DFH:Fee:PriceFeed"))).latestRoundData();
-    require(answer > 0, "Router::fee: invalid price feed response");
+    require(answer > 0, "SmartTradeRouter::fee: invalid price feed response");
 
     return (feeUSD * 1e18) / uint256(answer);
   }
@@ -99,9 +99,9 @@ contract Router is Ownable, Pausable {
     address token,
     uint256 amount
   ) public whenNotPaused {
-    require(recipient != address(0), "Router::deposit: invalid recipient address");
-    require(token != address(0), "Router::deposit: invalid token contract address");
-    require(amount > 0, "Router::deposit: invalid amount");
+    require(recipient != address(0), "SmartTradeRouter::deposit: invalid recipient address");
+    require(token != address(0), "SmartTradeRouter::deposit: invalid token contract address");
+    require(amount > 0, "SmartTradeRouter::deposit: invalid amount");
 
     IERC20(token).safeTransferFrom(msg.sender, address(this), amount);
     _balances[recipient][token] += amount;
@@ -112,14 +112,14 @@ contract Router is Ownable, Pausable {
     address token,
     uint256 amount
   ) external whenNotPaused {
-    require(spender != address(0), "Router::refund: invalid recipient address");
+    require(spender != address(0), "SmartTradeRouter::refund: invalid recipient address");
     require(
       spender == msg.sender ||
         info.getBool(keccak256(abi.encodePacked("DFH:Contract:SmartTrade:allowedHandler:", msg.sender)))
     );
-    require(token != address(0), "Router::refund: invalid token contract address");
-    require(amount > 0, "Router::refund: invalid amount");
-    require(balanceOf(spender, token) >= amount, "Router::refund: insufficient balance");
+    require(token != address(0), "SmartTradeRouter::refund: invalid token contract address");
+    require(amount > 0, "SmartTradeRouter::refund: invalid amount");
+    require(balanceOf(spender, token) >= amount, "SmartTradeRouter::refund: insufficient balance");
 
     _balances[spender][token] -= amount;
     IERC20(token).safeTransfer(msg.sender, amount);
@@ -137,7 +137,7 @@ contract Router is Ownable, Pausable {
   ) external payable whenNotPaused returns (uint256) {
     require(
       info.getBool(keccak256(abi.encodePacked("DFH:Contract:SmartTrade:allowedHandler:", handler))),
-      "Router::createOrder: invalid handler address"
+      "SmartTradeRouter::createOrder: invalid handler address"
     );
 
     ordersCount++;
@@ -156,7 +156,7 @@ contract Router is Ownable, Pausable {
 
     if (msg.value > 0) {
       address balance = info.getAddress(keccak256("DFH:Contract:Balance"));
-      require(balance != address(0), "Router::createOrder: invalid balance contract address");
+      require(balance != address(0), "SmartTradeRouter::createOrder: invalid balance contract address");
 
       Balance(balance).deposit{value: msg.value}(newOrder.owner);
     }
@@ -166,9 +166,9 @@ contract Router is Ownable, Pausable {
 
   function cancelOrder(uint256 id) external {
     Order storage _order = _orders[id];
-    require(_order.owner != address(0), "Router::cancelOrder: undefined order");
-    require(msg.sender == _order.owner || msg.sender == owner(), "Router::cancelOrder: forbidden");
-    require(_order.status == OrderStatus.Pending, "Router::cancelOrder: order has already been processed");
+    require(_order.owner != address(0), "SmartTradeRouter::cancelOrder: undefined order");
+    require(msg.sender == _order.owner || msg.sender == owner(), "SmartTradeRouter::cancelOrder: forbidden");
+    require(_order.status == OrderStatus.Pending, "SmartTradeRouter::cancelOrder: order has already been processed");
 
     _order.status = OrderStatus.Canceled;
     emit OrderCanceled(_order.id);
@@ -176,13 +176,13 @@ contract Router is Ownable, Pausable {
 
   function handleOrder(uint256 id, uint256 gasFee) external whenNotPaused {
     Order storage _order = _orders[id];
-    require(_order.owner != address(0), "Router::handleOrder: undefined order");
-    require(_order.status == OrderStatus.Pending, "Router::handleOrder: order has already been processed");
+    require(_order.owner != address(0), "SmartTradeRouter::handleOrder: undefined order");
+    require(_order.status == OrderStatus.Pending, "SmartTradeRouter::handleOrder: order has already been processed");
 
     // solhint-disable-next-line avoid-tx-origin
     if (tx.origin != _order.owner) {
       address balance = info.getAddress(keccak256("DFH:Contract:Balance"));
-      require(balance != address(0), "Router::handleOrder: invalid balance contract address");
+      require(balance != address(0), "SmartTradeRouter::handleOrder: invalid balance contract address");
       Balance(balance).claim(_order.owner, gasFee, fee(), "SmartTradeHandle");
     }
 

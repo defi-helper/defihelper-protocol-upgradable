@@ -8,7 +8,7 @@ import {IRouter as IExchange} from "../dex/IRouter.sol";
 import "./Router.sol";
 import "./IHandler.sol";
 
-contract SwapHandler is IHandler {
+contract SmartTradeSwapHandler is IHandler {
   using SafeERC20 for IERC20;
 
   struct OrderData {
@@ -21,12 +21,12 @@ contract SwapHandler is IHandler {
   address public router;
 
   constructor(address _router) {
-    require(_router != address(0), "SwapHandler::constructor: invalid router contract address");
+    require(_router != address(0), "SmartTradeSwapHandler::constructor: invalid router contract address");
     router = _router;
   }
 
   modifier onlyRouter() {
-    require(msg.sender == router, "SwapHandler::onlyRouter: caller is not the router");
+    require(msg.sender == router, "SmartTradeSwapHandler::onlyRouter: caller is not the router");
     _;
   }
 
@@ -34,7 +34,7 @@ contract SwapHandler is IHandler {
     return abi.encode(data);
   }
 
-  function onOrderCreated(Router.Order calldata order) external view override onlyRouter {
+  function onOrderCreated(SmartTradeRouter.Order calldata order) external view override onlyRouter {
     abi.decode(order.callData, (OrderData));
   }
 
@@ -44,15 +44,15 @@ contract SwapHandler is IHandler {
       uint256 tokenBalance = IERC20(tokens[i]).balanceOf(address(this));
       if (tokenBalance > 0) {
         IERC20(tokens[i]).safeApprove(_router, tokenBalance);
-        Router(_router).deposit(recipient, tokens[i], tokenBalance);
+        SmartTradeRouter(_router).deposit(recipient, tokens[i], tokenBalance);
       }
     }
   }
 
-  function handle(Router.Order calldata order) external override onlyRouter {
+  function handle(SmartTradeRouter.Order calldata order) external override onlyRouter {
     OrderData memory data = abi.decode(order.callData, (OrderData));
 
-    Router(router).refund(order.owner, data.path[0], data.amountIn);
+    SmartTradeRouter(router).refund(order.owner, data.path[0], data.amountIn);
     IERC20(data.path[0]).safeApprove(data.exchange, data.amountIn);
     IExchange(data.exchange).swapExactTokensForTokensSupportingFeeOnTransferTokens(
       data.amountIn,

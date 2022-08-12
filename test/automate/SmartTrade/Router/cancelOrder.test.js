@@ -25,11 +25,11 @@ describe('Router.cancelOrder', function () {
     storage = await Storage.deploy();
     await storage.deployed();
 
-    const Router = await ethers.getContractFactory('contracts/automate/SmartTrade/Router.sol:Router');
+    const Router = await ethers.getContractFactory('contracts/automate/SmartTrade/Router.sol:SmartTradeRouter');
     router = await Router.deploy(storage.address);
     await router.deployed();
 
-    const Handler = await ethers.getContractFactory('contracts/automate/SmartTrade/mock/HandlerMock.sol:HandlerMock');
+    const Handler = await ethers.getContractFactory('contracts/automate/SmartTrade/mock/HandlerMock.sol:SmartTradeHandlerMock');
     handler = await Handler.deploy(router.address);
     await handler.deployed();
 
