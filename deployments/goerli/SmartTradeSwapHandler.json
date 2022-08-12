@@ -1,10 +1,10 @@
 {
   "name": "SmartTradeSwapHandler",
-  "address": "0x1904560910DCcBe5c26abd953d5Ccbe56a5387bd",
-  "contractName": "SwapHandler",
+  "address": "0xDeC62Cf6B4E7bBe57D1C156a0b1603F3216B9Ddd",
+  "contractName": "SmartTradeSwapHandler",
   "sourceName": "contracts/automate/SmartTrade/SwapHandler.sol",
   "args": [
-    "0x13d1016F371cb1B87a315eb94236035964A9776e"
+    "0x51ed445Cff53F2D255f0835A8961f379F82F9F37"
   ],
   "libraries": {},
   "abi": [
@@ -44,7 +44,7 @@
               "type": "uint256"
             }
           ],
-          "internalType": "struct SwapHandler.OrderData",
+          "internalType": "struct SmartTradeSwapHandler.OrderData",
           "name": "data",
           "type": "tuple"
         }
@@ -75,7 +75,7 @@
               "type": "address"
             },
             {
-              "internalType": "enum Router.OrderStatus",
+              "internalType": "enum SmartTradeRouter.OrderStatus",
               "name": "status",
               "type": "uint8"
             },
@@ -90,7 +90,7 @@
               "type": "bytes"
             }
           ],
-          "internalType": "struct Router.Order",
+          "internalType": "struct SmartTradeRouter.Order",
           "name": "order",
           "type": "tuple"
         }
@@ -115,7 +115,7 @@
               "type": "address"
             },
             {
-              "internalType": "enum Router.OrderStatus",
+              "internalType": "enum SmartTradeRouter.OrderStatus",
               "name": "status",
               "type": "uint8"
             },
@@ -130,7 +130,7 @@
               "type": "bytes"
             }
           ],
-          "internalType": "struct Router.Order",
+          "internalType": "struct SmartTradeRouter.Order",
           "name": "order",
           "type": "tuple"
         }
@@ -154,6 +154,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 7391104,
-  "transactionHash": "0xbccaac20cde6cf5149cce010bc0282b851af169aac776980525a085cf0502604"
+  "blockNumber": 7391411,
+  "transactionHash": "0x79864b3ba4f2f9c2c0bc9a9799bef27f821094b2268fa0d7fbc84e5dff445d41"
 }

@@ -1,7 +1,7 @@
 {
   "name": "SmartTradeRouter",
-  "address": "0x13d1016F371cb1B87a315eb94236035964A9776e",
-  "contractName": "Router",
+  "address": "0x51ed445Cff53F2D255f0835A8961f379F82F9F37",
+  "contractName": "SmartTradeRouter",
   "sourceName": "contracts/automate/SmartTrade/Router.sol",
   "args": [
     "0xA32379671A956845E6B607B2a3b574Fe7c83146b"
@@ -328,7 +328,7 @@
               "type": "address"
             },
             {
-              "internalType": "enum Router.OrderStatus",
+              "internalType": "enum SmartTradeRouter.OrderStatus",
               "name": "status",
               "type": "uint8"
             },
@@ -343,7 +343,7 @@
               "type": "bytes"
             }
           ],
-          "internalType": "struct Router.Order",
+          "internalType": "struct SmartTradeRouter.Order",
           "name": "",
           "type": "tuple"
         }
@@ -448,6 +448,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 7391102,
-  "transactionHash": "0xdef69390503a507467b748f77c2d9df8dccb64227d3929aa59fed97fa1eb11c4"
+  "blockNumber": 7391409,
+  "transactionHash": "0xb4007987929ed8207689c6f3f5f6b70272cd3d1cc8dfe4dc7d5f5798a8de06c1"
 }

@@ -18,7 +18,7 @@
               "type": "address"
             },
             {
-              "internalType": "enum Router.OrderStatus",
+              "internalType": "enum SmartTradeRouter.OrderStatus",
               "name": "status",
               "type": "uint8"
             },
@@ -33,7 +33,7 @@
               "type": "bytes"
             }
           ],
-          "internalType": "struct Router.Order",
+          "internalType": "struct SmartTradeRouter.Order",
           "name": "order",
           "type": "tuple"
         }
@@ -58,7 +58,7 @@
               "type": "address"
             },
             {
-              "internalType": "enum Router.OrderStatus",
+              "internalType": "enum SmartTradeRouter.OrderStatus",
               "name": "status",
               "type": "uint8"
             },
@@ -73,7 +73,7 @@
               "type": "bytes"
             }
           ],
-          "internalType": "struct Router.Order",
+          "internalType": "struct SmartTradeRouter.Order",
           "name": "order",
           "type": "tuple"
         }
