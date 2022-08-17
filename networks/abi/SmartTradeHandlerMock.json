@@ -85,6 +85,11 @@
                     "internalType": "struct SmartTradeRouter.Order",
                     "name": "order",
                     "type": "tuple"
+                },
+                {
+                    "internalType": "bytes",
+                    "name": "",
+                    "type": "bytes"
                 }
             ],
             "name": "handle",

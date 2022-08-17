@@ -33,6 +33,11 @@
                     "internalType": "struct SmartTradeRouter.Order",
                     "name": "order",
                     "type": "tuple"
+                },
+                {
+                    "internalType": "bytes",
+                    "name": "options",
+                    "type": "bytes"
                 }
             ],
             "name": "handle",

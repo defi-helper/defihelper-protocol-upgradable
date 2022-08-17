@@ -1,6 +1,6 @@
 {
   "name": "SmartTradeRouter",
-  "address": "0x51ed445Cff53F2D255f0835A8961f379F82F9F37",
+  "address": "0xC82C19436D84f6c7A0a6c1e2562814508DFd0190",
   "contractName": "SmartTradeRouter",
   "sourceName": "contracts/automate/SmartTrade/Router.sol",
   "args": [
@@ -282,6 +282,11 @@
           "type": "uint256"
         },
         {
+          "internalType": "bytes",
+          "name": "options",
+          "type": "bytes"
+        },
+        {
           "internalType": "uint256",
           "name": "gasFee",
           "type": "uint256"
@@ -448,6 +453,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 7391409,
-  "transactionHash": "0xb4007987929ed8207689c6f3f5f6b70272cd3d1cc8dfe4dc7d5f5798a8de06c1"
+  "blockNumber": 7420955,
+  "transactionHash": "0x2322534e8506a245583b8217af54c6fde493b30e34013ca8b8636b2106adedd2"
 }

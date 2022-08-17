@@ -167,12 +167,12 @@
       "blockNumber": 7299483
     },
     "SmartTradeRouter": {
-      "address": "0x51ed445Cff53F2D255f0835A8961f379F82F9F37",
-      "blockNumber": 7391409
+      "address": "0xC82C19436D84f6c7A0a6c1e2562814508DFd0190",
+      "blockNumber": 7420955
     },
     "SmartTradeSwapHandler": {
-      "address": "0xDeC62Cf6B4E7bBe57D1C156a0b1603F3216B9Ddd",
-      "blockNumber": 7391411
+      "address": "0xdcb0B88dA62f6Be75d0dd425A2FCF322EA7ce74b",
+      "blockNumber": 7420957
     }
   },
   "10": {

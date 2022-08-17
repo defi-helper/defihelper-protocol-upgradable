@@ -31,9 +31,9 @@
                             "type": "address[]"
                         },
                         {
-                            "internalType": "uint256",
+                            "internalType": "uint256[]",
                             "name": "amountOutMin",
-                            "type": "uint256"
+                            "type": "uint256[]"
                         }
                     ],
                     "internalType": "struct SmartTradeSwapHandler.OrderData",
@@ -42,6 +42,37 @@
                 }
             ],
             "name": "callDataEncode",
+            "outputs": [
+                {
+                    "internalType": "bytes",
+                    "name": "",
+                    "type": "bytes"
+                }
+            ],
+            "stateMutability": "pure",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint8",
+                            "name": "route",
+                            "type": "uint8"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "deadline",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct SmartTradeSwapHandler.Options",
+                    "name": "data",
+                    "type": "tuple"
+                }
+            ],
+            "name": "callOptionsEncode",
             "outputs": [
                 {
                     "internalType": "bytes",
@@ -85,6 +116,11 @@
                     "internalType": "struct SmartTradeRouter.Order",
                     "name": "order",
                     "type": "tuple"
+                },
+                {
+                    "internalType": "bytes",
+                    "name": "_options",
+                    "type": "bytes"
                 }
             ],
             "name": "handle",
