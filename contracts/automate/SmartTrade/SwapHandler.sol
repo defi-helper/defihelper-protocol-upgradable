@@ -15,7 +15,12 @@ contract SmartTradeSwapHandler is IHandler {
     address exchange;
     uint256 amountIn;
     address[] path;
-    uint256 amountOutMin;
+    uint256[] amountOutMin;
+  }
+
+  struct Options {
+    uint8 route;
+    uint256 deadline;
   }
 
   address public router;
@@ -34,6 +39,10 @@ contract SmartTradeSwapHandler is IHandler {
     return abi.encode(data);
   }
 
+  function callOptionsEncode(Options calldata data) external pure returns (bytes memory) {
+    return abi.encode(data);
+  }
+
   function onOrderCreated(SmartTradeRouter.Order calldata order) external view override onlyRouter {
     abi.decode(order.callData, (OrderData));
   }
@@ -49,17 +58,18 @@ contract SmartTradeSwapHandler is IHandler {
     }
   }
 
-  function handle(SmartTradeRouter.Order calldata order) external override onlyRouter {
+  function handle(SmartTradeRouter.Order calldata order, bytes calldata _options) external override onlyRouter {
     OrderData memory data = abi.decode(order.callData, (OrderData));
+    Options memory options = abi.decode(_options, (Options));
 
     SmartTradeRouter(router).refund(order.owner, data.path[0], data.amountIn);
     IERC20(data.path[0]).safeApprove(data.exchange, data.amountIn);
     IExchange(data.exchange).swapExactTokensForTokensSupportingFeeOnTransferTokens(
       data.amountIn,
-      data.amountOutMin,
+      data.amountOutMin[options.route],
       data.path,
       address(this),
-      block.timestamp
+      options.deadline
     );
     _returnRemainder(data.path, order.owner);
   }

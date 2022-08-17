@@ -6,5 +6,5 @@ import "./Router.sol";
 interface IHandler {
   function onOrderCreated(SmartTradeRouter.Order calldata order) external;
 
-  function handle(SmartTradeRouter.Order calldata order) external;
+  function handle(SmartTradeRouter.Order calldata order, bytes calldata options) external;
 }

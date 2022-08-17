@@ -56,7 +56,7 @@ describe('Router.handleOrder', function () {
 
   it('handleOrder: should revert tx if order not found', async function () {
     await assertions.reverts(
-      router.handleOrder(await router.ordersCount().then((v) => new bn(v.toString()).plus(1).toString()), 0),
+      router.handleOrder(await router.ordersCount().then((v) => new bn(v.toString()).plus(1).toString()), '0x', 0),
       'Router::handleOrder: undefined order',
     );
   });
@@ -76,7 +76,7 @@ describe('Router.handleOrder', function () {
     const order = await router.order(await router.ordersCount().then((v) => v.toString()));
     const inTokenAccountBalance = await router.balanceOf(owner.address, inToken.address).then((v) => v.toString());
 
-    await router.handleOrder(order.id.toString(), 0);
+    await router.handleOrder(order.id.toString(), '0x', 0);
     const successedOrder = await router.order(order.id.toString());
 
     strictEqual(successedOrder.status.toString(), '1', 'Invalid order status');
@@ -94,7 +94,7 @@ describe('Router.handleOrder', function () {
 
   it('handleOrder: should revert tx if order already processed', async function () {
     await assertions.reverts(
-      router.handleOrder(await router.ordersCount().then((v) => v.toString()), 0),
+      router.handleOrder(await router.ordersCount().then((v) => v.toString()), '0x', 0),
       'Router::handleOrder: order has already been processed',
     );
   });
@@ -117,7 +117,7 @@ describe('Router.handleOrder', function () {
     const accountClaim = await balance.claimOf(owner.address).then((v) => v.toString());
 
     const expectedFee = await router.fee().then((v) => v.toString());
-    await router.connect(consumer).handleOrder(order.id.toString(), 0);
+    await router.connect(consumer).handleOrder(order.id.toString(), '0x', 0);
     strictEqual(
       await balance.claimOf(owner.address).then((v) => v.toString()),
       new bn(accountClaim).plus(expectedFee).toString(),
@@ -139,7 +139,7 @@ describe('Router.handleOrder', function () {
     );
 
     await assertions.reverts(
-      router.connect(other).handleOrder(await router.ordersCount().then((v) => v.toString()), 0),
+      router.connect(other).handleOrder(await router.ordersCount().then((v) => v.toString()), '0x', 0),
       'Balance: caller is not a consumer',
     );
   });
@@ -159,7 +159,7 @@ describe('Router.handleOrder', function () {
     await storage.setAddress(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Contract:Balance')), zeroAddress);
 
     await assertions.reverts(
-      router.connect(consumer).handleOrder(await router.ordersCount().then((v) => v.toString()), 0),
+      router.connect(consumer).handleOrder(await router.ordersCount().then((v) => v.toString()), '0x', 0),
       'Router::handleOrder: invalid balance contract address',
     );
   });

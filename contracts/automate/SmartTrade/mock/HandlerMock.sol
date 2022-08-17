@@ -36,7 +36,7 @@ contract SmartTradeHandlerMock is IHandler {
     abi.decode(order.callData, (OrderData));
   }
 
-  function handle(SmartTradeRouter.Order calldata order) external override onlyRouter {
+  function handle(SmartTradeRouter.Order calldata order, bytes calldata) external override onlyRouter {
     OrderData memory data = abi.decode(order.callData, (OrderData));
     address _router = router;
 

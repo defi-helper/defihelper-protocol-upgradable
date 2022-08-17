@@ -56,13 +56,19 @@ contract SmartTradeRouter is Ownable, Pausable {
 
   function pause() external {
     address pauser = info.getAddress(keccak256("DFH:Pauser"));
-    require(msg.sender == owner() || msg.sender == pauser, "SmartTradeRouter::pause: caller is not the owner or pauser");
+    require(
+      msg.sender == owner() || msg.sender == pauser,
+      "SmartTradeRouter::pause: caller is not the owner or pauser"
+    );
     _pause();
   }
 
   function unpause() external {
     address pauser = info.getAddress(keccak256("DFH:Pauser"));
-    require(msg.sender == owner() || msg.sender == pauser, "SmartTradeRouter::unpause: caller is not the owner or pauser");
+    require(
+      msg.sender == owner() || msg.sender == pauser,
+      "SmartTradeRouter::unpause: caller is not the owner or pauser"
+    );
     _unpause();
   }
 
@@ -174,7 +180,11 @@ contract SmartTradeRouter is Ownable, Pausable {
     emit OrderCanceled(_order.id);
   }
 
-  function handleOrder(uint256 id, uint256 gasFee) external whenNotPaused {
+  function handleOrder(
+    uint256 id,
+    bytes calldata options,
+    uint256 gasFee
+  ) external whenNotPaused {
     Order storage _order = _orders[id];
     require(_order.owner != address(0), "SmartTradeRouter::handleOrder: undefined order");
     require(_order.status == OrderStatus.Pending, "SmartTradeRouter::handleOrder: order has already been processed");
@@ -186,7 +196,7 @@ contract SmartTradeRouter is Ownable, Pausable {
       Balance(balance).claim(_order.owner, gasFee, fee(), "SmartTradeHandle");
     }
 
-    IHandler(_order.handler).handle(_order);
+    IHandler(_order.handler).handle(_order, options);
     _order.status = OrderStatus.Succeeded;
     emit OrderSuccessed(id);
   }
