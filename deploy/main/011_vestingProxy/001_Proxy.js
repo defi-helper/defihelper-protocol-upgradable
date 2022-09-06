@@ -13,7 +13,7 @@ module.exports = migration(async (deployer) => {
     'create',
     [
       vesting.address,
-      new ethers.utils.Interface(vesting.abi).encodeFunctionData('init', [gov.address, timelock.address]),
+      new ethers.utils.Interface(vesting.abi).encodeFunctionData('init', [timelock.address, gov.address, timelock.address]),
     ],
     { gasLimit: 150000 },
   );

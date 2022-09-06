@@ -20,10 +20,11 @@ describe('Vesting.claim', function () {
     const Vesting = await ethers.getContractFactory('Vesting');
     vesting = await Vesting.deploy();
     await vesting.deployed();
-    await vesting.init(token.address, deployer.address);
+    await vesting.init(deployer.address, token.address, deployer.address);
 
     await token.approve(vesting.address, amount.toFixed(0));
-    await vesting.distribute(owner.address, amount.toFixed(0), duration);
+    const currentBlock = await ethers.provider.getBlockNumber();
+    await vesting.distribute(owner.address, amount.toFixed(0), currentBlock + 4, duration);
   });
 
   it('claim: should revert tx if not owner call', async function () {
@@ -31,6 +32,18 @@ describe('Vesting.claim', function () {
   });
 
   it('claim: should claim tokens', async function () {
+    strictEqual(
+      '0',
+      await vesting
+        .earned()
+        .then(toBN)
+        .then((v) => v.toString()),
+      'Invalid prestart earned',
+    );
+    await nextBlock();
+    await assertions.reverts(vesting.connect(owner).claim(), 'Vesting::claim: empty');
+    await nextBlock();
+
     strictEqual(
       '8',
       await vesting
