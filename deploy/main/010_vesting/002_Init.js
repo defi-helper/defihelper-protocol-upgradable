@@ -6,6 +6,6 @@ module.exports = migration(async (deployer) => {
     deployer.artifacts.readDeploy('Timelock'),
   ]);
 
-  await deployer.execute('Vesting', 'init', [gov.address, timelock.address]);
+  await deployer.execute('Vesting', 'init', [timelock.address, gov.address, timelock.address]);
 });
 module.exports.tags = ['DFH', 'Main', 'Protocol', 'NonUpgradable'];

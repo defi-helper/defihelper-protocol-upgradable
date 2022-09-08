@@ -11,8 +11,14 @@ contract Vesting is ReentrancyGuard {
   /// @notice Contract owner.
   address public owner;
 
+  /// @notice Contract admin.
+  address public admin;
+
   /// @notice Vesting token.
   GovernanceToken public token;
+
+  /// @notice Block number of rewards distibution period start.
+  uint256 public periodStart;
 
   /// @notice Block number of rewards distibution period finish.
   uint256 public periodFinish;
@@ -25,9 +31,19 @@ contract Vesting is ReentrancyGuard {
 
   event Initialized(address indexed owner);
 
-  event Distribute(address indexed recipient, uint256 amount, uint256 duration);
+  event Distribute(address indexed recipient, uint256 amount, uint256 start, uint256 duration);
 
   event Claim(uint256 amount);
+
+  event Cancel();
+
+  /**
+   * @dev Throws if called by any account other than the admin.
+   */
+  modifier onlyAdmin() {
+    require(admin == msg.sender, "Vesting: caller is not the admin");
+    _;
+  }
 
   /**
    * @dev Throws if called by any account other than the owner.
@@ -48,9 +64,14 @@ contract Vesting is ReentrancyGuard {
   /**
    * @param _token Vesting token.
    */
-  function init(address _token, address _distributor) external {
+  function init(
+    address _admin,
+    address _token,
+    address _distributor
+  ) external {
     require(!initialized, "Vesting::init: contract already initialized");
     initialized = true;
+    admin = _admin;
     owner = _distributor;
     token = GovernanceToken(_token);
     emit Initialized(_distributor);
@@ -65,26 +86,30 @@ contract Vesting is ReentrancyGuard {
   function distribute(
     address recipient,
     uint256 amount,
+    uint256 start,
     uint256 duration
   ) external onlyOwner onlyInitialized {
     require(recipient != address(0), "Vesting::distribute: invalid recipient");
-    require(duration > 0, "Vesting::distribute: invalid duration");
     require(amount > 0, "Vesting::distribute: invalid amount");
+    require(start >= block.number, "Vesting::distribute: invalid start");
+    require(duration > 0, "Vesting::distribute: invalid duration");
     require(periodFinish == 0, "Vesting::distribute: already distributed");
 
     token.transferFrom(msg.sender, address(this), amount);
     owner = recipient;
     token.delegate(recipient);
     rate = amount / duration;
-    periodFinish = block.number + duration;
-    lastClaim = block.number;
-    emit Distribute(recipient, amount, duration);
+    periodStart = start;
+    periodFinish = start + duration;
+    lastClaim = start;
+    emit Distribute(recipient, amount, start, duration);
   }
 
   /**
    * @return Block number of last claim.
    */
   function lastTimeRewardApplicable() public view onlyInitialized returns (uint256) {
+    if (block.number <= periodStart) return periodStart;
     return periodFinish > block.number ? block.number : periodFinish;
   }
 
@@ -92,6 +117,7 @@ contract Vesting is ReentrancyGuard {
    * @return Earned tokens.
    */
   function earned() public view onlyInitialized returns (uint256) {
+    if (block.number <= periodStart) return 0;
     return
       block.number > periodFinish ? token.balanceOf(address(this)) : rate * (lastTimeRewardApplicable() - lastClaim);
   }
@@ -105,5 +131,17 @@ contract Vesting is ReentrancyGuard {
     lastClaim = lastTimeRewardApplicable();
     token.transfer(owner, amount);
     emit Claim(amount);
+  }
+
+  /**
+   * @notice Cancel distribute.
+   * @param recipient Token recipient.
+   */
+  function cancel(address recipient) external onlyInitialized onlyAdmin {
+    require(block.number <= periodFinish, "Vesting::cancel: ended");
+    uint256 balance = token.balanceOf(address(this));
+    require(balance > 0, "Vesting::cancel: already canceled");
+    token.transfer(recipient, balance);
+    emit Cancel();
   }
 }
