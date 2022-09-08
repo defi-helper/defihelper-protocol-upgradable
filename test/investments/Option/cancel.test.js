@@ -6,8 +6,8 @@ const bn = require('bignumber.js');
 const toBN = (v) => new bn(v.toString());
 const nextBlock = () => ethers.provider.send('evm_mine');
 
-describe('Vesting.cancel', function () {
-  let vesting, token, deployer, owner;
+describe('Option.cancel', function () {
+  let option, token, deployer, owner;
   const amount = new bn('50');
   const duration = 6;
   before(async function () {
@@ -17,24 +17,24 @@ describe('Vesting.cancel', function () {
     token = await Token.deploy(deployer.address);
     await token.deployed();
 
-    const Vesting = await ethers.getContractFactory('Vesting');
-    vesting = await Vesting.deploy();
-    await vesting.deployed();
-    await vesting.init(deployer.address, token.address, deployer.address);
+    const Option = await ethers.getContractFactory('Option');
+    option = await Option.deploy();
+    await option.deployed();
+    await option.init(deployer.address, token.address, deployer.address);
 
-    await token.approve(vesting.address, amount.toFixed(0));
+    await token.approve(option.address, amount.toFixed(0));
     const currentBlock = await ethers.provider.getBlockNumber();
-    await vesting.distribute(owner.address, amount.toFixed(0), currentBlock + 3, duration);
+    await option.distribute(owner.address, amount.toFixed(0), currentBlock + 3, duration);
   });
 
   it('cancel: should revert tx if not owner call', async function () {
-    await assertions.reverts(vesting.connect(owner).cancel(owner.address), 'Vesting: caller is not the admin');
+    await assertions.reverts(option.connect(owner).cancel(owner.address), 'Option: caller is not the admin');
   });
 
   it('cancel: should cancel distribution and transfer tokens', async function () {
     strictEqual(
       '0',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
@@ -45,35 +45,35 @@ describe('Vesting.cancel', function () {
     await nextBlock();
     strictEqual(
       '16',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
       'Invalid earned',
     );
 
-    const vestingBalance = await token.balanceOf(vesting.address).then(toBN);
+    const optionBalance = await token.balanceOf(option.address).then(toBN);
     const adminBalance = await token.balanceOf(deployer.address).then(toBN);
-    await vesting.cancel(deployer.address);
+    await option.cancel(deployer.address);
     strictEqual(
-      await token.balanceOf(vesting.address).then(v => v.toString()),
+      await token.balanceOf(option.address).then(v => v.toString()),
       '0',
       'Invalid end vestring balance',
     );
     strictEqual(
       await token.balanceOf(deployer.address).then(v => v.toString()),
-      adminBalance.plus(vestingBalance).toFixed(0),
+      adminBalance.plus(optionBalance).toFixed(0),
       'Invalid end admin balance',
     );
   });
 
   it('cancel: should revert tx if earned is zero', async function () {
-    await assertions.reverts(vesting.cancel(deployer.address), 'Vesting::cancel: already canceled');
+    await assertions.reverts(option.cancel(deployer.address), 'Option::cancel: already canceled');
   });
 
   it('cancel: should revert tx if distribution ended', async function () {
     await nextBlock();
     await nextBlock();
-    await assertions.reverts(vesting.cancel(deployer.address), 'Vesting::cancel: ended');
+    await assertions.reverts(option.cancel(deployer.address), 'Option::cancel: ended');
   });
 });

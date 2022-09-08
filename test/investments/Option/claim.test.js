@@ -6,8 +6,8 @@ const bn = require('bignumber.js');
 const toBN = (v) => new bn(v.toString());
 const nextBlock = () => ethers.provider.send('evm_mine');
 
-describe('Vesting.claim', function () {
-  let vesting, token, deployer, owner;
+describe('Option.claim', function () {
+  let option, token, deployer, owner;
   const amount = new bn('50');
   const duration = 6;
   before(async function () {
@@ -17,36 +17,36 @@ describe('Vesting.claim', function () {
     token = await Token.deploy(deployer.address);
     await token.deployed();
 
-    const Vesting = await ethers.getContractFactory('Vesting');
-    vesting = await Vesting.deploy();
-    await vesting.deployed();
-    await vesting.init(deployer.address, token.address, deployer.address);
+    const Option = await ethers.getContractFactory('Option');
+    option = await Option.deploy();
+    await option.deployed();
+    await option.init(deployer.address, token.address, deployer.address);
 
-    await token.approve(vesting.address, amount.toFixed(0));
+    await token.approve(option.address, amount.toFixed(0));
     const currentBlock = await ethers.provider.getBlockNumber();
-    await vesting.distribute(owner.address, amount.toFixed(0), currentBlock + 4, duration);
+    await option.distribute(owner.address, amount.toFixed(0), currentBlock + 4, duration);
   });
 
   it('claim: should revert tx if not owner call', async function () {
-    await assertions.reverts(vesting.claim(), 'Vesting: caller is not the owner');
+    await assertions.reverts(option.claim(), 'Option: caller is not the owner');
   });
 
   it('claim: should claim tokens', async function () {
     strictEqual(
       '0',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
       'Invalid prestart earned',
     );
     await nextBlock();
-    await assertions.reverts(vesting.connect(owner).claim(), 'Vesting::claim: empty');
+    await assertions.reverts(option.connect(owner).claim(), 'Option::claim: empty');
     await nextBlock();
 
     strictEqual(
       '8',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
@@ -64,17 +64,17 @@ describe('Vesting.claim', function () {
     await nextBlock();
     strictEqual(
       '16',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
       'Invalid 2 earned',
     );
 
-    await vesting.connect(owner).claim();
+    await option.connect(owner).claim();
     strictEqual(
       '0',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
@@ -95,17 +95,17 @@ describe('Vesting.claim', function () {
     await nextBlock();
     strictEqual(
       '26',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
       'Invalid 4 earned',
     );
 
-    await vesting.connect(owner).claim();
+    await option.connect(owner).claim();
     strictEqual(
       '0',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
@@ -123,7 +123,7 @@ describe('Vesting.claim', function () {
     await nextBlock();
     strictEqual(
       '0',
-      await vesting
+      await option
         .earned()
         .then(toBN)
         .then((v) => v.toString()),
@@ -132,6 +132,6 @@ describe('Vesting.claim', function () {
   });
 
   it('claim: should revert tx if earned is zero', async function () {
-    await assertions.reverts(vesting.connect(owner).claim(), 'Vesting::claim: empty');
+    await assertions.reverts(option.connect(owner).claim(), 'Option::claim: empty');
   });
 });

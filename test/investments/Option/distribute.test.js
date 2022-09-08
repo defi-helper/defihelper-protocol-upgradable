@@ -5,8 +5,8 @@ const bn = require('bignumber.js');
 
 const toBN = (v) => new bn(v.toString());
 
-describe('Vesting.distribute', function () {
-  let vesting, token, deployer, owner;
+describe('Option.distribute', function () {
+  let option, token, deployer, owner;
   before(async function () {
     [deployer, owner] = await ethers.getSigners();
 
@@ -14,49 +14,49 @@ describe('Vesting.distribute', function () {
     token = await Token.deploy(deployer.address);
     await token.deployed();
 
-    const Vesting = await ethers.getContractFactory('Vesting');
-    vesting = await Vesting.deploy();
-    await vesting.deployed();
-    await vesting.init(deployer.address, token.address, deployer.address);
+    const Option = await ethers.getContractFactory('Option');
+    option = await Option.deploy();
+    await option.deployed();
+    await option.init(deployer.address, token.address, deployer.address);
   });
 
   it('distribute: should revert if not owner call', async function () {
     const currentBlock = await ethers.provider.getBlockNumber();
     await assertions.reverts(
-      vesting.connect(owner).distribute(owner.address, 1, currentBlock + 1, 10),
-      'Vesting: caller is not the owner',
+        option.connect(owner).distribute(owner.address, 1, currentBlock + 1, 10),
+      'Option: caller is not the owner',
     );
   });
 
   it('distribute: should revert if invalid recipient address', async function () {
     const currentBlock = await ethers.provider.getBlockNumber();
     await assertions.reverts(
-      vesting.distribute('0x0000000000000000000000000000000000000000', 1, currentBlock + 1, 10),
-      'Vesting::distribute: invalid recipient',
+        option.distribute('0x0000000000000000000000000000000000000000', 1, currentBlock + 1, 10),
+      'Option::distribute: invalid recipient',
     );
   });
 
   it('distribute: should revert if invalid amount', async function () {
     const currentBlock = await ethers.provider.getBlockNumber();
     await assertions.reverts(
-      vesting.distribute(owner.address, 0, currentBlock + 1, 10),
-      'Vesting::distribute: invalid amount',
+        option.distribute(owner.address, 0, currentBlock + 1, 10),
+      'Option::distribute: invalid amount',
     );
   });
 
   it('distribute: should revert if invalid duration', async function () {
     const currentBlock = await ethers.provider.getBlockNumber();
     await assertions.reverts(
-      vesting.distribute(owner.address, 1, currentBlock + 1, 0),
-      'Vesting::distribute: invalid duration',
+        option.distribute(owner.address, 1, currentBlock + 1, 0),
+      'Option::distribute: invalid duration',
     );
   });
 
   it('distribute: should revert if invalid start', async function () {
     const currentBlock = await ethers.provider.getBlockNumber();
     await assertions.reverts(
-      vesting.distribute(owner.address, 1, currentBlock - 1, 10),
-      'Vesting::distribute: invalid start',
+        option.distribute(owner.address, 1, currentBlock - 1, 10),
+      'Option::distribute: invalid start',
     );
   });
 
@@ -64,7 +64,7 @@ describe('Vesting.distribute', function () {
     const amount = new bn('100e18');
     const duration = 10;
 
-    strictEqual(deployer.address, await vesting.owner(), 'Invalid start owner');
+    strictEqual(deployer.address, await option.owner(), 'Invalid start owner');
     strictEqual(
       '0',
       await token
@@ -74,19 +74,19 @@ describe('Vesting.distribute', function () {
       'Invalid start votes',
     );
 
-    await token.approve(vesting.address, amount.toFixed(0));
+    await token.approve(option.address, amount.toFixed(0));
     const currentBlock = await ethers.provider.getBlockNumber();
-    await vesting.distribute(owner.address, amount.toFixed(0), currentBlock + 1, 10);
+    await option.distribute(owner.address, amount.toFixed(0), currentBlock + 1, 10);
 
     strictEqual(
       amount.toString(10),
       await token
-        .balanceOf(vesting.address)
+        .balanceOf(option.address)
         .then(toBN)
         .then((v) => v.toString(10)),
       'Invalid end balance',
     );
-    strictEqual(owner.address, await vesting.owner(), 'Invalid end owner');
+    strictEqual(owner.address, await option.owner(), 'Invalid end owner');
     strictEqual(
       amount.toString(10),
       await token
@@ -95,10 +95,10 @@ describe('Vesting.distribute', function () {
         .then((v) => v.toString(10)),
       'Invalid end votes',
     );
-    strictEqual(owner.address, await token.delegates(vesting.address), 'Invalid delegates');
+    strictEqual(owner.address, await token.delegates(option.address), 'Invalid delegates');
     strictEqual(
       amount.div(duration).toString(10),
-      await vesting
+      await option
         .rate()
         .then(toBN)
         .then((v) => v.toString(10)),
@@ -109,8 +109,8 @@ describe('Vesting.distribute', function () {
   it('distribute: should revert if already distributeialized', async function () {
     const currentBlock = await ethers.provider.getBlockNumber();
     await assertions.reverts(
-      vesting.connect(owner).distribute(owner.address, 1, currentBlock + 1, 10),
-      'Vesting::distribute: already distributed',
+        option.connect(owner).distribute(owner.address, 1, currentBlock + 1, 10),
+      'Option::distribute: already distributed',
     );
   });
 });

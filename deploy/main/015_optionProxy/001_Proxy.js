@@ -2,8 +2,8 @@ const { migration } = require('../../../scripts/deploy');
 const { ethers } = require('hardhat');
 
 module.exports = migration(async (deployer) => {
-  const [vesting, gov, timelock] = await Promise.all([
-    deployer.artifacts.readDeploy('Vesting'),
+  const [option, gov, timelock] = await Promise.all([
+    deployer.artifacts.readDeploy('Option'),
     deployer.artifacts.readDeploy('GovernanceToken'),
     deployer.artifacts.readDeploy('Timelock'),
   ]);
@@ -12,8 +12,8 @@ module.exports = migration(async (deployer) => {
     'ProxyFactory',
     'create',
     [
-      vesting.address,
-      new ethers.utils.Interface(vesting.abi).encodeFunctionData('init', [gov.address, timelock.address]),
+      option.address,
+      new ethers.utils.Interface(option.abi).encodeFunctionData('init', [timelock.address, gov.address, timelock.address]),
     ],
     { gasLimit: 150000 },
   );
