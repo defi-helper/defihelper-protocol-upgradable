@@ -177,6 +177,14 @@
     "Option": {
       "address": "0x3F79530eE3ea7FA16c1813eba4e3234a189De319",
       "blockNumber": 7553547
+    },
+    "OptionOne": {
+      "address": "0xeFAE88b210fE47538A23856bD5b319B01890f9fD",
+      "blockNumber": 7553560
+    },
+    "OptionTwo": {
+      "address": "0x40925E0Be6A984878E163fFb8B9a42e615269f2C",
+      "blockNumber": 7559073
     }
   },
   "10": {
