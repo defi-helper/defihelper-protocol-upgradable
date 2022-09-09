@@ -165,6 +165,10 @@
     "ProxyAdmin": {
       "address": "0x68baE415A56469fC99C4dD026e30786d5ED79Ca5",
       "blockNumber": 7299483
+    },
+    "Option": {
+      "address": "0x3F79530eE3ea7FA16c1813eba4e3234a189De319",
+      "blockNumber": 7553547
     }
   },
   "10": {
