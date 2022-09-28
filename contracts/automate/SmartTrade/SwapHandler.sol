@@ -20,6 +20,7 @@ contract SmartTradeSwapHandler is IHandler {
 
   struct Options {
     uint8 route;
+    uint256 amountOutMin;
     uint256 deadline;
   }
 
@@ -61,12 +62,17 @@ contract SmartTradeSwapHandler is IHandler {
   function handle(SmartTradeRouter.Order calldata order, bytes calldata _options) external override onlyRouter {
     OrderData memory data = abi.decode(order.callData, (OrderData));
     Options memory options = abi.decode(_options, (Options));
+    uint256 amountOutMin = options.amountOutMin > 0 ? options.amountOutMin : data.amountOutMin[options.route];
+    require(
+      data.amountOutMin[options.route] <= amountOutMin,
+      "SmartTradeSwapHandler::handle: invalid amount out min option"
+    );
 
     SmartTradeRouter(router).refund(order.owner, data.path[0], data.amountIn);
     IERC20(data.path[0]).safeApprove(data.exchange, data.amountIn);
     IExchange(data.exchange).swapExactTokensForTokensSupportingFeeOnTransferTokens(
       data.amountIn,
-      data.amountOutMin[options.route],
+      amountOutMin,
       data.path,
       address(this),
       options.deadline
