@@ -12,4 +12,5 @@ module.exports = migration(async (deployer) => {
   );
   console.info(`Storage.setUint("${utils.keccak256(utils.toUtf8Bytes('DFH:Fee:Automate:SmartTrade'))}", 100000000)`);
 });
-module.exports.tags = ['DFH', 'Dev', 'Protocol', 'NonUpgradable'];
+
+module.exports.tags = ['DFH', 'Lite', 'Protocol', 'NonUpgradable'];

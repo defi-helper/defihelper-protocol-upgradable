@@ -265,6 +265,14 @@
     "LPTokensManager": {
       "address": "0x7d441fc545c32AE943814Fd5170DD1feaa4C515A",
       "blockNumber": 19940075
+    },
+    "SmartTradeRouter": {
+      "address": "0x36D97Da2a1925681548B7B8893f6C18264ecB4a7",
+      "blockNumber": 21725505
+    },
+    "SmartTradeSwapHandler": {
+      "address": "0x555055F47036e995F4E35e7E6E346fCc2dd60FAe",
+      "blockNumber": 21725515
     }
   },
   "1285": {

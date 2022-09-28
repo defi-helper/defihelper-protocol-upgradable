@@ -8,4 +8,5 @@ module.exports = migration(async (deployer) => {
     args: [storage.address],
   });
 });
-module.exports.tags = ['DFH', 'Dev', 'Protocol', 'NonUpgradable'];
+
+module.exports.tags = ['DFH', 'Lite', 'Protocol', 'NonUpgradable'];
