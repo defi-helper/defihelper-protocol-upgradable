@@ -1,6 +1,6 @@
 {
   "name": "SmartTradeSwapHandler",
-  "address": "0xdcb0B88dA62f6Be75d0dd425A2FCF322EA7ce74b",
+  "address": "0xF8442C646C0F238Fb6174c03b1B88cD57b796839",
   "contractName": "SmartTradeSwapHandler",
   "sourceName": "contracts/automate/SmartTrade/SwapHandler.sol",
   "args": [
@@ -68,6 +68,11 @@
               "internalType": "uint8",
               "name": "route",
               "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amountOutMin",
+              "type": "uint256"
             },
             {
               "internalType": "uint256",
@@ -190,6 +195,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 7420957,
-  "transactionHash": "0xdcbf9c07ad1f9d7faa53ae55a2dd7359c34f3ff2051047964f07a1ea0e153556"
+  "blockNumber": 7662147,
+  "transactionHash": "0xdbae30b4261e8d7ef40b88e775db4644ce9d8b4dc6c59aef58c4bd853262a277"
 }
