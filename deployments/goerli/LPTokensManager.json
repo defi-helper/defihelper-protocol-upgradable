@@ -1,6 +1,6 @@
 {
   "name": "LPTokensManager",
-  "address": "0xFeBd4185555F7D036E59CCe890a7df7f6A29954E",
+  "address": "0xA6E93f163A5310bD7ac1128dC34b73463889A1DF",
   "contractName": "LPTokensManager",
   "sourceName": "contracts/automate/LPTokensManager.sol",
   "args": [
@@ -50,6 +50,10 @@
       ],
       "name": "StorageChanged",
       "type": "event"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "fallback"
     },
     {
       "inputs": [
@@ -109,6 +113,63 @@
         }
       ],
       "name": "buyLiquidity",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "router",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address[]",
+              "name": "path",
+              "type": "address[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "outMin",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct LPTokensManager.Swap",
+          "name": "swap0",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address[]",
+              "name": "path",
+              "type": "address[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "outMin",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct LPTokensManager.Swap",
+          "name": "swap1",
+          "type": "tuple"
+        },
+        {
+          "internalType": "contract IPair",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "deadline",
+          "type": "uint256"
+        }
+      ],
+      "name": "buyLiquidityETH",
       "outputs": [],
       "stateMutability": "payable",
       "type": "function"
@@ -237,6 +298,68 @@
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "router",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address[]",
+              "name": "path",
+              "type": "address[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "outMin",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct LPTokensManager.Swap",
+          "name": "swap0",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address[]",
+              "name": "path",
+              "type": "address[]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "outMin",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct LPTokensManager.Swap",
+          "name": "swap1",
+          "type": "tuple"
+        },
+        {
+          "internalType": "contract IPair",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "deadline",
+          "type": "uint256"
+        }
+      ],
+      "name": "sellLiquidityETH",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "newOwner",
           "type": "address"
@@ -246,8 +369,12 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
     }
   ],
-  "blockNumber": 7299538,
-  "transactionHash": "0xa56c63b14113a3896d5dcd92fd863f8a4f90ba8ef0efc33b5eaed5fca43e8862"
+  "blockNumber": 7704008,
+  "transactionHash": "0xada4b2d462b8a8ce5a7dd09db92d617441dd77512ce2f719d6d07d9620777d38"
 }
