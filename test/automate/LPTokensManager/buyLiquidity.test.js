@@ -134,13 +134,29 @@ describe('LPTokensManager.buyLiquidity', function () {
   });
 
   it('buyLiquidity: should revert tx if router not allowed', async function () {
+    const token0Amount = new bn(`10e18`);
+    await token0.mint(owner.address, token0Amount.toString(10));
+    await token0.approve(automate.address, token0Amount.toString(10));
+    const payFee = await automate.fee().then((v) => new bn(v.toString()));
     await assertions.reverts(
-      automate.buyLiquidity('0', zeroAddress, { path: [], outMin: 0 }, { path: [], outMin: 0 }, pair.address, 0),
-      'LPTokensManager::buyLiquidity: invalid router address',
+      automate.buyLiquidity(
+        token0Amount.toString(10),
+        zeroAddress,
+        { path: [token0.address], outMin: 0 },
+        { path: [token0.address, token1.address], outMin: 0 },
+        pair.address,
+        0,
+        {
+          gasPrice: 0,
+          value: payFee.toFixed(0),
+        },
+      ),
+      'LPTokensManager::_buyLiquidity: invalid router address',
     );
   });
 
   it('buyLiquidity: should revert tx if first swap0 token not equals first swap1 token', async function () {
+    const payFee = await automate.fee().then((v) => new bn(v.toString()));
     await assertions.reverts(
       automate.buyLiquidity(
         '0',
@@ -149,8 +165,12 @@ describe('LPTokensManager.buyLiquidity', function () {
         { path: [token1.address], outMin: 0 },
         pair.address,
         0,
+        {
+          gasPrice: 0,
+          value: payFee.toFixed(0),
+        },
       ),
-      'LPTokensManager::buyLiqudity: start token not equals',
+      'LPTokensManager::_buyLiqudity: start token not equals',
     );
   });
 
@@ -167,7 +187,7 @@ describe('LPTokensManager.buyLiquidity', function () {
           value: await automate.fee().then((v) => v.toString()),
         },
       ),
-      'LPTokensManager::buyLiqudity: invalid token0',
+      'LPTokensManager::_buyLiqudity: invalid token0',
     );
   });
 
@@ -184,7 +204,7 @@ describe('LPTokensManager.buyLiquidity', function () {
           value: await automate.fee().then((v) => v.toString()),
         },
       ),
-      'LPTokensManager::buyLiqudity: invalid token1',
+      'LPTokensManager::_buyLiqudity: invalid token1',
     );
   });
 

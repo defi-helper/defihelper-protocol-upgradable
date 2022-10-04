@@ -4,7 +4,7 @@ const { ethers } = require('hardhat');
 const bn = require('bignumber.js');
 
 describe('LPTokensManager.sellLiquidity', function () {
-  let owner, treasury, outToken, token0, token1, pair, router, storage, priceFeed, automate;
+  let owner, treasury, outToken, token0, token1, pair, router, storage, priceFeed, weth, automate;
   const fee = new bn('1e8').toFixed(0);
   const nativeTokenUSD = new bn('1000e8').toFixed(0);
   const zeroAddress = '0x0000000000000000000000000000000000000000';
@@ -43,6 +43,10 @@ describe('LPTokensManager.sellLiquidity', function () {
     await priceFeed.deployed();
     await priceFeed.addRoundData(nativeTokenUSD);
 
+    const WrapMock = await ethers.getContractFactory('WrapMock');
+    weth = await WrapMock.deploy('WETH', 'Wrapped ETH');
+    await weth.deployed();
+
     const Storage = await ethers.getContractFactory('Storage');
     storage = await Storage.deploy();
     await storage.deployed();
@@ -58,6 +62,7 @@ describe('LPTokensManager.sellLiquidity', function () {
       treasury.address,
     );
     await storage.setAddress(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Fee:PriceFeed')), priceFeed.address);
+    await storage.setAddress(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('NativeWrapper:Contract')), weth.address);
     await storage.setUint(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Fee:Automate:LPTokensManager')), fee);
 
     const Automate = await ethers.getContractFactory('LPTokensManager');
@@ -111,13 +116,31 @@ describe('LPTokensManager.sellLiquidity', function () {
   });
 
   it('sellLiquidity: should revert tx if router not allowed', async function () {
+    const liquidity = new bn(`1e18`);
+    const token0Amount = new bn('10e18');
+    const token1Amount = new bn('10e18');
+    await pair.approve(automate.address, liquidity.toFixed(0));
+    const payFee = await automate.fee().then((v) => new bn(v.toString()));
     await assertions.reverts(
-      automate.sellLiquidity('0', zeroAddress, { path: [], outMin: 0 }, { path: [], outMin: 0 }, pair.address, 0),
+      automate.sellLiquidity(
+        liquidity.toFixed(0),
+        zeroAddress,
+        { path: [token0.address, outToken.address], outMin: token0Amount.toString(10) },
+        { path: [token1.address, outToken.address], outMin: token1Amount.toString(10) },
+        pair.address,
+        0,
+
+        {
+          gasPrice: 0,
+          value: payFee.toFixed(0),
+        },
+      ),
       'LPTokensManager::sellLiquidity: invalid router address',
     );
   });
 
   it('sellLiquidity: should revert tx if last swap0 token not equals last swap1 token', async function () {
+    const payFee = await automate.fee().then((v) => new bn(v.toString()));
     await assertions.reverts(
       automate.sellLiquidity(
         '0',
@@ -126,6 +149,10 @@ describe('LPTokensManager.sellLiquidity', function () {
         { path: [token1.address], outMin: 0 },
         pair.address,
         0,
+        {
+          gasPrice: 0,
+          value: payFee.toFixed(0),
+        },
       ),
       'LPTokensManager::sellLiqudity: end token not equals',
     );
