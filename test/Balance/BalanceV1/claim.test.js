@@ -1,20 +1,26 @@
 const { strictEqual } = require('assert');
 const assertions = require('truffle-assertions');
-const { ethers } = require('hardhat');
+const { ethers, upgrades } = require('hardhat');
 const bn = require('bignumber.js');
 
 describe('Balance.claim', function () {
-  let balance;
+  let balance, treasury;
   let account, consumer, notConsumer;
   const depositAmount = '2000';
   const claimGasFee = '100';
   const claimProtocolFee = '300';
-  const zeroAddress = '0x0000000000000000000000000000000000000000';
   const billStatusPending = 0;
   before(async function () {
-    const Balance = await ethers.getContractFactory('Balance');
-    balance = await Balance.deploy(zeroAddress);
+    const Treasury = await ethers.getContractFactory('contracts/Treasury/TreasuryV2.sol:TreasuryV2');
+    treasury = await upgrades.deployProxy(Treasury);
+    await treasury.deployed();
+
+    const Balance = await ethers.getContractFactory('contracts/Balance/BalanceV1.sol:BalanceV1');
+    balance = await upgrades.deployProxy(Balance, [treasury.address], {
+      initializer: 'initialize',
+    });
     await balance.deployed();
+
     const BalanceConsumerMock = await ethers.getContractFactory('BalanceConsumerMock');
     consumerMock = await BalanceConsumerMock.deploy(balance.address);
     await consumerMock.deployed();
