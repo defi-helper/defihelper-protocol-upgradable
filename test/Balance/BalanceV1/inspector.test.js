@@ -1,14 +1,19 @@
 const { strictEqual } = require('assert');
 const assertions = require('truffle-assertions');
-const { ethers } = require('hardhat');
+const { ethers, upgrades } = require('hardhat');
 
 describe('Balance.inspector', function () {
-  let balance;
+  let balance, treasury;
   let newInspector;
-  const zeroAddress = '0x0000000000000000000000000000000000000000';
   before(async function () {
-    const Balance = await ethers.getContractFactory('Balance');
-    balance = await Balance.deploy(zeroAddress);
+    const Treasury = await ethers.getContractFactory('contracts/Treasury/TreasuryV2.sol:TreasuryV2');
+    treasury = await upgrades.deployProxy(Treasury);
+    await treasury.deployed();
+
+    const Balance = await ethers.getContractFactory('contracts/Balance/BalanceV1.sol:BalanceV1');
+    balance = await upgrades.deployProxy(Balance, [treasury.address], {
+      initializer: 'initialize',
+    });
     await balance.deployed();
 
     [, newInspector] = await ethers.getSigners();

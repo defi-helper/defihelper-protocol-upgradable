@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: BSD-3-Clause
 pragma solidity ^0.8.6;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import {OwnableUpgradeable as Ownable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import {EnumerableSetUpgradeable as EnumerableSet} from "@openzeppelin/contracts-upgradeable/utils/structs/EnumerableSetUpgradeable.sol";
 
-contract Balance is Ownable {
+contract BalanceV1 is Initializable, Ownable {
   using EnumerableSet for EnumerableSet.AddressSet;
 
   /// @notice Maximum inspector count.
@@ -79,7 +80,9 @@ contract Balance is Ownable {
 
   event RejectClaim(uint256 indexed bill);
 
-  constructor(address payable _treasury) {
+  function initialize(address payable _treasury) public initializer {
+    require(_treasury != address(0), "BalanceV1::initialize: invalid treasury address");
+    __Ownable_init();
     treasury = _treasury;
   }
 
