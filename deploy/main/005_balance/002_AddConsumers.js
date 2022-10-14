@@ -15,4 +15,4 @@ module.exports = migration(async (deployer) => {
     await deployer.execute('BalanceUpgradable', 'addConsumer', [consumer3.address]);
   }
 });
-module.exports.tags = ['DFH', 'Main', 'Protocol', 'NonUpgradable'];
+module.exports.tags = ['DFH', 'Main', 'Protocol', 'Upgradable'];

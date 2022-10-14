@@ -175,12 +175,24 @@
       "blockNumber": 7420955
     },
     "SmartTradeSwapHandler": {
-      "address": "0xdcb0B88dA62f6Be75d0dd425A2FCF322EA7ce74b",
-      "blockNumber": 7420957
+      "address": "0xF8442C646C0F238Fb6174c03b1B88cD57b796839",
+      "blockNumber": 7662147
     },
     "OptionBusinessDevelopment": {
       "address": "0x58e203f0854723Ba0544e95a752e401F8E576317",
       "blockNumber": 7553560
+    },
+    "BalanceUpgradable": {
+      "address": "0x6E3a2e913C22919E23F46346D45d9AF52fd44161",
+      "blockNumber": 7766799
+    },
+    "Option": {
+      "address": "0x3F79530eE3ea7FA16c1813eba4e3234a189De319",
+      "blockNumber": 7553547
+    },
+    "WETHMock": {
+      "address": "0x7b109d1E02a56b7FcE042ffb609ac4AC1de07310",
+      "blockNumber": 7703368
     }
   },
   "10": {

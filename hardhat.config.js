@@ -47,7 +47,7 @@ module.exports = {
     goerli: {
       url: process.env.GOERLI_NODE || 'http://127.0.0.1:8545',
       chainId: 5,
-      gasPrice: 2_000_000_000,
+      gasPrice: 50_000_000_000,
       blockGasLimit: 6_000_000,
       accounts: accounts(
           'GOERLI_DEPLOYER',

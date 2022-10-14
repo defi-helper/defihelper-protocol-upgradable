@@ -8,4 +8,4 @@ module.exports = migration(async (deployer) => {
     args: [treasury.address],
   });
 });
-module.exports.tags = ['DFH', 'Main', 'Protocol', 'NonUpgradable'];
+module.exports.tags = ['DFH', 'Main', 'Protocol', 'Upgradable'];

@@ -9,4 +9,4 @@ module.exports = migration(async (deployer) => {
     await deployer.execute('BalanceUpgradable', 'addInspector', [inspector.address]);
   }
 });
-module.exports.tags = ['DFH', 'Lite', 'Protocol', 'NonUpgradable'];
+module.exports.tags = ['DFH', 'Lite', 'Protocol', 'Upgradable'];
