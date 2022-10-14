@@ -7,7 +7,7 @@ const defaultChainId = 31337;
 module.exports = migration(async (deployer) => {
   const [governor, balance, budget, treasury] = await Promise.all([
     deployer.artifacts.readDeploy('GovernorMultisig'),
-    deployer.artifacts.readDeploy('Balance'),
+    deployer.artifacts.readDeploy('BalanceUpgradable'),
     deployer.artifacts.readDeploy('Budget'),
     deployer.artifacts.readDeploy('TreasuryUpgradable'),
   ]);
