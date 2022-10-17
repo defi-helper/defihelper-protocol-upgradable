@@ -14,6 +14,11 @@
       "address": "0x64c7199F7d2A1719B1625981B28cbe8BA69C1415",
       "txHash": "0xc486729bf004cde4acc673574a3b7995534fe5ae7f01fa9e58e57d2ef9634d29",
       "kind": "transparent"
+    },
+    {
+      "address": "0xa4073954e54fdc8128E029A81d460B177f376031",
+      "txHash": "0x2440cb7b590f493bc11d8a1bbdfa8db1d9d453dd002d23c195a15acbc33df832",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -195,6 +200,242 @@
           "t_mapping(t_uint8,t_uint256)": {
             "label": "mapping(uint8 => uint256)",
             "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "2fb2146a2c587bdd7fb9ff666d4be9c4f20798e01aba41ecaab4b13435d17d43": {
+      "address": "0x9B1A46Dc9C0fB01cC488a001755Fd92Bb3FAA4A3",
+      "txHash": "0xfafb24983340d44f6e6e953a498ae73957879080c971abc6fabc74eccded5e56",
+      "layout": {
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "treasury",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_address_payable",
+            "contract": "BalanceV1",
+            "src": "contracts/Balance/BalanceV1.sol:21"
+          },
+          {
+            "label": "_inspectors",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_struct(AddressSet)879_storage",
+            "contract": "BalanceV1",
+            "src": "contracts/Balance/BalanceV1.sol:24"
+          },
+          {
+            "label": "_consumers",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_struct(AddressSet)879_storage",
+            "contract": "BalanceV1",
+            "src": "contracts/Balance/BalanceV1.sol:27"
+          },
+          {
+            "label": "balanceOf",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "BalanceV1",
+            "src": "contracts/Balance/BalanceV1.sol:30"
+          },
+          {
+            "label": "claimOf",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "BalanceV1",
+            "src": "contracts/Balance/BalanceV1.sol:33"
+          },
+          {
+            "label": "bills",
+            "offset": 0,
+            "slot": "108",
+            "type": "t_mapping(t_uint256,t_struct(Bill)1232_storage)",
+            "contract": "BalanceV1",
+            "src": "contracts/Balance/BalanceV1.sol:58"
+          },
+          {
+            "label": "billCount",
+            "offset": 0,
+            "slot": "109",
+            "type": "t_uint256",
+            "contract": "BalanceV1",
+            "src": "contracts/Balance/BalanceV1.sol:61"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_enum(BillStatus)1218": {
+            "label": "enum BalanceV1.BillStatus",
+            "members": [
+              "Pending",
+              "Accepted",
+              "Rejected"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Bill)1232_storage)": {
+            "label": "mapping(uint256 => struct BalanceV1.Bill)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AddressSet)879_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)578_storage",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(Bill)1232_storage": {
+            "label": "struct BalanceV1.Bill",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "claimant",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "account",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "gasFee",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "protocolFee",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(BillStatus)1218",
+                "offset": 0,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_struct(Set)578_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
           },
           "t_uint256": {
             "label": "uint256",

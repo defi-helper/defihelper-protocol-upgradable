@@ -87,6 +87,14 @@
     "OptionBusinessDevelopment": {
       "address": "0x2d2f65875804b39008bEDC3Ab617e5e776f063Cb",
       "blockNumber": 15509007
+    },
+    "BalanceUpgradable": {
+      "address": "0x4F612eC619be73620d6C026EB6260fA5dEB66175",
+      "blockNumber": 15766104
+    },
+    "Option": {
+      "address": "0xDE285774fbc7019349fF7E659549C195D37E16DD",
+      "blockNumber": 15509007
     }
   },
   "5": {
@@ -235,6 +243,10 @@
     "LPTokensManager": {
       "address": "0x295425B90077252D52c35F15eABfb5C6d3178a4C",
       "blockNumber": 16182616
+    },
+    "BalanceUpgradable": {
+      "address": "0x9B8583F71240ea6fa1A2a1e60BF4CE7DAfd6D5E4",
+      "blockNumber": 29822164
     }
   },
   "56": {
@@ -285,6 +297,10 @@
     "SmartTradeSwapHandler": {
       "address": "0x555055F47036e995F4E35e7E6E346fCc2dd60FAe",
       "blockNumber": 21725515
+    },
+    "BalanceUpgradable": {
+      "address": "0xa4073954e54fdc8128E029A81d460B177f376031",
+      "blockNumber": 22246533
     }
   },
   "1285": {
@@ -327,6 +343,10 @@
     "LPTokensManager": {
       "address": "0x297ebF8a23F99c6Ae3C00CBF2CECA84506e9d860",
       "blockNumber": 2279583
+    },
+    "BalanceUpgradable": {
+      "address": "0xc487bfD40fb36939114c8d5Ddf163f2eD3eeC02d",
+      "blockNumber": 2791319
     }
   },
   "43113": {
@@ -411,6 +431,10 @@
     "ProxyAdmin": {
       "address": "0x5bC4C9b047B31F8215EA178c1CF38D5a210af8a1",
       "blockNumber": 17319372
+    },
+    "BalanceUpgradable": {
+      "address": "0x90562C369f5aca8724eea6fC611a0B5aBEC3f836",
+      "blockNumber": 21169491
     }
   }
 }

@@ -34,7 +34,7 @@ module.exports = {
     main: {
       url: process.env.ETH_MAIN_NODE || 'http://127.0.0.1:8545',
       chainId: 1,
-      gasPrice: 12_000_000_000,
+      gasPrice: 15_000_000_000,
       blockGasLimit: 6_000_000,
       accounts: accounts(
         'ETH_MAIN_DEPLOYER',
@@ -80,7 +80,7 @@ module.exports = {
     avalanche: {
       url: process.env.AVALANCHE_NODE || 'http://127.0.0.1:8545',
       chainId: 43114,
-      gasPrice: 25_000_000_000,
+      gasPrice: 28_000_000_000,
       blockGasLimit: 8_000_000,
       accounts: accounts(
         'AVALANCHE_DEPLOYER',
