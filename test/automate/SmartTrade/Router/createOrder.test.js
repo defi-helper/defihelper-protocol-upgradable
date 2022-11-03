@@ -29,7 +29,9 @@ describe('Router.createOrder', function () {
     router = await Router.deploy(storage.address);
     await router.deployed();
 
-    const Handler = await ethers.getContractFactory('contracts/automate/SmartTrade/mock/HandlerMock.sol:SmartTradeHandlerMock');
+    const Handler = await ethers.getContractFactory(
+      'contracts/automate/SmartTrade/mock/HandlerMock.sol:SmartTradeHandlerMock',
+    );
     handler = await Handler.deploy(router.address);
     await handler.deployed();
 
@@ -52,7 +54,7 @@ describe('Router.createOrder', function () {
       amountIn: '10',
       amountOut: '5',
     });
-    await router.createOrder(handler.address, callData, zeroAddress, 0);
+    await router.createOrder(handler.address, callData, [], []);
     const newOrderId = new bn(ordersCount).plus(1).toString(10);
 
     const newOrder = await router.order(newOrderId);
@@ -78,9 +80,10 @@ describe('Router.createOrder', function () {
         amountIn,
         amountOut: '5',
       }),
-      inToken.address,
-      amountIn,
+      [inToken.address],
+      [amountIn],
     );
+    const orderId = await router.ordersCount().then((v) => v.toString());
 
     strictEqual(
       await inToken.balanceOf(owner.address).then((v) => v.toString()),
@@ -88,7 +91,7 @@ describe('Router.createOrder', function () {
       'Invalid token balance of account',
     );
     strictEqual(
-      await router.balanceOf(owner.address, inToken.address).then((v) => v.toString()),
+      await router.balanceOf(orderId, inToken.address).then((v) => v.toString()),
       new bn(routerBalanceOfAccount).plus(amountIn).toFixed(0),
       'Invalid router balance of account',
     );
@@ -111,8 +114,8 @@ describe('Router.createOrder', function () {
         amountIn: '10',
         amountOut: '5',
       }),
-      zeroAddress,
-      '0',
+      [],
+      [],
       { value: balanceAmountIn },
     );
 
@@ -128,7 +131,7 @@ describe('Router.createOrder', function () {
       ['address', 'address'],
       [inToken.address, outToken.address],
     );
-    await assertions.reverts(router.createOrder(handler.address, invalidCallData, zeroAddress, 0), '');
+    await assertions.reverts(router.createOrder(handler.address, invalidCallData, [], []), '');
   });
 
   it('createOrder: should revert tx if invalid handler', async function () {
@@ -141,8 +144,8 @@ describe('Router.createOrder', function () {
           amountIn: '10',
           amountOut: '5',
         }),
-        zeroAddress,
-        0,
+        [],
+        [],
       ),
       '',
     );
@@ -161,8 +164,8 @@ describe('Router.createOrder', function () {
           amountIn: '10',
           amountOut: '5',
         }),
-        zeroAddress,
-        '0',
+        [],
+        [],
         { value: balanceAmountIn },
       ),
       'Router::createOrder: invalid balance contract address',

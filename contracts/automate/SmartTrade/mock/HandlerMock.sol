@@ -40,8 +40,17 @@ contract SmartTradeHandlerMock is IHandler {
     OrderData memory data = abi.decode(order.callData, (OrderData));
     address _router = router;
 
-    SmartTradeRouter(_router).refund(order.owner, data.tokenIn, data.amountIn);
+    address[] memory refundTokens = new address[](1);
+    refundTokens[0] = data.tokenIn;
+    uint256[] memory refundAmounts = new uint256[](1);
+    refundAmounts[0] = data.amountIn;
+    SmartTradeRouter(_router).refund(order.id, refundTokens, refundAmounts, address(this));
+
+    address[] memory depositTokens = new address[](1);
+    depositTokens[0] = data.tokenOut;
+    uint256[] memory depositAmounts = new uint256[](1);
+    depositAmounts[0] = data.amountOut;
     IERC20(data.tokenOut).safeApprove(_router, data.amountOut);
-    SmartTradeRouter(_router).deposit(order.owner, data.tokenOut, data.amountOut);
+    SmartTradeRouter(_router).deposit(order.id, depositTokens, depositAmounts);
   }
 }

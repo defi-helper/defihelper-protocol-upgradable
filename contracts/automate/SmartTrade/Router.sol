@@ -30,9 +30,9 @@ contract SmartTradeRouter is Ownable, Pausable {
   /// @notice Storage contract
   Storage public info;
 
-  mapping(address => mapping(address => uint256)) internal _balances;
-
   mapping(uint256 => Order) internal _orders;
+
+  mapping(uint256 => mapping(address => uint256)) internal _orderBalances;
 
   uint256 public ordersCount;
 
@@ -96,39 +96,54 @@ contract SmartTradeRouter is Ownable, Pausable {
     return (feeUSD * 1e18) / uint256(answer);
   }
 
-  function balanceOf(address account, address token) public view returns (uint256) {
-    return _balances[account][token];
+  function balanceOf(uint256 orderId, address token) public view returns (uint256) {
+    return _orderBalances[orderId][token];
   }
 
   function deposit(
-    address recipient,
-    address token,
-    uint256 amount
+    uint256 orderId,
+    address[] calldata tokens,
+    uint256[] calldata amounts
   ) public whenNotPaused {
-    require(recipient != address(0), "SmartTradeRouter::deposit: invalid recipient address");
-    require(token != address(0), "SmartTradeRouter::deposit: invalid token contract address");
-    require(amount > 0, "SmartTradeRouter::deposit: invalid amount");
+    require(_orders[orderId].owner != address(0), "SmartTradeRouter::deposit: undefined order");
+    require(
+      msg.sender == _orders[orderId].owner ||
+        info.getBool(keccak256(abi.encodePacked("DFH:Contract:SmartTrade:allowedHandler:", msg.sender))),
+      "SmartTradeRouter::deposit: foreign order"
+    );
+    require(tokens.length == amounts.length, "SmartTradeRouter::deposit: invalid amounts length");
 
-    IERC20(token).safeTransferFrom(msg.sender, address(this), amount);
-    _balances[recipient][token] += amount;
+    for (uint256 i = 0; i < tokens.length; i++) {
+      require(tokens[i] != address(0), "SmartTradeRouter::deposit: invalid token contract address");
+      if (amounts[i] == 0) continue;
+
+      IERC20(tokens[i]).safeTransferFrom(msg.sender, address(this), amounts[i]);
+      _orderBalances[orderId][tokens[i]] += amounts[i];
+    }
   }
 
   function refund(
-    address spender,
-    address token,
-    uint256 amount
-  ) external whenNotPaused {
-    require(spender != address(0), "SmartTradeRouter::refund: invalid recipient address");
+    uint256 orderId,
+    address[] calldata tokens,
+    uint256[] memory amounts,
+    address recipient
+  ) public whenNotPaused {
     require(
-      spender == msg.sender ||
-        info.getBool(keccak256(abi.encodePacked("DFH:Contract:SmartTrade:allowedHandler:", msg.sender)))
+      msg.sender == _orders[orderId].owner ||
+        msg.sender == owner() ||
+        info.getBool(keccak256(abi.encodePacked("DFH:Contract:SmartTrade:allowedHandler:", msg.sender))),
+      "SmartTradeRouter::refund: foreign order"
     );
-    require(token != address(0), "SmartTradeRouter::refund: invalid token contract address");
-    require(amount > 0, "SmartTradeRouter::refund: invalid amount");
-    require(balanceOf(spender, token) >= amount, "SmartTradeRouter::refund: insufficient balance");
+    require(tokens.length == amounts.length, "SmartTradeRouter::refund: invalid amounts length");
 
-    _balances[spender][token] -= amount;
-    IERC20(token).safeTransfer(msg.sender, amount);
+    for (uint256 i = 0; i < tokens.length; i++) {
+      require(tokens[i] != address(0), "SmartTradeRouter::refund: invalid token contract address");
+      if (amounts[i] == 0) continue;
+      require(balanceOf(orderId, tokens[i]) >= amounts[i], "SmartTradeRouter::refund: insufficient balance");
+
+      _orderBalances[orderId][tokens[i]] -= amounts[i];
+      IERC20(tokens[i]).safeTransfer(recipient, amounts[i]);
+    }
   }
 
   function order(uint256 id) public view returns (Order memory) {
@@ -138,8 +153,8 @@ contract SmartTradeRouter is Ownable, Pausable {
   function createOrder(
     address handler,
     bytes calldata callData,
-    address token,
-    uint256 amount
+    address[] calldata tokens,
+    uint256[] calldata amounts
   ) external payable whenNotPaused returns (uint256) {
     require(
       info.getBool(keccak256(abi.encodePacked("DFH:Contract:SmartTrade:allowedHandler:", handler))),
@@ -156,8 +171,8 @@ contract SmartTradeRouter is Ownable, Pausable {
     emit OrderCreated(newOrder.id, newOrder.owner, newOrder.handler);
     IHandler(newOrder.handler).onOrderCreated(newOrder);
 
-    if (token != address(0) && amount > 0) {
-      deposit(newOrder.owner, token, amount);
+    if (tokens.length > 0) {
+      deposit(newOrder.id, tokens, amounts);
     }
 
     if (msg.value > 0) {
@@ -170,7 +185,7 @@ contract SmartTradeRouter is Ownable, Pausable {
     return newOrder.id;
   }
 
-  function cancelOrder(uint256 id) external {
+  function cancelOrder(uint256 id, address[] calldata refundTokens) external {
     Order storage _order = _orders[id];
     require(_order.owner != address(0), "SmartTradeRouter::cancelOrder: undefined order");
     require(msg.sender == _order.owner || msg.sender == owner(), "SmartTradeRouter::cancelOrder: forbidden");
@@ -178,6 +193,12 @@ contract SmartTradeRouter is Ownable, Pausable {
 
     _order.status = OrderStatus.Canceled;
     emit OrderCanceled(_order.id);
+
+    uint256[] memory refundAmounts = new uint256[](refundTokens.length);
+    for (uint256 i = 0; i < refundTokens.length; i++) {
+      refundAmounts[i] = _orderBalances[id][refundTokens[i]];
+    }
+    refund(id, refundTokens, refundAmounts, _order.owner);
   }
 
   function handleOrder(
