@@ -48,15 +48,15 @@ contract SmartTradeSwapHandler is IHandler {
     abi.decode(order.callData, (OrderData));
   }
 
-  function _returnRemainder(address[] memory tokens, address recipient) internal {
+  function _returnRemainder(SmartTradeRouter.Order calldata order, address[] memory tokens) internal {
     address _router = router; // gas optimization
+    uint256[] memory amounts = new uint256[](tokens.length);
     for (uint256 i = 0; i < tokens.length; i++) {
-      uint256 tokenBalance = IERC20(tokens[i]).balanceOf(address(this));
-      if (tokenBalance > 0) {
-        IERC20(tokens[i]).safeApprove(_router, tokenBalance);
-        SmartTradeRouter(_router).deposit(recipient, tokens[i], tokenBalance);
-      }
+      amounts[i] = IERC20(tokens[i]).balanceOf(address(this));
+      if (amounts[i] == 0) continue;
+      IERC20(tokens[i]).safeApprove(_router, amounts[i]);
     }
+    SmartTradeRouter(_router).deposit(order.id, tokens, amounts);
   }
 
   function handle(SmartTradeRouter.Order calldata order, bytes calldata _options) external override onlyRouter {
@@ -68,7 +68,12 @@ contract SmartTradeSwapHandler is IHandler {
       "SmartTradeSwapHandler::handle: invalid amount out min option"
     );
 
-    SmartTradeRouter(router).refund(order.owner, data.path[0], data.amountIn);
+    address[] memory refundTokens = new address[](1);
+    refundTokens[0] = data.path[0];
+    uint256[] memory refundAmounts = new uint256[](1);
+    refundAmounts[0] = data.amountIn;
+    SmartTradeRouter(router).refund(order.id, refundTokens, refundAmounts, address(this));
+
     IERC20(data.path[0]).safeApprove(data.exchange, data.amountIn);
     IExchange(data.exchange).swapExactTokensForTokensSupportingFeeOnTransferTokens(
       data.amountIn,
@@ -77,6 +82,6 @@ contract SmartTradeSwapHandler is IHandler {
       address(this),
       options.deadline
     );
-    _returnRemainder(data.path, order.owner);
+    _returnRemainder(order, data.path);
   }
 }

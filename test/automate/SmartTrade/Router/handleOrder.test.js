@@ -38,7 +38,9 @@ describe('Router.handleOrder', function () {
     router = await Router.deploy(storage.address);
     await router.deployed();
 
-    const Handler = await ethers.getContractFactory('contracts/automate/SmartTrade/mock/HandlerMock.sol:SmartTradeHandlerMock');
+    const Handler = await ethers.getContractFactory(
+      'contracts/automate/SmartTrade/mock/HandlerMock.sol:SmartTradeHandlerMock',
+    );
     handler = await Handler.deploy(router.address);
     await handler.deployed();
 
@@ -72,21 +74,22 @@ describe('Router.handleOrder', function () {
       amountOut: amountOut,
     });
     await inToken.approve(router.address, amountIn);
-    await router.createOrder(handler.address, callData, inToken.address, amountIn);
-    const order = await router.order(await router.ordersCount().then((v) => v.toString()));
-    const inTokenAccountBalance = await router.balanceOf(owner.address, inToken.address).then((v) => v.toString());
+    await router.createOrder(handler.address, callData, [inToken.address], [amountIn]);
+    const orderId = await router.ordersCount().then((v) => v.toString());
+    const order = await router.order(orderId);
+    const inTokenAccountBalance = await router.balanceOf(orderId, inToken.address).then((v) => v.toString());
 
     await router.handleOrder(order.id.toString(), '0x', 0);
     const successedOrder = await router.order(order.id.toString());
 
     strictEqual(successedOrder.status.toString(), '1', 'Invalid order status');
     strictEqual(
-      await router.balanceOf(owner.address, inToken.address).then((v) => v.toString()),
+      await router.balanceOf(orderId, inToken.address).then((v) => v.toString()),
       new bn(inTokenAccountBalance).minus(amountIn).toString(),
       'Invalid in token balance',
     );
     strictEqual(
-      await router.balanceOf(owner.address, outToken.address).then((v) => v.toString()),
+      await router.balanceOf(orderId, outToken.address).then((v) => v.toString()),
       new bn(outTokenAccountBalance).plus(amountOut).toString(),
       'Invalid out token balance',
     );
@@ -112,7 +115,7 @@ describe('Router.handleOrder', function () {
       amountOut: amountOut,
     });
     await inToken.approve(router.address, amountIn);
-    await router.createOrder(handler.address, callData, inToken.address, amountIn);
+    await router.createOrder(handler.address, callData, [inToken.address], [amountIn]);
     const order = await router.order(await router.ordersCount().then((v) => v.toString()));
     const accountClaim = await balance.claimOf(owner.address).then((v) => v.toString());
 
@@ -134,8 +137,8 @@ describe('Router.handleOrder', function () {
         amountIn: '100',
         amountOut: amountOut,
       }),
-      zeroAddress,
-      '0',
+      [],
+      [],
     );
 
     await assertions.reverts(
@@ -153,8 +156,8 @@ describe('Router.handleOrder', function () {
         amountIn: '100',
         amountOut: amountOut,
       }),
-      zeroAddress,
-      '0',
+      [],
+      [],
     );
     await storage.setAddress(ethers.utils.keccak256(ethers.utils.toUtf8Bytes('DFH:Contract:Balance')), zeroAddress);
 
