@@ -44,6 +44,8 @@ contract SmartTradeRouter is Ownable, Pausable {
 
   event OrderCreated(uint256 indexed id, address indexed owner, address indexed handler);
 
+  event OrderUpdated(uint256 indexed id);
+
   event OrderCanceled(uint256 indexed id);
 
   event OrderSuccessed(uint256 indexed id);
@@ -183,6 +185,16 @@ contract SmartTradeRouter is Ownable, Pausable {
     }
 
     return newOrder.id;
+  }
+
+  function updateOrder(uint256 id, bytes calldata callData) external whenNotPaused {
+    Order storage _order = _orders[id];
+    require(_order.owner != address(0), "SmartTradeRouter::updateOrder: undefined order");
+    require(msg.sender == _order.owner || msg.sender == owner(), "SmartTradeRouter::updateOrder: forbidden");
+    require(_order.status == OrderStatus.Pending, "SmartTradeRouter::updateOrder: order has already been processed");
+
+    _order.callData = callData;
+    emit OrderUpdated(id);
   }
 
   function cancelOrder(uint256 id, address[] calldata refundTokens) external {

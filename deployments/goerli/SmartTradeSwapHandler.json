@@ -1,10 +1,10 @@
 {
   "name": "SmartTradeSwapHandler",
-  "address": "0x5C9263b59a45a353f4A75824F16DF8d3c52405AF",
+  "address": "0x121BA7A3F9fc2d477CF0cD1ea772Df47dcefA3e8",
   "contractName": "SmartTradeSwapHandler",
   "sourceName": "contracts/automate/SmartTrade/SwapHandler.sol",
   "args": [
-    "0x4F92c1DADEdF1AF63160576138c6f7197CaF10DC"
+    "0x13abF3151fD54308E95f45b3B5f5E03a229C1791"
   ],
   "libraries": {},
   "abi": [
@@ -200,6 +200,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 7975540,
-  "transactionHash": "0x728389b849e307437e2d5bde7b5738af206dc9bf7c9e23e58bbbef91fcd40816"
+  "blockNumber": 8041212,
+  "transactionHash": "0xf11f58f12f62ab7a962b8a4cae8dd3a83b81b6d5db0545fcc5ef93e9895809ec"
 }
