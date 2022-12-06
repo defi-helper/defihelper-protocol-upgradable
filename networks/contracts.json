@@ -291,12 +291,12 @@
       "blockNumber": 22047415
     },
     "SmartTradeRouter": {
-      "address": "0x9F4F434953A3980Ed0361A85e7B990A55fEc9702",
-      "blockNumber": 22900431
+      "address": "0xD9827505362E75fb5DAFC566a4396da8eDB14899",
+      "blockNumber": 23669317
     },
     "SmartTradeSwapHandler": {
-      "address": "0xee0383A7abd1381614BD851403BcB5DcD2dba5Ca",
-      "blockNumber": 22900444
+      "address": "0xBf1B5AA5d9F2fBe3ac92E4Bf1b422Ff99c2EE8Ae",
+      "blockNumber": 23669338
     },
     "BalanceUpgradable": {
       "address": "0xa4073954e54fdc8128E029A81d460B177f376031",

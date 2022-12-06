@@ -1,6 +1,6 @@
 {
   "name": "SmartTradeRouter",
-  "address": "0x9F4F434953A3980Ed0361A85e7B990A55fEc9702",
+  "address": "0xD9827505362E75fb5DAFC566a4396da8eDB14899",
   "contractName": "SmartTradeRouter",
   "sourceName": "contracts/automate/SmartTrade/Router.sol",
   "args": [
@@ -94,6 +94,19 @@
         }
       ],
       "name": "OrderSuccessed",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        }
+      ],
+      "name": "OrderUpdated",
       "type": "event"
     },
     {
@@ -461,8 +474,26 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "callData",
+          "type": "bytes"
+        }
+      ],
+      "name": "updateOrder",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "blockNumber": 22900431,
-  "transactionHash": "0xf184c4ecefae60a2c29e1e66ba40d47352fe67e7f6fda03337b76b69fecd043d"
+  "blockNumber": 23669317,
+  "transactionHash": "0xe90c6b8fac7362aa6996bc7679cf21c8026ed4e58829c0cbb017297779ad0fe3"
 }
