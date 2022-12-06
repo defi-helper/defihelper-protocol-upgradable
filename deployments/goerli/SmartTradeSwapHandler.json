@@ -1,10 +1,10 @@
 {
   "name": "SmartTradeSwapHandler",
-  "address": "0x41ea14B45Aa8D20104Ba651AcD65d80C5159adF3",
+  "address": "0x121BA7A3F9fc2d477CF0cD1ea772Df47dcefA3e8",
   "contractName": "SmartTradeSwapHandler",
   "sourceName": "contracts/automate/SmartTrade/SwapHandler.sol",
   "args": [
-    "0x4F92c1DADEdF1AF63160576138c6f7197CaF10DC"
+    "0x13abF3151fD54308E95f45b3B5f5E03a229C1791"
   ],
   "libraries": {},
   "abi": [
@@ -78,6 +78,11 @@
               "internalType": "uint256",
               "name": "deadline",
               "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "emergency",
+              "type": "bool"
             }
           ],
           "internalType": "struct SmartTradeSwapHandler.Options",
@@ -195,6 +200,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 7884100,
-  "transactionHash": "0x0ba12899fe8902a86cc22ad14bcd5c232b6963679c384826b7917ce2b3105038"
+  "blockNumber": 8041212,
+  "transactionHash": "0xf11f58f12f62ab7a962b8a4cae8dd3a83b81b6d5db0545fcc5ef93e9895809ec"
 }

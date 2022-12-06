@@ -22,6 +22,7 @@ contract SmartTradeSwapHandler is IHandler {
     uint8 route;
     uint256 amountOutMin;
     uint256 deadline;
+    bool emergency;
   }
 
   address public router;
@@ -59,29 +60,42 @@ contract SmartTradeSwapHandler is IHandler {
     SmartTradeRouter(_router).deposit(order.id, tokens, amounts);
   }
 
-  function handle(SmartTradeRouter.Order calldata order, bytes calldata _options) external override onlyRouter {
-    OrderData memory data = abi.decode(order.callData, (OrderData));
-    Options memory options = abi.decode(_options, (Options));
-    uint256 amountOutMin = options.amountOutMin > 0 ? options.amountOutMin : data.amountOutMin[options.route];
-    require(
-      data.amountOutMin[options.route] <= amountOutMin,
-      "SmartTradeSwapHandler::handle: invalid amount out min option"
-    );
-
+  function _swap(
+    SmartTradeRouter.Order calldata order,
+    OrderData memory data,
+    uint256 amountOutMin,
+    uint256 deadline
+  ) internal {
     address[] memory refundTokens = new address[](1);
     refundTokens[0] = data.path[0];
     uint256[] memory refundAmounts = new uint256[](1);
     refundAmounts[0] = data.amountIn;
     SmartTradeRouter(router).refund(order.id, refundTokens, refundAmounts, address(this));
-
     IERC20(data.path[0]).safeApprove(data.exchange, data.amountIn);
     IExchange(data.exchange).swapExactTokensForTokensSupportingFeeOnTransferTokens(
       data.amountIn,
       amountOutMin,
       data.path,
       address(this),
-      options.deadline
+      deadline
     );
     _returnRemainder(order, data.path);
+  }
+
+  function handle(SmartTradeRouter.Order calldata order, bytes calldata _options) external override onlyRouter {
+    OrderData memory data = abi.decode(order.callData, (OrderData));
+    Options memory options = abi.decode(_options, (Options));
+
+    if (options.emergency) {
+      _swap(order, data, 0, options.deadline);
+      return;
+    }
+
+    uint256 amountOutMin = options.amountOutMin > 0 ? options.amountOutMin : data.amountOutMin[options.route];
+    require(
+      data.amountOutMin[options.route] <= amountOutMin,
+      "SmartTradeSwapHandler::handle: invalid amount out min option"
+    );
+    _swap(order, data, amountOutMin, options.deadline);
   }
 }
