@@ -247,6 +247,14 @@
     "BalanceUpgradable": {
       "address": "0x9B8583F71240ea6fa1A2a1e60BF4CE7DAfd6D5E4",
       "blockNumber": 29822164
+    },
+    "SmartTradeRouter": {
+      "address": "0x6FDaA57bA46104e70C07C54006253C3816b61F87",
+      "blockNumber": 48981933
+    },
+    "SmartTradeSwapHandler": {
+      "address": "0xd8C830401453796e043b35B628EF55A18817D9bD",
+      "blockNumber": 48981978
     }
   },
   "56": {
@@ -347,6 +355,14 @@
     "BalanceUpgradable": {
       "address": "0xc487bfD40fb36939114c8d5Ddf163f2eD3eeC02d",
       "blockNumber": 2791319
+    },
+    "SmartTradeRouter": {
+      "address": "0x555055F47036e995F4E35e7E6E346fCc2dd60FAe",
+      "blockNumber": 3182504
+    },
+    "SmartTradeSwapHandler": {
+      "address": "0xCC4FC7c019515cc07710942e66979873E70C116b",
+      "blockNumber": 3182508
     }
   },
   "43113": {
@@ -435,6 +451,14 @@
     "BalanceUpgradable": {
       "address": "0x90562C369f5aca8724eea6fC611a0B5aBEC3f836",
       "blockNumber": 21169491
+    },
+    "SmartTradeRouter": {
+      "address": "0x9b805Edba851b3C23b35cb9967b0AcD4E2b4a15C",
+      "blockNumber": 23582996
+    },
+    "SmartTradeSwapHandler": {
+      "address": "0x1060b8Ca2235AaC2FC121E7b9cB0D9057E460fAb",
+      "blockNumber": 23583009
     }
   }
 }
