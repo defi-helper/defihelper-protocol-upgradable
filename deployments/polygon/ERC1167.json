@@ -1,0 +1,44 @@
+{
+  "name": "ERC1167",
+  "address": "0x7ecFCbdeb6f195030B9Bf2ECc402f6d5433d116D",
+  "contractName": "ERC1167",
+  "sourceName": "contracts/proxy/ERC1167.sol",
+  "args": [],
+  "libraries": {},
+  "abi": [
+    {
+      "inputs": [],
+      "name": "CLONE",
+      "outputs": [
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "proxy",
+          "type": "address"
+        }
+      ],
+      "name": "implementation",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "impl",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "blockNumber": 36849658,
+  "transactionHash": "0x0f05436ada64df877312176269c7956590e77aa06efceea46e01b5de5d163b9b"
+}
