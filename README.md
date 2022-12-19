@@ -1,6 +1,7 @@
 # defihelper-protocol-upgradable
 
-```npx hardhat deploy --network avalanche --tags Lite --deploy ./deploy/upgrade/011_StoreV3
+```
+npx hardhat deploy --network avalanche --tags Lite --deploy ./deploy/upgrade/011_StoreV3
 npx hardhat deploy --network main --tags Lite --deploy ./deploy/upgrade/011_StoreV3
 npx hardhat deploy --network optimistic --tags Lite --deploy ./deploy/upgrade/011_StoreV3
 npx hardhat deploy --network bsc --tags Lite --deploy ./deploy/upgrade/011_StoreV3
