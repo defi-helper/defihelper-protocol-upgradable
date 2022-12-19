@@ -320,6 +320,10 @@
     }
   },
   "137": {
+    "ProxyAdmin": {
+      "address": "0xb2A55570Ae16cb8b04432790ADa44D6008e1111a",
+      "blockNumber": 36848753
+    },
     "BalanceUpgradable": {
       "address": "0x92Df189712C2d1ABe508F1a7220F7ebc92c41A7E",
       "blockNumber": 36849553
