@@ -30,6 +30,9 @@ module.exports = {
     hardhat: {
       initialBaseFeePerGas: 0,
       blockGasLimit: 10000000,
+      forking: {
+        url: process.env.GOERLI_NODE
+      }
     },
     main: {
       url: process.env.ETH_MAIN_NODE || 'http://127.0.0.1:8545',
@@ -47,7 +50,7 @@ module.exports = {
     goerli: {
       url: process.env.GOERLI_NODE || 'http://127.0.0.1:8545',
       chainId: 5,
-      gasPrice: 50_000_000_000,
+      gasPrice: 15_000_000_000,
       blockGasLimit: 6_000_000,
       accounts: accounts(
           'GOERLI_DEPLOYER',

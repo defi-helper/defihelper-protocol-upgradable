@@ -1,11 +1,12 @@
 {
   "name": "WETHMock",
-  "address": "0x7b109d1E02a56b7FcE042ffb609ac4AC1de07310",
+  "address": "0x9e33bA3217560a0a07a29CEEE333D9518E970120",
   "contractName": "WrapMock",
   "sourceName": "contracts/interfaces/NativeWrapper/mock/WrapMock.sol",
   "args": [
     "Wrapped ETH",
-    "WETH"
+    "WETH",
+    "1000000000000000000000000"
   ],
   "libraries": {},
   "abi": [
@@ -20,6 +21,11 @@
           "internalType": "string",
           "name": "symbol",
           "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "initialSupply",
+          "type": "uint256"
         }
       ],
       "stateMutability": "nonpayable",
@@ -181,6 +187,24 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "burn",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "decimals",
       "outputs": [
@@ -245,6 +269,24 @@
           "type": "bool"
         }
       ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mint",
+      "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
@@ -354,6 +396,6 @@
       "type": "function"
     }
   ],
-  "blockNumber": 7703368,
-  "transactionHash": "0x52d2b8145292044fb3fb0ece81eea5e1aba9c8e7af2c3e9bd1f0e6cb87e135a3"
+  "blockNumber": 8579314,
+  "transactionHash": "0x2670682e55bb95242a1e8b53edbaa4498c65f4516d1f6ae45108dc0e9e7fce18"
 }
