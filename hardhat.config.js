@@ -37,7 +37,7 @@ module.exports = {
     main: {
       url: process.env.ETH_MAIN_NODE || 'http://127.0.0.1:8545',
       chainId: 1,
-      gasPrice: 12_000_000_000,
+      gasPrice: 22_000_000_000,
       blockGasLimit: 6_000_000,
       accounts: accounts(
         'ETH_MAIN_DEPLOYER',
@@ -50,7 +50,7 @@ module.exports = {
     goerli: {
       url: process.env.GOERLI_NODE || 'http://127.0.0.1:8545',
       chainId: 5,
-      gasPrice: 15_000_000_000,
+      gasPrice: 30_000_000_000,
       blockGasLimit: 6_000_000,
       accounts: accounts(
           'GOERLI_DEPLOYER',
@@ -109,7 +109,7 @@ module.exports = {
     polygon: {
       url: process.env.POLYGON_NODE || 'http://127.0.0.1:8545',
       chainId: 137,
-      gasPrice: 50_000_000_000,
+      gasPrice: 400_000_000_000,
       blockGasLimit: 21_000_000,
       accounts: accounts(
         'POLYGON_DEPLOYER',

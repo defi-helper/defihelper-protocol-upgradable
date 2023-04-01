@@ -1,8 +1,8 @@
 {
   "name": "Uni3LPTokensManager",
-  "address": "0xe4eB503C995BaD5Fec2974DfE4D218135b120407",
-  "contractName": "LPTokensManager",
-  "sourceName": "contracts/automate/Uni3/LPTokensManager.sol",
+  "address": "0x73eF7bBb0a9aeE554937bb340aAc03B4f8fb8E4A",
+  "contractName": "Uni3LPTokensManager",
+  "sourceName": "contracts/automate/Uni3/Uni3LPTokensManager.sol",
   "args": [
     "0xA32379671A956845E6B607B2a3b574Fe7c83146b"
   ],
@@ -148,7 +148,7 @@
                   "type": "uint256"
                 }
               ],
-              "internalType": "struct LPTokensManager.Swap",
+              "internalType": "struct Uni3LPTokensManager.Swap",
               "name": "swap",
               "type": "tuple"
             },
@@ -173,7 +173,7 @@
               "type": "uint256"
             }
           ],
-          "internalType": "struct LPTokensManager.BuyLiquidityParams",
+          "internalType": "struct Uni3LPTokensManager.BuyLiquidityParams",
           "name": "params",
           "type": "tuple"
         }
@@ -220,7 +220,7 @@
                   "type": "uint256"
                 }
               ],
-              "internalType": "struct LPTokensManager.Swap",
+              "internalType": "struct Uni3LPTokensManager.Swap",
               "name": "swap",
               "type": "tuple"
             },
@@ -245,7 +245,7 @@
               "type": "uint256"
             }
           ],
-          "internalType": "struct LPTokensManager.BuyLiquidityParams",
+          "internalType": "struct Uni3LPTokensManager.BuyLiquidityParams",
           "name": "params",
           "type": "tuple"
         }
@@ -380,7 +380,7 @@
                   "type": "uint256"
                 }
               ],
-              "internalType": "struct LPTokensManager.Swap",
+              "internalType": "struct Uni3LPTokensManager.Swap",
               "name": "swap",
               "type": "tuple"
             },
@@ -395,7 +395,7 @@
               "type": "uint256"
             }
           ],
-          "internalType": "struct LPTokensManager.SellLiquidityParams",
+          "internalType": "struct Uni3LPTokensManager.SellLiquidityParams",
           "name": "params",
           "type": "tuple"
         }
@@ -437,7 +437,7 @@
                   "type": "uint256"
                 }
               ],
-              "internalType": "struct LPTokensManager.Swap",
+              "internalType": "struct Uni3LPTokensManager.Swap",
               "name": "swap",
               "type": "tuple"
             },
@@ -452,7 +452,7 @@
               "type": "uint256"
             }
           ],
-          "internalType": "struct LPTokensManager.SellLiquidityParams",
+          "internalType": "struct Uni3LPTokensManager.SellLiquidityParams",
           "name": "params",
           "type": "tuple"
         }
@@ -480,6 +480,6 @@
       "type": "receive"
     }
   ],
-  "blockNumber": 8614316,
-  "transactionHash": "0xa542a52ce8a7eb56a829b595ad4f1e45d72170c6ac14499d7dc810dfdead131d"
+  "blockNumber": 8756742,
+  "transactionHash": "0x505ec8beaaf4e225b76f67838e8b29478c3080e642cb47b6c0833b258f395326"
 }

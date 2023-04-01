@@ -188,11 +188,11 @@
     },
     "SmartTradeRouter": {
       "address": "0x13abF3151fD54308E95f45b3B5f5E03a229C1791",
-      "blockNumber": 7876868
+      "blockNumber": 8041203
     },
     "SmartTradeSwapHandler": {
       "address": "0x121BA7A3F9fc2d477CF0cD1ea772Df47dcefA3e8",
-      "blockNumber": 7975540
+      "blockNumber": 8041212
     },
     "OptionBusinessDevelopment": {
       "address": "0x58e203f0854723Ba0544e95a752e401F8E576317",
@@ -207,8 +207,12 @@
       "blockNumber": 7553547
     },
     "WETHMock": {
-      "address": "0x7b109d1E02a56b7FcE042ffb609ac4AC1de07310",
-      "blockNumber": 7703368
+      "address": "0x9e33bA3217560a0a07a29CEEE333D9518E970120",
+      "blockNumber": 8579314
+    },
+    "Uni3LPTokensManager": {
+      "address": "0x73eF7bBb0a9aeE554937bb340aAc03B4f8fb8E4A",
+      "blockNumber": 8756742
     }
   },
   "10": {
@@ -263,6 +267,10 @@
     "SmartTradeSwapHandler": {
       "address": "0xd8C830401453796e043b35B628EF55A18817D9bD",
       "blockNumber": 48981978
+    },
+    "Uni3LPTokensManager": {
+      "address": "0x5bC4C9b047B31F8215EA178c1CF38D5a210af8a1",
+      "blockNumber": 85446181
     }
   },
   "56": {
