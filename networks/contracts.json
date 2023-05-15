@@ -103,6 +103,10 @@
     "SmartTradeSwapHandler": {
       "address": "0xCB26F03547544B62289FA37A8dD733D2f5622F65",
       "blockNumber": 16188045
+    },
+    "Uni3LPTokensManager": {
+      "address": "0xb61883d6D26C380Dce9F0AF869e86da693daad21",
+      "blockNumber": 17265903
     }
   },
   "5": {
@@ -325,6 +329,10 @@
     "BalanceUpgradable": {
       "address": "0xa4073954e54fdc8128E029A81d460B177f376031",
       "blockNumber": 22246533
+    },
+    "Uni3LPTokensManager": {
+      "address": "0x05179599f71EFaf1759461c75218da702340E6FB",
+      "blockNumber": 28234504
     }
   },
   "137": {
@@ -375,6 +383,10 @@
     "TreasuryUpgradable": {
       "address": "0xA66aC7ED58Fb0FAa48cE0c44ca5977fF8c524c56",
       "blockNumber": 36848759
+    },
+    "Uni3LPTokensManager": {
+      "address": "0x9558cae63883E1ae812BDda9376097351B16fFA6",
+      "blockNumber": 42738562
     }
   },
   "1285": {
