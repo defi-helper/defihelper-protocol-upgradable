@@ -491,6 +491,10 @@
     "Uni3LPTokensManager": {
       "address": "0xe890Dbb2EA4dd17ec0D1F9a2DD6a756D2C637f97",
       "blockNumber": 97773114
+    },
+    "ProxyAdmin": {
+      "address": "0x1E46B649d6651b3892217Dd1EFd2a3e78f4D904B",
+      "blockNumber": 97772393
     }
   },
   "43113": {
