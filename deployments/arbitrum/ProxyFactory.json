@@ -1,0 +1,57 @@
+{
+  "name": "ProxyFactory",
+  "address": "0xBD6F3c7D03aca8141bc24aaf096bbAFce277a85f",
+  "contractName": "ProxyFactory",
+  "sourceName": "contracts/proxy/ProxyFactory.sol",
+  "args": [],
+  "libraries": {
+    "ERC1167": "0x31E723E3ff71D70cAb6a914BaB3d901d36497610"
+  },
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "prototype",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "proxy",
+          "type": "address"
+        }
+      ],
+      "name": "ProxyCreated",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "prototype",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes",
+          "name": "args",
+          "type": "bytes"
+        }
+      ],
+      "name": "create",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "proxy",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "blockNumber": 97772979,
+  "transactionHash": "0xedfd7bc2f8c42c8b62de5803617f14aecdbc5a219f9e6676d2d0d400a18ece71"
+}

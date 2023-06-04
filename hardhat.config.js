@@ -171,6 +171,19 @@ module.exports = {
         'OPTIMISTIC_CONSUMER3',
       ),
     },
+    arbitrum: {
+      url: process.env.ARBITRUM_NODE || 'http://127.0.0.1:8545',
+      chainId: 42161,
+      gasPrice: 100_000_000,
+      blockGasLimit: 15_000_000,
+      accounts: accounts(
+          'ARBITRUM_DEPLOYER',
+          'ARBITRUM_INSPECTOR',
+          'ARBITRUM_CONSUMER1',
+          'ARBITRUM_CONSUMER2',
+          'ARBITRUM_CONSUMER3',
+      ),
+    },
   },
   namedAccounts: {
     deployer: {

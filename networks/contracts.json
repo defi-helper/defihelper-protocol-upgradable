@@ -443,6 +443,56 @@
       "blockNumber": 3182508
     }
   },
+  "42161": {
+    "BalanceUpgradable": {
+      "address": "0x29A265890aBf4faA084C9A5A475f49a2afC3412b",
+      "blockNumber": 97772469
+    },
+    "Budget": {
+      "address": "0x67B6CE0aD583fd2c8c2701A2BAB3c27CB4758c1b",
+      "blockNumber": 97772588
+    },
+    "ERC1167": {
+      "address": "0x31E723E3ff71D70cAb6a914BaB3d901d36497610",
+      "blockNumber": 97772967
+    },
+    "GovernorMultisig": {
+      "address": "0x7725c6045092DEB243ae23aFB4355f43aAC1FC22",
+      "blockNumber": 97772235
+    },
+    "LPTokensManager": {
+      "address": "0xF28C8D44C1dD837FEc8a93a7BCD540552e954E7B",
+      "blockNumber": 97772993
+    },
+    "ProxyFactory": {
+      "address": "0xBD6F3c7D03aca8141bc24aaf096bbAFce277a85f",
+      "blockNumber": 97772979
+    },
+    "SmartTradeRouter": {
+      "address": "0xF11438cFDC2B8463A1F4d79C3825930a233C76bd",
+      "blockNumber": 97773054
+    },
+    "SmartTradeSwapHandler": {
+      "address": "0x77fB5E70c95430cf9df0949169ce47EF050D4B10",
+      "blockNumber": 97773084
+    },
+    "Storage": {
+      "address": "0xDdfbffEfacB7598Ad995D327Ea4fF2D42aCF7b77",
+      "blockNumber": 97772709
+    },
+    "StoreUpgradable": {
+      "address": "0x770D64Ae34a52d8B60e0CC34F7991F19e026CfD7",
+      "blockNumber": 97772904
+    },
+    "TreasuryUpgradable": {
+      "address": "0x8dE8AFa08196Bb03fb8eE4cEe8BAdCe98fE4D063",
+      "blockNumber": 97772423
+    },
+    "Uni3LPTokensManager": {
+      "address": "0xe890Dbb2EA4dd17ec0D1F9a2DD6a756D2C637f97",
+      "blockNumber": 97773114
+    }
+  },
   "43113": {
     "Balance": {
       "address": "0xb59aFaec69313fDe836Edffba5b2942ea2eD57Ed",
